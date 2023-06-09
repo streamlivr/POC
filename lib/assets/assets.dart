@@ -21,6 +21,18 @@ class Assets {
   /// assets/icons/bnb-chain.png
   static const String assetsIconsBnbChain = "assets/icons/bnb-chain.png";
 
+  /// Assets for assetsIconsBoxIcon
+  /// assets/icons/box_icon.svg
+  static const String assetsIconsBoxIcon = "assets/icons/box_icon.svg";
+
+  /// Assets for assetsIconsCommentIcon
+  /// assets/icons/comment_icon.svg
+  static const String assetsIconsCommentIcon = "assets/icons/comment_icon.svg";
+
+  /// Assets for assetsIconsCreditcardIcon
+  /// assets/icons/creditcard_icon.svg
+  static const String assetsIconsCreditcardIcon = "assets/icons/creditcard_icon.svg";
+
   /// Assets for assetsIconsDanger
   /// assets/icons/danger.png
   static const String assetsIconsDanger = "assets/icons/danger.png";
@@ -37,6 +49,10 @@ class Assets {
   /// assets/icons/ethereum.png
   static const String assetsIconsEthereum = "assets/icons/ethereum.png";
 
+  /// Assets for assetsIconsFilesIcon
+  /// assets/icons/files_icon.svg
+  static const String assetsIconsFilesIcon = "assets/icons/files_icon.svg";
+
   /// Assets for assetsIconsFollowingLogo
   /// assets/icons/following_logo.svg
   static const String assetsIconsFollowingLogo = "assets/icons/following_logo.svg";
@@ -49,13 +65,29 @@ class Assets {
   /// assets/icons/gradient.png
   static const String assetsIconsGradient = "assets/icons/gradient.png";
 
+  /// Assets for assetsIconsInformationsquareIcon
+  /// assets/icons/informationsquare_icon.svg
+  static const String assetsIconsInformationsquareIcon = "assets/icons/informationsquare_icon.svg";
+
+  /// Assets for assetsIconsLogoutIcon
+  /// assets/icons/logout_icon.svg
+  static const String assetsIconsLogoutIcon = "assets/icons/logout_icon.svg";
+
   /// Assets for assetsIconsMetamaskWalletLogo
   /// assets/icons/metamask-wallet-logo.png
   static const String assetsIconsMetamaskWalletLogo = "assets/icons/metamask-wallet-logo.png";
 
+  /// Assets for assetsIconsMoresquareIcon
+  /// assets/icons/moresquare_icon.svg
+  static const String assetsIconsMoresquareIcon = "assets/icons/moresquare_icon.svg";
+
   /// Assets for assetsIconsNearWalletLogo
   /// assets/icons/near-wallet-logo.png
   static const String assetsIconsNearWalletLogo = "assets/icons/near-wallet-logo.png";
+
+  /// Assets for assetsIconsNotificationIcon
+  /// assets/icons/notification_icon.svg
+  static const String assetsIconsNotificationIcon = "assets/icons/notification_icon.svg";
 
   /// Assets for assetsIconsNotificationsLogo
   /// assets/icons/notifications_logo.svg
@@ -73,9 +105,21 @@ class Assets {
   /// assets/icons/polygon.png
   static const String assetsIconsPolygon = "assets/icons/polygon.png";
 
+  /// Assets for assetsIconsProfilecircleIcon
+  /// assets/icons/profilecircle_icon.svg
+  static const String assetsIconsProfilecircleIcon = "assets/icons/profilecircle_icon.svg";
+
   /// Assets for assetsIconsSearchIcon
   /// assets/icons/search_icon.svg
   static const String assetsIconsSearchIcon = "assets/icons/search_icon.svg";
+
+  /// Assets for assetsIconsSettingIcon
+  /// assets/icons/setting_icon.svg
+  static const String assetsIconsSettingIcon = "assets/icons/setting_icon.svg";
+
+  /// Assets for assetsIconsShieldIcon
+  /// assets/icons/shield_icon.svg
+  static const String assetsIconsShieldIcon = "assets/icons/shield_icon.svg";
 
   /// Assets for assetsIconsSolana
   /// assets/icons/solana.png
@@ -104,6 +148,38 @@ class Assets {
   /// Assets for assetsImagesFlight
   /// assets/images/flight.png
   static const String assetsImagesFlight = "assets/images/flight.png";
+
+  /// Assets for assetsImagesGenre1
+  /// assets/images/genre1.png
+  static const String assetsImagesGenre1 = "assets/images/genre1.png";
+
+  /// Assets for assetsImagesGenre2
+  /// assets/images/genre2.png
+  static const String assetsImagesGenre2 = "assets/images/genre2.png";
+
+  /// Assets for assetsImagesGenre3
+  /// assets/images/genre3.png
+  static const String assetsImagesGenre3 = "assets/images/genre3.png";
+
+  /// Assets for assetsImagesGenre4
+  /// assets/images/genre4.png
+  static const String assetsImagesGenre4 = "assets/images/genre4.png";
+
+  /// Assets for assetsImagesImage
+  /// assets/images/image.png
+  static const String assetsImagesImage = "assets/images/image.png";
+
+  /// Assets for assetsImagesProfileImage
+  /// assets/images/profile_image.png
+  static const String assetsImagesProfileImage = "assets/images/profile_image.png";
+
+  /// Assets for assetsImagesStream1
+  /// assets/images/stream1.png
+  static const String assetsImagesStream1 = "assets/images/stream1.png";
+
+  /// Assets for assetsImagesStream2
+  /// assets/images/stream2.png
+  static const String assetsImagesStream2 = "assets/images/stream2.png";
 
   /// Assets for assetsImagesStreamlivrLogo
   /// assets/images/streamlivr_logo.png
