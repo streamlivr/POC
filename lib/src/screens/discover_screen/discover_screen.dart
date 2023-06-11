@@ -4,6 +4,8 @@ import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/models/category_model.dart';
 import 'package:streamlivr/src/models/streaming_model.dart';
+import 'package:streamlivr/src/routes/router.dart';
+import 'package:streamlivr/src/screens/live_screen/live_screen.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
@@ -156,131 +158,136 @@ class DiscoverScreen extends StatelessWidget {
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 270,
-                  height: 156,
-                  child: Stack(
+            return GestureDetector(
+              onTap: () {
+                push(context: context, page: LiveScreen(model:model[index]));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 270,
+                    height: 156,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 270,
+                          height: 156,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(model[index].image!)),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          left: 10,
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 28,
+                                width: 45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: const Color(0xffeb5757)),
+                                child: Center(
+                                  child: BuildText(
+                                    data: 'LIVE',
+                                    color: white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              const Horizontalspace(space: 5),
+                              Container(
+                                height: 28,
+                                width: 70,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 2),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: const Color(0xff333333)
+                                        .withOpacity(0.4)),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.remove_red_eye,
+                                        color: white,
+                                      ),
+                                      const Horizontalspace(space: 5),
+                                      BuildText(
+                                        data: formatNumber(model[index].views!),
+                                        color: white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Verticalspace(space: 13),
+                  BuildText(
+                    data: model[index].userName!,
+                    color: white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  Row(
                     children: [
-                      Container(
-                        width: 270,
-                        height: 156,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(model[index].image!)),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                      BuildText(
+                        data: model[index].title!,
+                        color: const Color(0xff1d9ddd),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 28,
-                              width: 45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: const Color(0xffeb5757)),
-                              child: Center(
-                                child: BuildText(
-                                  data: 'LIVE',
-                                  color: white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            const Horizontalspace(space: 5),
-                            Container(
-                              height: 28,
-                              width: 70,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 2),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color:
-                                      const Color(0xff333333).withOpacity(0.4)),
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.remove_red_eye,
-                                      color: white,
-                                    ),
-                                    const Horizontalspace(space: 5),
-                                    BuildText(
-                                      data: formatNumber(model[index].views!),
-                                      color: white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      const BuildText(
+                        data: "-",
+                        color: Color(0xff828282),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                      BuildText(
+                        data: model[index].subtitle!,
+                        color: const Color(0xff828282),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                      Row(
+                        children: model[index]
+                            .tag!
+                            .asMap()
+                            .entries
+                            .map((e) => Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 2),
+                                  padding: const EdgeInsets.only(
+                                      top: 2, bottom: 3, left: 10, right: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: const Color(0xff343232),
+                                  ),
+                                  child: BuildText(
+                                    data: e.value,
+                                    fontSize: 5,
+                                    fontWeight: FontWeight.w500,
+                                    color: white,
+                                  ),
+                                ))
+                            .toList(),
                       )
                     ],
                   ),
-                ),
-                const Verticalspace(space: 13),
-                BuildText(
-                  data: model[index].userName!,
-                  color: white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-                Row(
-                  children: [
-                    BuildText(
-                      data: model[index].title!,
-                      color: const Color(0xff1d9ddd),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    const BuildText(
-                      data: "-",
-                      color: Color(0xff828282),
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                    ),
-                    BuildText(
-                      data: model[index].subtitle!,
-                      color: const Color(0xff828282),
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                    ),
-                    Row(
-                      children: model[index]
-                          .tag!
-                          .asMap()
-                          .entries
-                          .map((e) => Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 2),
-                                padding: const EdgeInsets.only(
-                                    top: 2, bottom: 3, left: 10, right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: const Color(0xff343232),
-                                ),
-                                child: BuildText(
-                                  data: e.value,
-                                  fontSize: 5,
-                                  fontWeight: FontWeight.w500,
-                                  color: white,
-                                ),
-                              ))
-                          .toList(),
-                    )
-                  ],
-                ),
-              ],
+                ],
+              ),
             );
           },
           separatorBuilder: (context, index) {

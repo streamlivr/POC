@@ -32,6 +32,7 @@ dependencies:
   animated_snack_bar: ^0.3.1
   dotted_line: ^3.1.0
   file_picker: ^5.3.0
+  glass_kit: ^2.0.1
 
 
 

@@ -125,6 +125,10 @@ class Assets {
   /// assets/icons/solana.png
   static const String assetsIconsSolana = "assets/icons/solana.png";
 
+  /// Assets for assetsIconsTipUserIcon
+  /// assets/icons/tip_user_icon.svg
+  static const String assetsIconsTipUserIcon = "assets/icons/tip_user_icon.svg";
+
   /// Assets for assetsIconsTrustWalletLogo
   /// assets/icons/trust-wallet-logo.png
   static const String assetsIconsTrustWalletLogo = "assets/icons/trust-wallet-logo.png";
