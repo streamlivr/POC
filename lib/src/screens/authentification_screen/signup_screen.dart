@@ -13,6 +13,8 @@ import 'package:streamlivr/src/widgets/app_textfield.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../theme/style.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
   @override
@@ -32,17 +34,17 @@ class SignUpScreen extends StatelessWidget {
                 push(context: context, page: const SignInScreen());
               },
               child: RichText(
-                  text: TextSpan(children: [
+                  text: const TextSpan(children: [
                 TextSpan(
                     text: "Do you already have an account?",
                     style: TextStyle(
-                      color: grey,
+                      color: Styles.grey,
                       fontSize: 14,
                     )),
                 TextSpan(
                   text: 'Sign in',
                   style: TextStyle(
-                    color: primary,
+                    color: Styles.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
@@ -56,14 +58,14 @@ class SignUpScreen extends StatelessWidget {
                 BuildText(
                   data: 'E-mail',
                   fontSize: 14,
-                  color: black.withOpacity(0.5),
+                  color: Styles.black.withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppTextField(
                     hint: "Email",
-                    prefix: Icon(
+                    prefix: const Icon(
                       Icons.person_outline,
-                      color: grey,
+                      color: Styles.grey,
                     ),
                     controller: TextEditingController()),
               ],
@@ -75,7 +77,7 @@ class SignUpScreen extends StatelessWidget {
                 BuildText(
                   data: 'Password',
                   fontSize: 14,
-                  color: black.withOpacity(0.5),
+                  color: Styles.black.withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
@@ -95,7 +97,7 @@ class SignUpScreen extends StatelessWidget {
                 Consumer<BasicProvider>(
                   builder: (context, provider, child) {
                     return Checkbox(
-                      activeColor: primary,
+                      activeColor: Styles.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
                       value: provider.check,
@@ -112,7 +114,7 @@ class SignUpScreen extends StatelessWidget {
             const Verticalspace(space: 43),
             AppButton(
               text: 'Continue',
-              textColor: white,
+              textColor: Styles.white,
               onPressed: () {
                 push(context: context, page: const VerifyPhoneScreen());
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
@@ -6,6 +7,7 @@ import 'package:streamlivr/src/models/network_model.dart';
 import 'package:streamlivr/src/models/wallet_model.dart';
 import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/basic_provider.dart';
+import 'package:streamlivr/src/providers/dark_theme_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/authentification_screen/verify_phone.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
@@ -15,13 +17,45 @@ import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../theme/style.dart';
+
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            Consumer<DarkThemeProvider>(builder: (context, provider, _) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  right: 24,
+                ),
+                child: FlutterSwitch(
+                  width: 35.49,
+                  height: 17.74,
+                  toggleSize: 20.0,
+                  value: provider.darkTheme,
+                  borderRadius: 30.0,
+                  padding: 2.0,
+                  toggleColor: const Color.fromRGBO(225, 225, 225, 1),
+                  switchBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  toggleBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  activeColor: Styles.primary,
+                  inactiveColor: Colors.black38,
+                  onToggle: provider.changeDarkTheme,
+                ),
+              );
+            })
+          ],
+        ),
         body: ListView(
           padding: screenPadding,
           children: [
@@ -36,15 +70,13 @@ class SignInScreen extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                    text: "Do you already have an account?",
-                    style: TextStyle(
-                      color: grey,
-                      fontSize: 14,
-                    )),
-                TextSpan(
+                  text: "Do you already have an account?",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const TextSpan(
                   text: 'Sign in',
                   style: TextStyle(
-                    color: primary,
+                    color: Styles.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
@@ -58,14 +90,14 @@ class SignInScreen extends StatelessWidget {
                 BuildText(
                   data: 'E-mail',
                   fontSize: 14,
-                  color: black.withOpacity(0.5),
+                  color: Styles.black.withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppTextField(
                     hint: "Email",
-                    prefix: Icon(
+                    prefix: const Icon(
                       Icons.person_outline,
-                      color: grey,
+                      color: Styles.grey,
                     ),
                     controller: TextEditingController()),
               ],
@@ -77,7 +109,7 @@ class SignInScreen extends StatelessWidget {
                 BuildText(
                   data: 'Password',
                   fontSize: 14,
-                  color: black.withOpacity(0.5),
+                  color: Styles.black.withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
@@ -90,7 +122,7 @@ class SignInScreen extends StatelessWidget {
                 Consumer<BasicProvider>(
                   builder: (context, provider, child) {
                     return Checkbox(
-                      activeColor: primary,
+                      activeColor: Styles.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
                       value: provider.check,
@@ -107,7 +139,7 @@ class SignInScreen extends StatelessWidget {
             const Verticalspace(space: 43),
             AppButton(
               text: 'Login',
-              textColor: white,
+              textColor: Styles.white,
               onPressed: () {
                 push(context: context, page: const VerifyPhoneScreen());
               },
@@ -128,7 +160,7 @@ class SignInScreen extends StatelessWidget {
             SizedBox(
               height: 34,
               child: AppButton(
-                textColor: white,
+                textColor: Styles.white,
                 radius: 3,
                 text: 'Connect to wallet',
                 onPressed: () {
@@ -338,8 +370,8 @@ class SignInScreen extends StatelessWidget {
       height: 40,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              backgroundColor: white,
-              foregroundColor: white,
+              backgroundColor: Styles.white,
+              foregroundColor: Styles.white,
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(2))),
@@ -352,7 +384,7 @@ class SignInScreen extends StatelessWidget {
               const Horizontalspace(space: 10),
               BuildText(
                 data: title,
-                color: black,
+                color: Styles.black,
               ),
             ],
           )),

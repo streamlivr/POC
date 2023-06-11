@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:streamlivr/src/constants/constants.dart';
+
+import '../theme/style.dart';
 
 class AppPasswordTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -27,7 +28,7 @@ class _AppPasswordTextFieldState extends State<AppPasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: white,
+      color: Styles.white,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
         controller: widget.controller,

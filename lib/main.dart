@@ -1,24 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:streamlivr/src/constants/constants.dart';
+import 'package:streamlivr/src/providers/dark_theme_provider.dart';
 import 'package:streamlivr/src/screens/splash_screen/splash_screen.dart';
+import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/state_manager.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentAppTheme();
+  }
+
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme; 
+  }
+
   @override
   Widget build(BuildContext context) {
     return StateManager(
-      child: MaterialApp(
-        title: appName,
-        debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        home: const SplashScreen(),
+      child: Consumer<DarkThemeProvider>(
+        builder: (context, provider, _) {
+          return MaterialApp(
+            title: appName,
+            debugShowCheckedModeBanner: false,
+            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

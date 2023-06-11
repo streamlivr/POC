@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
+import '../theme/style.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
@@ -38,7 +38,7 @@ class AppButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: elevation,
           padding: padding,
-          backgroundColor: buttonColor ?? primary,
+          backgroundColor: buttonColor ?? Styles.primary,
           shape: RoundedRectangleBorder(
             side: side ?? side_,
             borderRadius: BorderRadius.circular(
@@ -49,7 +49,7 @@ class AppButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: textColor ?? black,
+            color: textColor ?? Styles.black,
             fontSize: fontSize ?? 16,
           ),
         ),

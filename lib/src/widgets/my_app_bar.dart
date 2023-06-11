@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/assets/assets.dart';
-import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
+
+import '../theme/style.dart';
 
 class MyAppBar extends StatelessWidget {
   final String pageTitle;
@@ -31,11 +32,11 @@ class MyAppBar extends StatelessWidget {
               const Horizontalspace(space: 5),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: transparent,
+                      backgroundColor: Styles.transparent,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                            color: primary,
+                          side: const BorderSide(
+                            color: Styles.primary,
                             width: 2,
                           ))),
                   onPressed: () {},
@@ -43,9 +44,9 @@ class MyAppBar extends StatelessWidget {
                     children: [
                       SvgPicture.asset(Assets.assetsIconsAddVideoIcon),
                       const Horizontalspace(space: 5),
-                      Text(
+                      const Text(
                         'Create',
-                        style: TextStyle(color: primary),
+                        style: TextStyle(color: Styles.primary),
                       ),
                     ],
                   )),
@@ -53,7 +54,7 @@ class MyAppBar extends StatelessWidget {
           ),
           BuildText(
             data: pageTitle,
-            color: white,
+            color: Styles.white,
             fontSize: 24,
             fontWeight: FontWeight.w600,
           ),

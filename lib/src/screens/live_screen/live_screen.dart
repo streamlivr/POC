@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:streamlivr/assets/assets.dart';
-import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/models/streaming_model.dart';
+import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
+import 'package:streamlivr/src/widgets/vertical_space.dart';
+
+import '../../theme/style.dart';
 
 class LiveScreen extends StatelessWidget {
   final StreamingModel model;
@@ -13,7 +17,7 @@ class LiveScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    print(model);
+
     return Container(
       height: size.height,
       width: size.width,
@@ -24,7 +28,7 @@ class LiveScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: transparent,
+        backgroundColor: Styles.transparent,
         body: Stack(
           children: [
             Positioned(
@@ -50,9 +54,9 @@ class LiveScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_down,
-              color: white,
+              color: Styles.white,
               size: 34,
             ),
             const Horizontalspace(space: 5),
@@ -61,9 +65,9 @@ class LiveScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    BuildText(
+                    const BuildText(
                       data: 'Kachi',
-                      color: white,
+                      color: Styles.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
@@ -76,10 +80,10 @@ class LiveScreen extends StatelessWidget {
                         color: const Color(0xffed5757),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: BuildText(
                           data: 'LIVE',
-                          color: white,
+                          color: Styles.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -87,23 +91,23 @@ class LiveScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                Row(
+                const Row(
                   children: [
                     BuildText(
                       data: 'Streaming Now',
-                      color: white,
+                      color: Styles.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                     BuildText(
                       data: '-',
-                      color: white,
+                      color: Styles.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
                     BuildText(
                       data: 'Daily life',
-                      color: white,
+                      color: Styles.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -123,15 +127,15 @@ class LiveScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      side: BorderSide(
-                        color: white,
+                      side: const BorderSide(
+                        color: Styles.white,
                       )),
                   onPressed: () {},
-                  child: BuildText(
+                  child: const BuildText(
                     data: 'Following',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: white,
+                    color: Styles.white,
                   )),
             )
           ],
@@ -183,7 +187,8 @@ class LiveScreen extends StatelessWidget {
                 bottom: 8,
               ),
               decoration: BoxDecoration(
-                  color: primary, borderRadius: BorderRadius.circular(7)),
+                  color: Styles.primary,
+                  borderRadius: BorderRadius.circular(7)),
               child: const Center(
                 child: Icon(
                   Icons.arrow_back,
@@ -191,17 +196,17 @@ class LiveScreen extends StatelessWidget {
                 ),
               ),
             ),
-            hintStyle: TextStyle(color: white),
+            hintStyle: const TextStyle(color: Styles.white),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: white),
+              borderSide: const BorderSide(color: Styles.white),
               borderRadius: BorderRadius.circular(18),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: white),
+              borderSide: const BorderSide(color: Styles.white),
               borderRadius: BorderRadius.circular(18),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: white),
+              borderSide: const BorderSide(color: Styles.white),
               borderRadius: BorderRadius.circular(18),
             ),
           ),
@@ -217,15 +222,19 @@ class LiveScreen extends StatelessWidget {
   }
 
   buildTipDialog({required BuildContext context}) {
-    showDialog(
+    showAnimatedDialog(
+      barrierDismissible: true,
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: transparent,
+          backgroundColor: Styles.transparent,
           contentPadding: EdgeInsets.zero,
           content: buildTipBody(context: context),
         );
       },
+      animationType: DialogTransitionType.fadeScale,
+      curve: Curves.fastOutSlowIn,
+      duration: const Duration(seconds: 1),
     );
   }
 
@@ -235,6 +244,7 @@ class LiveScreen extends StatelessWidget {
     return GlassContainer(
       height: 300,
       width: 400,
+      borderRadius: BorderRadius.circular(10),
       gradient: LinearGradient(
         colors: [
           Colors.white.withOpacity(0.40),
@@ -255,14 +265,78 @@ class LiveScreen extends StatelessWidget {
         stops: const [0.0, 0.39, 0.40, 1.0],
       ),
       blur: 15.0,
-      borderWidth: 1.5,
+      borderWidth: 0,
       elevation: 3.0,
-      isFrostedGlass: true,
-      shadowColor: Colors.black.withOpacity(0.20),
+      isFrostedGlass: false,
       alignment: Alignment.center,
-      frostedOpacity: 0.12,
-      margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    pop(context: context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Styles.white,
+                  )),
+              const BuildText(
+                data: 'Tip the streamer',
+                color: Styles.white,
+              ),
+            ],
+          ),
+          const Verticalspace(space: 26),
+          const BuildText(
+            data: 'Amount',
+            color: Styles.white,
+          ),
+          const Verticalspace(space: 13),
+          TextFormField(
+            decoration: const InputDecoration(
+              suffixIcon: BuildText(
+                data: 'STVR',
+                color: Styles.white,
+              ),
+              border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Styles.white)),
+              errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Styles.white)),
+              enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Styles.white)),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Styles.white)),
+            ),
+          ),
+          const Verticalspace(space: 9),
+          const BuildText(
+            data: '\$10',
+            color: Styles.white,
+          ),
+          const Verticalspace(space: 25),
+          SizedBox(
+            width: 85,
+            height: 38,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Styles.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () {},
+              child: const BuildText(
+                data: 'Send',
+                color: Styles.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

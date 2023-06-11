@@ -10,6 +10,7 @@ import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../theme/style.dart';
 import '../../widgets/my_app_bar.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -75,7 +76,7 @@ class DiscoverScreen extends StatelessWidget {
       CategoryModel(title: "Creative"),
     ];
     return Scaffold(
-      backgroundColor: transparent,
+      backgroundColor: Styles.transparent,
       body: Column(
         children: [
           const Verticalspace(space: 24),
@@ -98,17 +99,17 @@ class DiscoverScreen extends StatelessWidget {
                 padding: screenPadding,
                 child: Row(
                   children: [
-                    BuildText(
+                    const BuildText(
                       data: 'Top Streamers Live',
-                      color: white,
+                      color: Styles.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                     const Spacer(),
                     TextButton(
                         style: TextButton.styleFrom(
-                            textStyle: TextStyle(
-                          color: primary,
+                            textStyle: const TextStyle(
+                          color: Styles.primary,
                         )),
                         onPressed: () {},
                         child: const Text('view all'))
@@ -138,12 +139,12 @@ class DiscoverScreen extends StatelessWidget {
                   width: 109,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: primary,
+                    color: Styles.primary,
                   ),
                   child: Center(
                     child: BuildText(
                       data: e.value.title!,
-                      color: white,
+                      color: Styles.white,
                     ),
                   ),
                 ))
@@ -160,7 +161,7 @@ class DiscoverScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                push(context: context, page: LiveScreen(model:model[index]));
+                push(context: context, page: LiveScreen(model: model[index]));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,10 +191,10 @@ class DiscoverScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: const Color(0xffeb5757)),
-                                child: Center(
+                                child: const Center(
                                   child: BuildText(
                                     data: 'LIVE',
-                                    color: white,
+                                    color: Styles.white,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -213,14 +214,14 @@ class DiscoverScreen extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.remove_red_eye,
-                                        color: white,
+                                        color: Styles.white,
                                       ),
                                       const Horizontalspace(space: 5),
                                       BuildText(
                                         data: formatNumber(model[index].views!),
-                                        color: white,
+                                        color: Styles.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -237,7 +238,7 @@ class DiscoverScreen extends StatelessWidget {
                   const Verticalspace(space: 13),
                   BuildText(
                     data: model[index].userName!,
-                    color: white,
+                    color: Styles.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
@@ -279,7 +280,7 @@ class DiscoverScreen extends StatelessWidget {
                                     data: e.value,
                                     fontSize: 5,
                                     fontWeight: FontWeight.w500,
-                                    color: white,
+                                    color: Styles.white,
                                   ),
                                 ))
                             .toList(),
@@ -331,10 +332,10 @@ class DiscoverScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: const Color(0xffeb5757)),
-                              child: Center(
+                              child: const Center(
                                 child: BuildText(
                                   data: 'LIVE',
-                                  color: white,
+                                  color: Styles.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -354,14 +355,14 @@ class DiscoverScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.remove_red_eye,
-                                      color: white,
+                                      color: Styles.white,
                                     ),
                                     const Horizontalspace(space: 5),
                                     BuildText(
                                       data: formatNumber(model[index].views!),
-                                      color: white,
+                                      color: Styles.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -398,7 +399,7 @@ class DiscoverScreen extends StatelessWidget {
                       children: [
                         BuildText(
                           data: model[index].userName!,
-                          color: white,
+                          color: Styles.white,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
@@ -406,13 +407,13 @@ class DiscoverScreen extends StatelessWidget {
                           children: [
                             BuildText(
                               data: model[index].title!,
-                              color: white,
+                              color: Styles.white,
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                             ),
                             BuildText(
                               data: model[index].subtitle!,
-                              color: white,
+                              color: Styles.white,
                               fontWeight: FontWeight.w500,
                               fontSize: 10,
                             ),
@@ -437,7 +438,7 @@ class DiscoverScreen extends StatelessWidget {
                                       data: e.value,
                                       fontSize: 5,
                                       fontWeight: FontWeight.w500,
-                                      color: white,
+                                      color: Styles.white,
                                     ),
                                   ))
                               .toList(),
@@ -477,7 +478,7 @@ class DiscoverScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: white,
+            color: Styles.white,
           ),
         ),
         child: Row(

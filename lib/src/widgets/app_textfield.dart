@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:streamlivr/src/constants/constants.dart';
+
+import '../theme/style.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -29,7 +30,7 @@ class AppTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 0),
-      color: white,
+      color: Styles.white,
       child: TextFormField(
         controller: controller,
         minLines: minLines,

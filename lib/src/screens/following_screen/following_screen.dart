@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:streamlivr/assets/assets.dart';
-import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/models/following_model.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/my_app_bar.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
+
+import '../../theme/style.dart';
 
 class FollowingScreen extends StatelessWidget {
   const FollowingScreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class FollowingScreen extends StatelessWidget {
           src: Assets.assetsImagesFlight, title: "Flight tour", views: "78.4"),
     ];
     return Scaffold(
-      backgroundColor: transparent,
+      backgroundColor: Styles.transparent,
       body: Padding(
         padding: const EdgeInsets.only(
           top: 24,
@@ -46,9 +47,9 @@ class FollowingScreen extends StatelessWidget {
               pageTitle: 'Following',
               onPressed: () {},
             ),
-            BuildText(
+            const BuildText(
               data: 'Recommended Channel',
-              color: white,
+              color: Styles.white,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -93,13 +94,13 @@ class FollowingScreen extends StatelessWidget {
                 margin: const EdgeInsets.all(8),
                 width: 43,
                 decoration: BoxDecoration(
-                  color: red,
+                  color:Styles.red,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Center(
+                child: const Center(
                   child: BuildText(
                     data: 'Live',
-                    color: white,
+                    color: Styles.white,
                   ),
                 ),
               ),
@@ -112,7 +113,7 @@ class FollowingScreen extends StatelessWidget {
             children: [
               BuildText(
                 data: data[index].title!,
-                color: white,
+                color: Styles.white,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
               ),
@@ -131,16 +132,16 @@ class FollowingScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
+              const Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 7,
                   ),
-                  const Horizontalspace(space: 5),
+                  Horizontalspace(space: 5),
                   BuildText(
                     data: 'Kachi',
                     fontSize: 8,
-                    color: white,
+                    color: Styles.white,
                   )
                 ],
               )

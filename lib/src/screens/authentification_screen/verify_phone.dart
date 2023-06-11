@@ -7,6 +7,7 @@ import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../theme/style.dart';
 import '../../widgets/build_text.dart';
 
 class VerifyPhoneScreen extends StatelessWidget {
@@ -39,8 +40,8 @@ class VerifyPhoneScreen extends StatelessWidget {
           OtpTextField(
             numberOfFields: 5,
             filled: true,
-            textStyle: GoogleFonts.ptMono(color: primary),
-            fillColor: white,
+            textStyle: GoogleFonts.ptMono(color: Styles.primary),
+            fillColor: Styles.white,
             decoration: const InputDecoration(),
             showFieldAsBox: true,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,10 +56,10 @@ class VerifyPhoneScreen extends StatelessWidget {
             ),
           ),
           const Verticalspace(space: 18),
-          Center(
+          const Center(
             child: BuildText(
               data: '''Resend''',
-              color: primary,
+              color: Styles.primary,
               fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
@@ -66,7 +67,7 @@ class VerifyPhoneScreen extends StatelessWidget {
           const Verticalspace(space: 90),
           AppButton(
             text: 'Verify',
-            textColor: white,
+            textColor: Styles.white,
             onPressed: () {
               push(context: context, page: const MainScreen());
             },
