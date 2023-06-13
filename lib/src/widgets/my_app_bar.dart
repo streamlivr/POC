@@ -26,7 +26,10 @@ class MyAppBar extends StatelessWidget {
         children: [
           Row(
             children: [
-              SvgPicture.asset(Assets.assetsIconsPersonIcon),
+              InkWell(
+                onTap: onPressed,
+                  borderRadius: BorderRadius.circular(50),
+                  child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),
               SvgPicture.asset(Assets.assetsIconsNotificationsLogo),
               const Horizontalspace(space: 5),

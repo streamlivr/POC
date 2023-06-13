@@ -6,7 +6,9 @@ import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/my_app_bar.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../routes/router.dart';
 import '../../theme/style.dart';
+import '../profile_screen/profile_screen.dart';
 
 class FollowingScreen extends StatelessWidget {
   const FollowingScreen({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class FollowingScreen extends StatelessWidget {
           children: [
             MyAppBar(
               pageTitle: 'Following',
-              onPressed: () {},
+              onPressed: () {   push(context: context, page: ProfileScreen());},
             ),
             const BuildText(
               data: 'Recommended Channel',

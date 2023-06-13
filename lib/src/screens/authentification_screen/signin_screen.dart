@@ -9,7 +9,7 @@ import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/basic_provider.dart';
 import 'package:streamlivr/src/providers/dark_theme_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
-import 'package:streamlivr/src/screens/authentification_screen/verify_phone.dart';
+import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/app_password_textfield.dart';
 import 'package:streamlivr/src/widgets/app_textfield.dart';
@@ -52,7 +52,7 @@ class SignInScreen extends StatelessWidget {
                   activeColor: Styles.primary,
                   inactiveColor: Colors.black38,
                   onToggle: (value) {
-                     themeProvider.darkTheme = !themeProvider.darkTheme;
+                    themeProvider.darkTheme = !themeProvider.darkTheme;
                   },
                 ),
               );
@@ -77,7 +77,7 @@ class SignInScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const TextSpan(
-                  text: 'Sign in',
+                  text: ' Sign in',
                   style: TextStyle(
                     color: Styles.primary,
                     fontSize: 14,
@@ -144,7 +144,7 @@ class SignInScreen extends StatelessWidget {
               text: 'Login',
               textColor: Styles.white,
               onPressed: () {
-                push(context: context, page: const VerifyPhoneScreen());
+                push(context: context, page: const MainScreen());
               },
             ),
             const Verticalspace(space: 31),

@@ -10,6 +10,8 @@ double dp32 = 32.0;
 double dp20 = 20.0;
 double dp14 = 14.0;
 
+const KAninationDuration = Duration(milliseconds: 500);
+
 // Form Error
 final RegExp emailValidatorRegExp = RegExp(
     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");

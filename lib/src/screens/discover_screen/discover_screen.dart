@@ -6,6 +6,7 @@ import 'package:streamlivr/src/models/category_model.dart';
 import 'package:streamlivr/src/models/streaming_model.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/live_screen/live_screen.dart';
+import 'package:streamlivr/src/screens/profile_screen/profile_screen.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
@@ -84,7 +85,9 @@ class DiscoverScreen extends StatelessWidget {
             padding: screenPadding,
             child: MyAppBar(
               pageTitle: 'Discover',
-              onPressed: () {},
+              onPressed: () {
+                push(context: context, page: ProfileScreen());
+              },
             ),
           ),
           buildSearchWidget(),

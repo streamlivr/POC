@@ -1,5 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/providers/authentification_provider.dart';
@@ -7,12 +8,14 @@ import 'package:streamlivr/src/providers/basic_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/authentification_screen/signin_screen.dart';
 import 'package:streamlivr/src/screens/authentification_screen/verify_phone.dart';
+import 'package:streamlivr/src/screens/choose_genre/choose_genre_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/app_password_textfield.dart';
 import 'package:streamlivr/src/widgets/app_textfield.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../providers/dark_theme_provider.dart';
 import '../../theme/style.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -21,7 +24,41 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            Consumer<DarkThemeProvider>(builder: (context, provider, _) {
+              final themeProvider = Provider.of<DarkThemeProvider>(context);
+              return Padding(
+                padding: const EdgeInsets.only(
+                  right: 24,
+                ),
+                child: FlutterSwitch(
+                  width: 35.49,
+                  height: 17.74,
+                  toggleSize: 20.0,
+                  value: provider.darkTheme,
+                  borderRadius: 30.0,
+                  padding: 2.0,
+                  toggleColor: const Color.fromRGBO(225, 225, 225, 1),
+                  switchBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  toggleBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  activeColor: Styles.primary,
+                  inactiveColor: Colors.black38,
+                  onToggle: (value) {
+                    themeProvider.darkTheme = !themeProvider.darkTheme;
+                  },
+                ),
+              );
+            })
+          ],
+        ),
+       
         body: ListView(
           padding: screenPadding,
           children: [
@@ -42,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
                       fontSize: 14,
                     )),
                 TextSpan(
-                  text: 'Sign in',
+                  text: ' Sign in',
                   style: TextStyle(
                     color: Styles.primary,
                     fontSize: 14,
@@ -116,7 +153,7 @@ class SignUpScreen extends StatelessWidget {
               text: 'Continue',
               textColor: Styles.white,
               onPressed: () {
-                push(context: context, page: const VerifyPhoneScreen());
+                push(context: context, page: const ChooseGenreScreen());
               },
             ),
           ],

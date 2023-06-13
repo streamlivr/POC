@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
+import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/providers/basic_provider.dart';
 import 'package:streamlivr/src/screens/discover_screen/discover_screen.dart';
 import 'package:streamlivr/src/screens/following_screen/following_screen.dart';
@@ -21,7 +22,24 @@ class MainScreen extends StatelessWidget {
     return Consumer<BasicProvider>(builder: (context, provider, _) {
       return Scaffold(
         backgroundColor: Styles.black,
-        body: pages[provider.currentIndex],
+        body: AnimatedSwitcher(
+            switchInCurve: Curves.easeIn,
+            switchOutCurve: Curves.ease,
+            transitionBuilder: (child, animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+              // return SlideTransition(
+              //   position: Tween<Offset>(
+              //     begin: const Offset(0.0, 1.0),
+              //     end: const Offset(0.0, 0.0),
+              //   ).animate(animation),
+              //   child: child,
+              // );
+            },
+            duration: KAninationDuration,
+            child: pages[provider.currentIndex]),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Styles.primary,

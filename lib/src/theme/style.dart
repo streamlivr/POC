@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 abstract class Styles {
@@ -93,7 +91,6 @@ abstract class Styles {
       color: Styles.blackColor, fontSize: 16.0, fontWeight: FontWeight.bold);
 
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
-    log('hello ${isDarkTheme.toString()}');
     return ThemeData(
       primaryColor: isDarkTheme ? primary : primary,
       fontFamily: "Poppins",
@@ -106,10 +103,9 @@ abstract class Styles {
           isDarkTheme ? const Color(0xff0E1D36) : const Color(0xffCBDCF8),
       hintColor:
           isDarkTheme ? const Color(0xff280C0B) : const Color(0xffEECED3),
-      highlightColor: isDarkTheme ? primary : primary,
-      hoverColor:
-          isDarkTheme ? const Color(0xff3A3A3B) : const Color(0xff4285F4),
-      focusColor: isDarkTheme ? primary : primary,
+      highlightColor: isDarkTheme ? transparent : transparent,
+      hoverColor: isDarkTheme ? transparent : transparent,
+      focusColor: isDarkTheme ? transparent : transparent,
       disabledColor: Colors.grey,
       cardColor: isDarkTheme ? const Color(0xFF151515) : Colors.white,
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
@@ -120,7 +116,7 @@ abstract class Styles {
               ? const ColorScheme.dark()
               : const ColorScheme.light()),
       appBarTheme: AppBarTheme(
-        backgroundColor: isDarkTheme ? black : const Color(0xfff7fafd),
+        backgroundColor: isDarkTheme ? black : white,
         elevation: 0,
         iconTheme: IconThemeData(color: isDarkTheme ? white : black),
         toolbarTextStyle: const TextTheme().bodyLarge,

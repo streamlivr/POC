@@ -1,6 +1,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsIconsActiveIcon
+  /// assets/icons/active_icon.svg
+  static const String assetsIconsActiveIcon = "assets/icons/active_icon.svg";
+
   /// Assets for assetsIconsAddVideoIcon
   /// assets/icons/add_video_icon.svg
   static const String assetsIconsAddVideoIcon = "assets/icons/add_video_icon.svg";
@@ -8,6 +12,10 @@ class Assets {
   /// Assets for assetsIconsApple
   /// assets/icons/apple.png
   static const String assetsIconsApple = "assets/icons/apple.png";
+
+  /// Assets for assetsIconsArrowRight
+  /// assets/icons/arrow_right.svg
+  static const String assetsIconsArrowRight = "assets/icons/arrow_right.svg";
 
   /// Assets for assetsIconsAstar
   /// assets/icons/astar.png
@@ -44,6 +52,10 @@ class Assets {
   /// Assets for assetsIconsDiscoverLogo
   /// assets/icons/discover_logo.svg
   static const String assetsIconsDiscoverLogo = "assets/icons/discover_logo.svg";
+
+  /// Assets for assetsIconsDownArrow
+  /// assets/icons/down_arrow.svg
+  static const String assetsIconsDownArrow = "assets/icons/down_arrow.svg";
 
   /// Assets for assetsIconsEthereum
   /// assets/icons/ethereum.png
@@ -132,6 +144,14 @@ class Assets {
   /// Assets for assetsIconsTrustWalletLogo
   /// assets/icons/trust-wallet-logo.png
   static const String assetsIconsTrustWalletLogo = "assets/icons/trust-wallet-logo.png";
+
+  /// Assets for assetsIconsUpArrow
+  /// assets/icons/up_arrow.svg
+  static const String assetsIconsUpArrow = "assets/icons/up_arrow.svg";
+
+  /// Assets for assetsIconsWalletInclined
+  /// assets/icons/wallet_inclined.svg
+  static const String assetsIconsWalletInclined = "assets/icons/wallet_inclined.svg";
 
   /// Assets for assetsIconsWalletLogo
   /// assets/icons/wallet_logo.svg
