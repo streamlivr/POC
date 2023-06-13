@@ -18,16 +18,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
-
   @override
   void initState() {
     super.initState();
-    getCurrentAppTheme();
-  }
-
-  void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme; 
   }
 
   @override
@@ -38,7 +31,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: appName,
             debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            theme: Styles.themeData(provider.darkTheme, context),
             home: const SplashScreen(),
           );
         },

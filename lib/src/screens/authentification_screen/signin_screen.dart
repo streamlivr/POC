@@ -28,6 +28,7 @@ class SignInScreen extends StatelessWidget {
         appBar: AppBar(
           actions: [
             Consumer<DarkThemeProvider>(builder: (context, provider, _) {
+              final themeProvider = Provider.of<DarkThemeProvider>(context);
               return Padding(
                 padding: const EdgeInsets.only(
                   right: 24,
@@ -50,7 +51,9 @@ class SignInScreen extends StatelessWidget {
                   ),
                   activeColor: Styles.primary,
                   inactiveColor: Colors.black38,
-                  onToggle: provider.changeDarkTheme,
+                  onToggle: (value) {
+                     themeProvider.darkTheme = !themeProvider.darkTheme;
+                  },
                 ),
               );
             })
