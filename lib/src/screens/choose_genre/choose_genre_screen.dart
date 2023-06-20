@@ -1,12 +1,16 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/genre_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/choose_channel/choose_channel_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
+import 'package:streamlivr/src/widgets/app_message.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
+import 'package:streamlivr/src/widgets/processing_dialogue.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
 import '../../../assets/assets.dart';
@@ -18,81 +22,113 @@ class ChooseGenreScreen extends StatelessWidget {
   const ChooseGenreScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        actions: [
-          Consumer<DarkThemeProvider>(builder: (context, provider, _) {
-            final themeProvider = Provider.of<DarkThemeProvider>(context);
-            return Padding(
+    return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          actions: [
+            Consumer<DarkThemeProvider>(builder: (context, provider, _) {
+              final themeProvider = Provider.of<DarkThemeProvider>(context);
+              return Padding(
+                padding: const EdgeInsets.only(
+                  right: 24,
+                ),
+                child: FlutterSwitch(
+                  width: 35.49,
+                  height: 17.74,
+                  toggleSize: 20.0,
+                  value: provider.darkTheme,
+                  borderRadius: 30.0,
+                  padding: 2.0,
+                  toggleColor: const Color.fromRGBO(225, 225, 225, 1),
+                  switchBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  toggleBorder: Border.all(
+                    color: const Color.fromRGBO(2, 107, 206, 1),
+                    width: 0.0,
+                  ),
+                  activeColor: Styles.primary,
+                  inactiveColor: Colors.black38,
+                  onToggle: (value) {
+                    themeProvider.darkTheme = !themeProvider.darkTheme;
+                  },
+                ),
+              );
+            })
+          ],
+        ),
+        body: Column(
+          children: [
+            buildSearchWidget(),
+            const Verticalspace(space: 16),
+            const BuildText(
+              data: 'Pick What You’d Like to Watch',
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+            const Verticalspace(space: 21),
+            BuildText(
+              data: '''Pick some Genres and we’ll show you 
+some live streams you might like.''',
+              color: Theme.of(context).textTheme.titleSmall!.color,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+            const Verticalspace(space: 41),
+            builtListWidget(),
+            Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
               padding: const EdgeInsets.only(
-                right: 24,
+                top: 24,
+                left: 31,
+                right: 31,
+                bottom: 56,
               ),
-              child: FlutterSwitch(
-                width: 35.49,
-                height: 17.74,
-                toggleSize: 20.0,
-                value: provider.darkTheme,
-                borderRadius: 30.0,
-                padding: 2.0,
-                toggleColor: const Color.fromRGBO(225, 225, 225, 1),
-                switchBorder: Border.all(
-                  color: const Color.fromRGBO(2, 107, 206, 1),
-                  width: 0.0,
-                ),
-                toggleBorder: Border.all(
-                  color: const Color.fromRGBO(2, 107, 206, 1),
-                  width: 0.0,
-                ),
-                activeColor: Styles.primary,
-                inactiveColor: Colors.black38,
-                onToggle: (value) {
-                  themeProvider.darkTheme = !themeProvider.darkTheme;
+              height: 130,
+              child: AppButton(
+                text: 'Continue',
+                textColor: Styles.white,
+                onPressed: () {
+                  ProcessingDialog.showProcessingDialog(
+                    context: context,
+                  );
+                  provider
+                      .chooseGenre(
+                    genres: Provider.of<GenreProvider>(
+                      context,
+                      listen: false,
+                    ).list,
+                  )
+                      .then((value) {
+                    print(value);
+                    pop(context: context);
+                    if (value.status == 'success') {
+                      AppMessage.showMessage(
+                        context: context,
+                        message: 'genre selected',
+                        type: AnimatedSnackBarType.success,
+                      );
+                      push(
+                        context: context,
+                        page: const ChooseChannelScreen(),
+                      );
+                    } else {
+                      AppMessage.showMessage(
+                        context: context,
+                        message: 'something went wrong',
+                        type: AnimatedSnackBarType.error,
+                      );
+                    }
+                  });
                 },
               ),
-            );
-          })
-        ],
-      ),
-      body: Column(
-        children: [
-          buildSearchWidget(),
-          const Verticalspace(space: 16),
-          const BuildText(
-            data: 'Pick What You’d Like to Watch',
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-          const Verticalspace(space: 21),
-          BuildText(
-            data: '''Pick some Genres and we’ll show you 
-some live streams you might like.''',
-            color: Styles.black.withOpacity(0.6),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-          const Verticalspace(space: 41),
-          builtListWidget(),
-          Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            padding: const EdgeInsets.only(
-              top: 24,
-              left: 31,
-              right: 31,
-              bottom: 56,
-            ),
-            height: 130,
-            child: AppButton(
-              text: 'Continue',
-              textColor: Styles.white,
-              onPressed: () {
-                push(context: context, page: const ChooseChannelScreen());
-              },
-            ),
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
+    });
   }
 
   Widget builtListWidget() {

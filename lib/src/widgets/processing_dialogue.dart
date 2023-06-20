@@ -14,7 +14,7 @@ class ProcessingDialog {
               height: 150,
               width: 150,
               child: LottieBuilder.asset(
-                'assets/animation/loading.json',
+                'assets/animations/loading.json',
               ),
             ),
           );

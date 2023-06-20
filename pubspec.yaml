@@ -35,6 +35,11 @@ dependencies:
   glass_kit: ^2.0.1
   flutter_switch: ^0.3.2
 
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  firebase_storage: ^11.0.9
+  cloud_firestore: ^4.1.0
+
 
 
 dev_dependencies:

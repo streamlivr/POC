@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/src/constants/constants.dart';
@@ -6,7 +7,13 @@ import 'package:streamlivr/src/screens/splash_screen/splash_screen.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/state_manager.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseApp app = await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

@@ -4,7 +4,7 @@ import 'package:streamlivr/src/models/genre_model.dart';
 import '../../assets/assets.dart';
 
 class GenreProvider extends ChangeNotifier {
-   List<GenreModel> _list = [
+  final List<GenreModel> _list = [
     GenreModel(title: "Genre 1", image: Assets.assetsImagesGenre1),
     GenreModel(title: "Genre 2", image: Assets.assetsImagesGenre2),
     GenreModel(title: "Genre 3", image: Assets.assetsImagesGenre3),
@@ -24,13 +24,12 @@ class GenreProvider extends ChangeNotifier {
   ];
 
   List<GenreModel> get list => _list;
-  List<GenreModel> _checkedList = [];
-  List<GenreModel> _filterList = [];
+  final List<GenreModel> _checkedList = [];
+  final List<GenreModel> _filterList = [];
   List<GenreModel> get filterListdList => _filterList;
   List<GenreModel> get checkedList => _checkedList;
 
   checkList(GenreModel data) {
-
     if (_checkedList.contains(data)) {
       _checkedList.remove(data);
       notifyListeners();
@@ -40,19 +39,15 @@ class GenreProvider extends ChangeNotifier {
     }
   }
 
-   filterList(String data) {
+  filterList(String data) {
     for (var i = 0; i < _list.length; i++) {
-        if (_list[i].title!.contains(data)) {
-      _list.remove(_list[i]);
-      notifyListeners();
-    } else {
-      _list.add(_list[i]);
-      notifyListeners();
+      if (_list[i].title!.contains(data)) {
+        _list.remove(_list[i]);
+        notifyListeners();
+      } else {
+        _list.add(_list[i]);
+        notifyListeners();
+      }
     }
-    }
-  
-  
   }
-
-  
 }

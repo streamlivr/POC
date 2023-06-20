@@ -20,14 +20,14 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       // padding: const EdgeInsets.symmetric(horizontal: 16),
-      height: 70,
+      height: 80,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               InkWell(
-                onTap: onPressed,
+                  onTap: onPressed,
                   borderRadius: BorderRadius.circular(50),
                   child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),

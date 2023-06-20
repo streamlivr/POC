@@ -47,7 +47,9 @@ class FollowingScreen extends StatelessWidget {
           children: [
             MyAppBar(
               pageTitle: 'Following',
-              onPressed: () {   push(context: context, page: ProfileScreen());},
+              onPressed: () {
+                push(context: context, page: const ProfileScreen());
+              },
             ),
             const BuildText(
               data: 'Recommended Channel',
@@ -96,7 +98,7 @@ class FollowingScreen extends StatelessWidget {
                 margin: const EdgeInsets.all(8),
                 width: 43,
                 decoration: BoxDecoration(
-                  color:Styles.red,
+                  color: Styles.red,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Center(
@@ -109,45 +111,69 @@ class FollowingScreen extends StatelessWidget {
             ],
           ),
           const Horizontalspace(space: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              BuildText(
-                data: data[index].title!,
-                color: Styles.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.remove_red_eye,
-                    color: Color(0xffe0e0e0),
-                    size: 26,
-                  ),
-                  const Horizontalspace(space: 5),
-                  BuildText(
-                    data: '${data[index].views!} viewers',
-                    color: const Color(0xffe0e0e0),
-                    fontSize: 18,
-                  ),
-                ],
-              ),
-              const Row(
-                children: [
-                  CircleAvatar(
-                    radius: 7,
-                  ),
-                  Horizontalspace(space: 5),
-                  BuildText(
-                    data: 'Kachi',
-                    fontSize: 8,
-                    color: Styles.white,
-                  )
-                ],
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BuildText(
+                  data: data[index].title!,
+                  color: Styles.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.remove_red_eye,
+                      color: Color(0xffe0e0e0),
+                      size: 26,
+                    ),
+                    const Horizontalspace(space: 5),
+                    BuildText(
+                      data: '${data[index].views!} viewers',
+                      color: const Color(0xffe0e0e0),
+                      fontSize: 14,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    ...["Nigeria", "Ph"]
+                        .map((e) => Container(
+                              margin: const EdgeInsets.only(right: 8),
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff343232),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: BuildText(
+                                data: e.toString(),
+                                fontSize: 5,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xfff4f3fc),
+                              ),
+                            ))
+                        .toList(),
+                  ],
+                ),
+                const Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 7,
+                      backgroundImage:
+                          AssetImage(Assets.assetsImagesProfileImage),
+                    ),
+                    Horizontalspace(space: 5),
+                    BuildText(
+                      data: 'Kachi',
+                      fontSize: 8,
+                      color: Styles.white,
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),

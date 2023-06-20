@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/assets/assets.dart';
+import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
+import 'package:streamlivr/wrapper.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -112,10 +115,15 @@ class ProfileScreen extends StatelessWidget {
             src: Assets.assetsIconsInformationsquareIcon,
           ),
           buildListTile(
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut().then((value) {
+                pushRemoveAll(context: context, page: const Wrapper());
+              });
+            },
             title: 'Logout',
             src: Assets.assetsIconsLogoutIcon,
           ),
+          const Verticalspace(space: 50)
         ],
       ),
     );

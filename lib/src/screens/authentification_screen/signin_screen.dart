@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
@@ -11,16 +14,34 @@ import 'package:streamlivr/src/providers/dark_theme_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
+import 'package:streamlivr/src/widgets/app_message.dart';
 import 'package:streamlivr/src/widgets/app_password_textfield.dart';
 import 'package:streamlivr/src/widgets/app_textfield.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
+import 'package:streamlivr/src/widgets/processing_dialogue.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
 import '../../theme/style.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  var emailTextEditingCOntroller = TextEditingController();
+  var passwordTextEditingCOntroller = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailTextEditingCOntroller.dispose();
+    passwordTextEditingCOntroller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
@@ -102,7 +123,7 @@ class SignInScreen extends StatelessWidget {
                       Icons.person_outline,
                       color: Styles.grey,
                     ),
-                    controller: TextEditingController()),
+                    controller: emailTextEditingCOntroller),
               ],
             ),
             const Verticalspace(space: 26),
@@ -116,7 +137,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
-                    hint: "Password", controller: TextEditingController()),
+                    hint: "Password", controller: passwordTextEditingCOntroller),
               ],
             ),
             const Verticalspace(space: 54),
@@ -125,6 +146,10 @@ class SignInScreen extends StatelessWidget {
                 Consumer<BasicProvider>(
                   builder: (context, provider, child) {
                     return Checkbox(
+                      side: const BorderSide(
+                        color: Styles.primary,
+                        width: 3,
+                      ),
                       activeColor: Styles.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
@@ -144,7 +169,45 @@ class SignInScreen extends StatelessWidget {
               text: 'Login',
               textColor: Styles.white,
               onPressed: () {
-                push(context: context, page: const MainScreen());
+                if (emailTextEditingCOntroller.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("email field cannot be empty")));
+                  return;
+                }
+                if (passwordTextEditingCOntroller.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("password field cannot be empty")));
+                  return;
+                }
+                ProcessingDialog.showProcessingDialog(context: context);
+                provider
+                    .loginUser(
+                  email: emailTextEditingCOntroller.text,
+                  password: passwordTextEditingCOntroller.text,
+                )
+                    .then((value) async {
+                  Navigator.pop(context);
+                  if (value.status == "success") {
+                    AppMessage.showMessage(
+                      context: context,
+                      message: 'User login successfully',
+                      type: AnimatedSnackBarType.error,
+                    );
+                    pushRemoveAll(context: context, page: const MainScreen());
+                  } else {
+                    String message = value.data
+                        .toString()
+                        .replaceRange(0, 14, '')
+                        .split(']')[1];
+                    AppMessage.showMessage(
+                      context: context,
+                      message: message,
+                      type: AnimatedSnackBarType.error,
+                    );
+
+                    log(value.data.toString());
+                  }
+                });
               },
             ),
             const Verticalspace(space: 31),

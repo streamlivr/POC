@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "688095053609",
+    "project_id": "streamlivr-1cc43",
+    "storage_bucket": "streamlivr-1cc43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688095053609:android:eb52647d89726f11259938",
+        "android_client_info": {
+          "package_name": "com.example.streamlivr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688095053609-v0u6kiojs2uimutfddac4p5tagi6ds46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo5Tstpw1Dckl0nKSQGPLyfTLJh2SgQ2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688095053609-v0u6kiojs2uimutfddac4p5tagi6ds46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688095053609:android:35d898e6d1835cbd259938",
+        "android_client_info": {
+          "package_name": "com.streamlivr.mvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688095053609-v0u6kiojs2uimutfddac4p5tagi6ds46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo5Tstpw1Dckl0nKSQGPLyfTLJh2SgQ2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688095053609-v0u6kiojs2uimutfddac4p5tagi6ds46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
@@ -7,19 +10,37 @@ import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/basic_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/authentification_screen/signin_screen.dart';
-import 'package:streamlivr/src/screens/authentification_screen/verify_phone.dart';
 import 'package:streamlivr/src/screens/choose_genre/choose_genre_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/app_password_textfield.dart';
 import 'package:streamlivr/src/widgets/app_textfield.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
+import 'package:streamlivr/src/widgets/processing_dialogue.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
 import '../../providers/dark_theme_provider.dart';
 import '../../theme/style.dart';
+import '../../widgets/app_message.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  var emailTextEditingCOntroller = TextEditingController();
+  var passwordTextEditingCOntroller = TextEditingController();
+  var userType = "";
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailTextEditingCOntroller.dispose();
+    passwordTextEditingCOntroller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
@@ -58,7 +79,6 @@ class SignUpScreen extends StatelessWidget {
             })
           ],
         ),
-       
         body: ListView(
           padding: screenPadding,
           children: [
@@ -71,14 +91,11 @@ class SignUpScreen extends StatelessWidget {
                 push(context: context, page: const SignInScreen());
               },
               child: RichText(
-                  text: const TextSpan(children: [
+                  text: TextSpan(children: [
                 TextSpan(
                     text: "Do you already have an account?",
-                    style: TextStyle(
-                      color: Styles.grey,
-                      fontSize: 14,
-                    )),
-                TextSpan(
+                    style: Theme.of(context).textTheme.titleSmall),
+                const TextSpan(
                   text: ' Sign in',
                   style: TextStyle(
                     color: Styles.primary,
@@ -104,7 +121,7 @@ class SignUpScreen extends StatelessWidget {
                       Icons.person_outline,
                       color: Styles.grey,
                     ),
-                    controller: TextEditingController()),
+                    controller: emailTextEditingCOntroller),
               ],
             ),
             const Verticalspace(space: 26),
@@ -118,7 +135,8 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
-                    hint: "Password", controller: TextEditingController()),
+                    hint: "Password",
+                    controller: passwordTextEditingCOntroller),
               ],
             ),
             const Verticalspace(space: 31),
@@ -127,6 +145,11 @@ class SignUpScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(0),
               items: const ['Creator', 'Fan'],
               controller: provider.jobRoleCtrl,
+              onChanged: (p0) {
+                setState(() {
+                  userType = p0;
+                });
+              },
             ),
             const Verticalspace(space: 54),
             Row(
@@ -134,6 +157,10 @@ class SignUpScreen extends StatelessWidget {
                 Consumer<BasicProvider>(
                   builder: (context, provider, child) {
                     return Checkbox(
+                      side: const BorderSide(
+                        color: Styles.primary,
+                        width: 3,
+                      ),
                       activeColor: Styles.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),
@@ -153,7 +180,49 @@ class SignUpScreen extends StatelessWidget {
               text: 'Continue',
               textColor: Styles.white,
               onPressed: () {
-                push(context: context, page: const ChooseGenreScreen());
+                if (emailTextEditingCOntroller.text.isEmpty) {
+                  AppMessage.showMessage(
+                      context: context,
+                      message: "email field cannot be empty",
+                      type: AnimatedSnackBarType.info);
+                  return;
+                }
+                if (passwordTextEditingCOntroller.text.isEmpty) {
+                  AppMessage.showMessage(
+                      context: context,
+                      message: "password field cannot be empty",
+                      type: AnimatedSnackBarType.info);
+                  return;
+                }
+                if (userType.isEmpty) {
+                  AppMessage.showMessage(
+                      context: context,
+                      message: "Select user type",
+                      type: AnimatedSnackBarType.info);
+                  return;
+                }
+                ProcessingDialog.showProcessingDialog(context: context);
+                provider
+                    .registerUser(
+                        email: emailTextEditingCOntroller.text,
+                        password: passwordTextEditingCOntroller.text,
+                        userType: userType)
+                    .then((value) async {
+                  print(value);
+                  Navigator.pop(context);
+                  if (value.status == "success") {
+                    pushRemoveAll(
+                        context: context, page: const ChooseGenreScreen());
+                  } else {
+                    String message = value.data.data.toString();
+                    AppMessage.showMessage(
+                      context: context,
+                      message: message,
+                      type: AnimatedSnackBarType.error,
+                    );
+                    log(value.data.toString());
+                  }
+                });
               },
             ),
           ],

@@ -12,7 +12,7 @@ class DarkThemeProvider with ChangeNotifier {
   bool get darkTheme => _darkTheme;
   getTheme() async {
     _darkTheme = await pocPreferences.getTheme();
-    notifyListeners();
+    // notifyListeners();
   }
 
   set darkTheme(bool value) {
