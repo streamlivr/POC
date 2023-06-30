@@ -88,4 +88,21 @@ class AuthentificationProvider extends state.ChangeNotifier {
       );
     }
   }
+
+  Future<ResponseModel> chooseChannel({
+    required List<dynamic> channel,
+  }) async {
+    try {
+      var result = await UserService.chooseChannel(channel: channel);
+      return ResponseModel(
+        data: result,
+        status: "success",
+      );
+    } catch (e) {
+      return ResponseModel(
+        data: e,
+        status: 'error',
+      );
+    }
+  }
 }

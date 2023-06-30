@@ -10,6 +10,7 @@ class TransactionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Styles.black,
       body: ListView.builder(
         padding: screenPadding,
         itemBuilder: (context, index) {

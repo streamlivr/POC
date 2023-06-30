@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
@@ -208,11 +209,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         password: passwordTextEditingCOntroller.text,
                         userType: userType)
                     .then((value) async {
-                  print(value);
                   Navigator.pop(context);
                   if (value.status == "success") {
-                    pushRemoveAll(
-                        context: context, page: const ChooseGenreScreen());
+                    await FirebaseAuth.instance.currentUser!
+                        .sendEmailVerification()
+                        .then((value) {
+                      AppMessage.showMessage(
+                          context: context,
+                          message: "Go to your mail to verify email",
+                          type: AnimatedSnackBarType.info);
+                      pushRemoveAll(
+                          context: context, page: const ChooseGenreScreen());
+                    });
                   } else {
                     String message = value.data.data.toString();
                     AppMessage.showMessage(

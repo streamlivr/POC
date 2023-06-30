@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helper/single_file_uploader.dart';
-import '../models/post_model.dart';
 import '../models/register_user_model.dart';
 import '../models/response_model.dart';
+import '../models/stream_model.dart';
 
 class UserService {
   static Future<ResponseModel> createUser({
@@ -92,6 +92,30 @@ class UserService {
     return model!;
   }
 
+  static Future<ResponseModel> chooseChannel({
+    required List<dynamic> channel,
+  }) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final userRef = firestoreInstance.collection('users');
+    var userId = FirebaseAuth.instance.currentUser!.uid;
+    final id = userRef.doc(userId);
+    ResponseModel? model;
+    try {
+      await id.update({
+        'channel': channel,
+      }).then((value) {
+        model = ResponseModel(data: 'success', status: 'success');
+      }).onError((error, stackTrace) {
+        model = ResponseModel(data: error, status: 'error');
+      });
+      return model!;
+    } catch (e) {
+      log(e.toString());
+      model = ResponseModel(data: e, status: 'error');
+    }
+    return model!;
+  }
+
   static Future<RegisterUserModel?> fetchUser() async {
     final firestoreInstance = FirebaseFirestore.instance;
     var pref = await SharedPreferences.getInstance();
@@ -112,16 +136,14 @@ class UserService {
     }
   }
 
-  static Future<RegisterUserModel?> fetchPost() async {
+  static Future<StreamModel?> fetchStream({required String streamId}) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    var pref = await SharedPreferences.getInstance();
-    var userId = pref.getString('uuid') ?? "";
-
     try {
-      final doc = await firestoreInstance.collection('post').doc(userId).get();
+      final doc =
+          await firestoreInstance.collection('stream').doc(streamId).get();
 
       if (doc.exists) {
-        final userData = RegisterUserModel.fromMap(doc.data()!);
+        final userData = StreamModel.fromMap(doc.data()!);
         return userData;
       } else {
         return null;
@@ -132,27 +154,28 @@ class UserService {
     }
   }
 
-  static Stream<List<PostModel>> readPosts() {
-    return FirebaseFirestore.instance.collection('post').snapshots().map(
-        (event) => event.docs.map((e) => PostModel.fromMap(e.data())).toList());
+  static Stream<List<StreamModel>> readStreams() {
+    return FirebaseFirestore.instance.collection('stream').snapshots().map(
+        (event) =>
+            event.docs.map((e) => StreamModel.fromMap(e.data())).toList());
   }
 
-  static Future<ResponseModel> uploadPost(PostModel userData) async {
+  static Future<ResponseModel> uploadPost(StreamModel userData) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final userRef = firestoreInstance.collection('post');
-    var userId = FirebaseAuth.instance.currentUser!.uid;
+    final userRef = firestoreInstance.collection('stream');
     final id = userRef.doc();
     log(userData.toString());
     try {
       ResponseModel? model;
-      if (userData.avatar == null) {
+      if (userData.avatar == "") {
         await id.set({
-          'userId': userId,
-          'postId': id.id,
+          'userId': userData.userId,
+          'streamId': id.id,
           'title': userData.title,
           'description': userData.description,
-          'tag': userData.tags,
-          'avatar': "",
+          'avatar': userData.avatar,
+          'userName': userData.userName,
+          'streamImage': userData.streamImage,
         }).then((value) {
           model = ResponseModel(data: 'success', status: 'success');
         }).onError((error, stackTrace) {
@@ -163,12 +186,13 @@ class UserService {
             .then((value) async {
           if (value.status == "success") {
             await id.set({
-              'userId': userId,
-              'postId': id.id,
+              'userId': userData.userId,
+              'streamId': id.id,
               'title': userData.title,
               'description': userData.description,
-              'tag': userData.tags,
               'avatar': value.data.toString(),
+              'userName': userData.userName,
+              'streamImage': userData.streamImage,
             }).then((value) {
               model = ResponseModel(data: 'success', status: 'success');
             }).onError((error, stackTrace) {

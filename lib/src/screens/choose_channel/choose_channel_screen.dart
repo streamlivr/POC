@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/src/providers/authentification_provider.dart';
-import 'package:streamlivr/src/providers/genre_provider.dart';
+import 'package:streamlivr/src/providers/channel_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
@@ -71,8 +71,8 @@ class ChooseChannelScreen extends StatelessWidget {
             ),
             const Verticalspace(space: 21),
             BuildText(
-              data: '''Follow some of the live streaming channels 
-that you may know below''',
+              data:
+                  '''Follow some of the live streaming channels that you may know below''',
               color: Theme.of(context).textTheme.titleSmall!.color,
               fontSize: 14,
               textAlign: TextAlign.center,
@@ -93,22 +93,33 @@ that you may know below''',
                 text: 'Continue',
                 textColor: Styles.white,
                 onPressed: () {
+                  if (Provider.of<ChannelProvider>(
+                    context,
+                    listen: false,
+                  ).checkedList.isEmpty) {
+                    AppMessage.showMessage(
+                      context: context,
+                      message: 'Select at least one',
+                      type: AnimatedSnackBarType.info,
+                    );
+                    return;
+                  }
                   ProcessingDialog.showProcessingDialog(
                     context: context,
                   );
                   provider
-                      .chooseGenre(
-                    genres: Provider.of<GenreProvider>(
+                      .chooseChannel(
+                    channel: Provider.of<ChannelProvider>(
                       context,
                       listen: false,
-                    ).list,
+                    ).checkedList,
                   )
                       .then((value) {
                     pop(context: context);
                     if (value.status == 'success') {
                       AppMessage.showMessage(
                         context: context,
-                        message: 'genre selected',
+                        message: 'channel selected',
                         type: AnimatedSnackBarType.success,
                       );
                       push(
@@ -136,7 +147,7 @@ that you may know below''',
 
   Widget builtListWidget() {
     return Expanded(
-      child: Consumer<GenreProvider>(builder: (context, provider, _) {
+      child: Consumer<ChannelProvider>(builder: (context, provider, _) {
         return ListView.builder(
           padding: screenPadding,
           itemCount: provider.list.length,

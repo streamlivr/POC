@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:streamlivr/src/models/genre_model.dart';
 
-import '../../assets/assets.dart';
+import '../helper/export.dart';
 
-class GenreProvider extends ChangeNotifier {
+class GenreProvider extends foundation.ChangeNotifier {
   final List<GenreModel> _list = [
     GenreModel(title: "Genre 1", image: Assets.assetsImagesGenre1),
     GenreModel(title: "Genre 2", image: Assets.assetsImagesGenre2),
@@ -24,17 +24,19 @@ class GenreProvider extends ChangeNotifier {
   ];
 
   List<GenreModel> get list => _list;
-  final List<GenreModel> _checkedList = [];
+
   final List<GenreModel> _filterList = [];
   List<GenreModel> get filterListdList => _filterList;
-  List<GenreModel> get checkedList => _checkedList;
+
+  final List<dynamic> _checkedList = [];
+  List<dynamic> get checkedList => _checkedList;
 
   checkList(GenreModel data) {
-    if (_checkedList.contains(data)) {
-      _checkedList.remove(data);
+    if (_checkedList.contains(data.title)) {
+      _checkedList.remove(data.title);
       notifyListeners();
     } else {
-      _checkedList.add(data);
+      _checkedList.add(data.title);
       notifyListeners();
     }
   }

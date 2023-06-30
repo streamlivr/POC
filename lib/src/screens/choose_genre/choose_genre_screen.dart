@@ -91,6 +91,17 @@ some live streams you might like.''',
                 text: 'Continue',
                 textColor: Styles.white,
                 onPressed: () {
+                  if (Provider.of<GenreProvider>(
+                    context,
+                    listen: false,
+                  ).checkedList.isEmpty) {
+                    AppMessage.showMessage(
+                      context: context,
+                      message: 'Select at least one',
+                      type: AnimatedSnackBarType.info,
+                    );
+                    return;
+                  }
                   ProcessingDialog.showProcessingDialog(
                     context: context,
                   );
@@ -99,10 +110,9 @@ some live streams you might like.''',
                     genres: Provider.of<GenreProvider>(
                       context,
                       listen: false,
-                    ).list,
+                    ).checkedList,
                   )
                       .then((value) {
-                    print(value);
                     pop(context: context);
                     if (value.status == 'success') {
                       AppMessage.showMessage(

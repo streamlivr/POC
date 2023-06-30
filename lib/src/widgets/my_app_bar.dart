@@ -20,7 +20,7 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       // padding: const EdgeInsets.symmetric(horizontal: 16),
-      height: 80,
+      // height: 80,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
