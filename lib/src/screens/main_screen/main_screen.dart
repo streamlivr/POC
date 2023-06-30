@@ -4,14 +4,29 @@ import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/providers/basic_provider.dart';
+import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/screens/discover_screen/discover_screen.dart';
 import 'package:streamlivr/src/screens/following_screen/following_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/wallet_screen.dart';
 
 import '../../theme/style.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<UserProvider>(context, listen: false).fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var pages = [

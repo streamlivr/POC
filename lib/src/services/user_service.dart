@@ -116,23 +116,23 @@ class UserService {
     return model!;
   }
 
-  static Future<RegisterUserModel?> fetchUser() async {
+  static Future<ResponseModel?> fetchUser() async {
     final firestoreInstance = FirebaseFirestore.instance;
-    var pref = await SharedPreferences.getInstance();
-    var userId = pref.getString('uuid') ?? "";
+
+    var userId = FirebaseAuth.instance.currentUser!.uid;
+    
 
     try {
       final doc = await firestoreInstance.collection('users').doc(userId).get();
 
       if (doc.exists) {
-        final userData = RegisterUserModel.fromMap(doc.data()!);
-        return userData;
+        final userData = doc.data();
+        return ResponseModel(data: userData, status: "success");
       } else {
-        return null;
+        return ResponseModel(data: '', status: "error");
       }
     } catch (e) {
-      debugPrintStack();
-      return null;
+      return ResponseModel(data: e, status: "error");
     }
   }
 

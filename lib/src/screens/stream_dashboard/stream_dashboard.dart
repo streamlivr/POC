@@ -1,35 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:streamlivr/assets/assets.dart';
-import 'package:streamlivr/src/screens/stream_dashboard/stream_dashboard.dart';
-import 'package:streamlivr/src/widgets/build_text.dart';
-import 'package:streamlivr/src/widgets/horizontal_space.dart';
+import 'package:streamlivr/src/constants/constants.dart';
+import 'package:streamlivr/src/theme/style.dart';
 
-import '../routes/router.dart';
-import '../theme/style.dart';
+import '../../../assets/assets.dart';
+import '../../routes/router.dart';
+import '../../widgets/build_text.dart';
+import '../../widgets/horizontal_space.dart';
+import '../../widgets/vertical_space.dart';
+import '../profile_screen/profile_screen.dart';
+import 'content_tab.dart';
+import 'dashboard_tab.dart';
 
-class MyAppBar extends StatelessWidget {
-  final String pageTitle;
-  final bool? enableBackButton;
-  final VoidCallback onPressed;
-  const MyAppBar(
-      {Key? key,
-      required this.pageTitle,
-      required this.onPressed,
-      this.enableBackButton})
-      : super(key: key);
+class StreamDashboard extends StatelessWidget {
+  const StreamDashboard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              const Verticalspace(space: 24),
+              Padding(
+                padding: screenPadding,
+                child: buildAppButton(context),
+              ),
+              const TabBar(tabs: [
+                Tab(text: "Dashboard"),
+                Tab(text: "Content"),
+              ]),
+              const Expanded(
+                  child: TabBarView(children: [
+                DashboardTab(),
+                ContentTab(),
+              ]))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildAppButton(
+    BuildContext context,
+  ) {
     return SizedBox(
-      // padding: const EdgeInsets.symmetric(horizontal: 16),
-      // height: 80,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               InkWell(
-                  onTap: onPressed,
+                  onTap: () {
+                    push(context: context, page: const ProfileScreen());
+                  },
                   borderRadius: BorderRadius.circular(50),
                   child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),
@@ -45,22 +71,22 @@ class MyAppBar extends StatelessWidget {
                             width: 2,
                           ))),
                   onPressed: () {
-                    push(context: context,page: const StreamDashboard() );
+                    push(context: context, page: const StreamDashboard());
                   },
                   child: Row(
                     children: [
                       SvgPicture.asset(Assets.assetsIconsAddVideoIcon),
                       const Horizontalspace(space: 5),
                       const Text(
-                        'Create',
+                        'Watch',
                         style: TextStyle(color: Styles.primary),
                       ),
                     ],
                   )),
             ],
           ),
-          BuildText(
-            data: pageTitle,
+          const BuildText(
+            data: "Dashboard",
             color: Styles.white,
             fontSize: 24,
             fontWeight: FontWeight.w600,
