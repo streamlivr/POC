@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/models/category_model.dart';
@@ -322,7 +323,7 @@ class DiscoverScreen extends StatelessWidget {
                         push(
                             context: context,
                             page: LivePage2(
-                              isHost: false,
+                              isHost: user.model!.uuid.toString()==model[index].userId.toString(),
                               userId: user.model!.uuid.toString(),
                               liveID: model[index].streamId.toString(),
                               userName: user.model!.firstName.toString(),

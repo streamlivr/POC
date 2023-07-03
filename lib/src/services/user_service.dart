@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:random_date/random_date.dart';
 import 'package:streamlivr/src/models/genre_model.dart';
 import 'package:streamlivr/src/models/user_model.dart';
+import 'package:streamlivr/src/models/wallet_detail_model.dart';
 import 'package:unique_name_generator/unique_name_generator.dart';
 
 import '../helper/generate_stream_id.dart';
@@ -16,9 +19,39 @@ import '../models/response_model.dart';
 import '../models/stream_model.dart';
 
 class UserService {
+  static Future<ResponseModel> createWallet() async {
+    try {
+      var response = await http
+          .get(Uri.parse('https://empty-brook-2068.fly.dev/api/v1/wallet'));
+      log(response.body.toString());
+      if (response.statusCode.toString()[0] == "2") {
+        return ResponseModel(data: response.body, status: 'success');
+      } else {
+        return ResponseModel(data: response.body, status: 'error');
+      }
+    } catch (e) {
+      print(e);
+      return ResponseModel(data: e, status: 'error');
+    }
+  }
+
   static Future<ResponseModel> createUser({
     required RegisterUserModel userData,
   }) async {
+    var wallet = await createWallet();
+    String cleanedJsonString = wallet.data
+        .toString()
+        .replaceAll('\n', '')
+        .replaceAll('\\', '')
+        .replaceAll('[n', '[')
+        .replaceAll('{n', '{')
+        .replaceAll(',n', ',')
+        .replaceAll('}n', '}')
+        .replaceAll(']n', ']')
+        .replaceAll('"n', '"');
+
+    // WalletDetailModel.fromJson(jsonDecode(cleanedJsonString));
+
     final firestoreInstance = FirebaseFirestore.instance;
     final userRef = firestoreInstance.collection('users');
     var userId = FirebaseAuth.instance.currentUser!.uid;
@@ -32,13 +65,15 @@ class UserService {
 
     try {
       ResponseModel? model;
+      // await id.collection('wallet').doc('wallet').set(
+      //     WalletDetailModel.fromJson(jsonDecode(cleanedJsonString)[0]).toMap());
       if (userData.avatar == "") {
         print("no image");
         await id.set({
           'uuid': id.id,
           'firstName': ung.generate().split("_")[0],
           'lastName': ung.generate().split("_")[1],
-          'dateOfBirth': randomDate.random().toUtc(),
+          'dateOfBirth': '${randomDate.random().microsecondsSinceEpoch}',
           'emailAddress': userData.emailAddress,
           'password': userData.password,
           'phoneNumber': generateRandomnumber(),

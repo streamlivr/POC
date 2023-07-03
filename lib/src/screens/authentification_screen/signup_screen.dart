@@ -181,6 +181,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
               text: 'Continue',
               textColor: Styles.white,
               onPressed: () {
+                // UserService.createWallet().then((value) {
+                //   String jsonString = '${value.data}';
+                //   String cleanedJsonString = jsonString
+                //       .replaceAll('\n', '')
+                //       .replaceAll('\\', '')
+                //       .replaceAll('[n', '[')
+                //       .replaceAll('{n', '{')
+                //       .replaceAll(',n', ',')
+                //       .replaceAll('}n', '}')
+                //       .replaceAll(']n', ']')
+                //       .replaceAll('"n', '"')
+                //       .trim();
+                // String cleanedJsonString2 = jsonString.replaceAll("\\", '');
+
+                // print(cleanedJsonString.toString().trim()[0]);
+                // List<dynamic> data = jsonDecode(cleanedJsonString);
+                // // List<dynamic> data = jsonDecode('${value.data}');
+
+                // if (data.isNotEmpty) {
+                //   Map<String, dynamic> firstObject = data[0];
+                //   String passphrase = firstObject['passphrase'];
+                //   String privateKey = firstObject['privateKey'];
+                //   String publicKey = firstObject['publicKey'];
+                //   String binaryAddress = firstObject['binaryAddress'];
+                //   String address = firstObject['address'];
+
+                //   print('Passphrase: $passphrase');
+                //   print('Private Key: $privateKey');
+                //   print('Public Key: $publicKey');
+                //   print('Binary Address: $binaryAddress');
+                //   print('Address: $address');
+                // }
+                // });
+                // return;
                 if (emailTextEditingCOntroller.text.isEmpty) {
                   AppMessage.showMessage(
                       context: context,
@@ -203,11 +237,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   return;
                 }
                 if (!Provider.of<BasicProvider>(context, listen: false).check) {
-                     AppMessage.showMessage(
+                  AppMessage.showMessage(
                       context: context,
                       message: "Please check Accept term and privacy",
                       type: AnimatedSnackBarType.info);
-                  return ;
+                  return;
                 }
                 ProcessingDialog.showProcessingDialog(context: context);
                 provider
