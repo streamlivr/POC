@@ -10,6 +10,7 @@ import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
+import 'package:unique_name_generator/unique_name_generator.dart';
 
 import '../../helper/generate_stream_id.dart';
 import '../live_screen/live_page2.dart';
@@ -19,6 +20,7 @@ class DashboardTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.black,
       body: Padding(
         padding: screenPadding,
         child: Column(
@@ -85,13 +87,19 @@ class DashboardTab extends StatelessWidget {
   createStream(BuildContext context) {
     var data = Provider.of<UserProvider>(context, listen: false);
     final streamId = generateRandomCharacters();
+    var ung = UniqueNameGenerator(
+      dictionaries: [adjectives, animals],
+      style: NameStyle.capital,
+      separator: ' ',
+    );
     UserService.uploadPost(StreamModel(
-      title: "tset ",
-      description: "new test ",
+      title: ung.generate().toString(),
+      description: ung.generate().toString(),
       userId: data.model!.uuid.toString(),
       userName: data.model!.firstName.toString(),
       streamId: streamId,
-      streamImage: "",
+      streamImage:
+          "https://firebasestorage.googleapis.com/v0/b/streamlivr-1cc43.appspot.com/o/stream%20picture%2Fstream2.png?alt=media&token=8b8d3abb-2d78-4f86-a8fa-9279dad8dbc3",
       avatar: data.model!.avatar.toString(),
     )).then((value) {
       print(value);

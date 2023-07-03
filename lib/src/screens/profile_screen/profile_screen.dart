@@ -11,12 +11,20 @@ import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 import 'package:streamlivr/wrapper.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+      ),
       body: Consumer<UserProvider>(builder: (context, snapshot, _) {
         if (!snapshot.hadData) {
           return const Center(
@@ -25,11 +33,21 @@ class ProfileScreen extends StatelessWidget {
         }
         return ListView(
           children: [
-            const CircleAvatar(
-              radius: 65,
-              backgroundImage: NetworkImage(
-                  '''https://firebasestorage.googleapis.com/v0/b/streamlivr-1cc43.appspot.com/o/stream%20picture%2Fwp11268839-sharingan-3840x2160-wallpapers.png?alt=media&token=71db99a5-95be-44f5-8dc0-7a6f80313a7a'''),
-            ),
+            Builder(builder: (context) {
+              if (snapshot.model!.avatar == "") {
+                return const CircleAvatar(
+                  radius: 65,
+                  backgroundImage: NetworkImage(
+                      '''https://firebasestorage.googleapis.com/v0/b/streamlivr-1cc43.appspot.com/o/stream%20picture%2Fwp11268839-sharingan-3840x2160-wallpapers.png?alt=media&token=71db99a5-95be-44f5-8dc0-7a6f80313a7a'''),
+                );
+              } else {
+                return CircleAvatar(
+                  radius: 65,
+                  backgroundImage:
+                      NetworkImage(snapshot.model!.avatar.toString()),
+                );
+              }
+            }),
             const Verticalspace(space: 14),
             Center(
               child: Container(
@@ -155,6 +173,7 @@ class ProfileScreen extends StatelessWidget {
               src,
               height: 20,
               width: 19,
+              color: Theme.of(context).textTheme.titleSmall!.color,
             ),
             const Horizontalspace(space: 10),
             BuildText(
@@ -184,7 +203,6 @@ class ProfileScreen extends StatelessWidget {
         ),
         BuildText(
           data: subtitle,
-          color: const Color(0xfff4f3fc),
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),

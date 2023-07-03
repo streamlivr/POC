@@ -116,7 +116,7 @@ abstract class Styles {
               ? const ColorScheme.dark()
               : const ColorScheme.light()),
       appBarTheme: AppBarTheme(
-        backgroundColor: isDarkTheme ? black : white,
+        backgroundColor: isDarkTheme ? black : const Color(0xfff7fafd),
         elevation: 0,
         iconTheme: IconThemeData(color: isDarkTheme ? white : black),
         toolbarTextStyle: const TextTheme().bodyLarge,

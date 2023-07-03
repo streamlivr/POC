@@ -202,6 +202,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       type: AnimatedSnackBarType.info);
                   return;
                 }
+                if (!Provider.of<BasicProvider>(context, listen: false).check) {
+                     AppMessage.showMessage(
+                      context: context,
+                      message: "Please check Accept term and privacy",
+                      type: AnimatedSnackBarType.info);
+                  return ;
+                }
                 ProcessingDialog.showProcessingDialog(context: context);
                 provider
                     .registerUser(

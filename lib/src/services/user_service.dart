@@ -4,8 +4,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:random_date/random_date.dart';
+import 'package:streamlivr/src/models/genre_model.dart';
+import 'package:streamlivr/src/models/user_model.dart';
+import 'package:unique_name_generator/unique_name_generator.dart';
 
+import '../helper/generate_stream_id.dart';
 import '../helper/single_file_uploader.dart';
 import '../models/register_user_model.dart';
 import '../models/response_model.dart';
@@ -19,6 +23,12 @@ class UserService {
     final userRef = firestoreInstance.collection('users');
     var userId = FirebaseAuth.instance.currentUser!.uid;
     final id = userRef.doc(userId);
+    var ung = UniqueNameGenerator(
+      dictionaries: [adjectives, animals],
+      style: NameStyle.capital,
+      separator: '_',
+    );
+    var randomDate = RandomDate.withStartYear(2000);
 
     try {
       ResponseModel? model;
@@ -26,13 +36,13 @@ class UserService {
         print("no image");
         await id.set({
           'uuid': id.id,
-          'firstName': userData.firstName,
-          'lastName': userData.lastName,
-          'dateOfBirth': userData.dateOfBirth,
+          'firstName': ung.generate().split("_")[0],
+          'lastName': ung.generate().split("_")[1],
+          'dateOfBirth': randomDate.random().toUtc(),
           'emailAddress': userData.emailAddress,
           'password': userData.password,
-          'phoneNumber': userData.phoneNumber,
-          'avatar': "",
+          'phoneNumber': generateRandomnumber(),
+          'avatar': "https://img.icons8.com/3d-fluency/94/person-male--v3.png",
         }).then((value) {
           model = ResponseModel(data: 'success', status: 'success');
         }).onError((error, stackTrace) {
@@ -78,7 +88,7 @@ class UserService {
     ResponseModel? model;
     try {
       await id.update({
-        'genres': ["hello", "hi"],
+        'genres': genre,
       }).then((value) {
         model = ResponseModel(data: 'success', status: 'success');
       }).onError((error, stackTrace) {
@@ -120,7 +130,6 @@ class UserService {
     final firestoreInstance = FirebaseFirestore.instance;
 
     var userId = FirebaseAuth.instance.currentUser!.uid;
-    
 
     try {
       final doc = await firestoreInstance.collection('users').doc(userId).get();
@@ -160,6 +169,17 @@ class UserService {
             event.docs.map((e) => StreamModel.fromMap(e.data())).toList());
   }
 
+  static Stream<List<GenreModel>> readGenre() {
+    return FirebaseFirestore.instance.collection('genre').snapshots().map(
+        (event) =>
+            event.docs.map((e) => GenreModel.fromMap(e.data())).toList());
+  }
+
+  static Stream<List<UserModel>> readUser() {
+    return FirebaseFirestore.instance.collection('users').snapshots().map(
+        (event) => event.docs.map((e) => UserModel.fromMap(e.data())).toList());
+  }
+
   static Future<ResponseModel> uploadPost(StreamModel userData) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final userRef = firestoreInstance.collection('stream');
@@ -167,42 +187,42 @@ class UserService {
     log(userData.toString());
     try {
       ResponseModel? model;
-      if (userData.avatar == "") {
-        await id.set({
-          'userId': userData.userId,
-          'streamId': id.id,
-          'title': userData.title,
-          'description': userData.description,
-          'avatar': userData.avatar,
-          'userName': userData.userName,
-          'streamImage': userData.streamImage,
-        }).then((value) {
-          model = ResponseModel(data: 'success', status: 'success');
-        }).onError((error, stackTrace) {
-          model = ResponseModel(data: error, status: 'error');
-        });
-      } else {
-        await SingleFileUploader.uploadFile(File(userData.avatar.toString()))
-            .then((value) async {
-          if (value.status == "success") {
-            await id.set({
-              'userId': userData.userId,
-              'streamId': id.id,
-              'title': userData.title,
-              'description': userData.description,
-              'avatar': value.data.toString(),
-              'userName': userData.userName,
-              'streamImage': userData.streamImage,
-            }).then((value) {
-              model = ResponseModel(data: 'success', status: 'success');
-            }).onError((error, stackTrace) {
-              model = ResponseModel(data: error, status: 'error');
-            });
-          } else {
-            return ResponseModel(data: 'error', status: 'error');
-          }
-        });
-      }
+      // if (userData.avatar == "") {
+      await id.set({
+        'userId': userData.userId,
+        'streamId': id.id,
+        'title': userData.title,
+        'description': userData.description,
+        'avatar': userData.avatar,
+        'userName': userData.userName,
+        'streamImage': userData.streamImage,
+      }).then((value) {
+        model = ResponseModel(data: 'success', status: 'success');
+      }).onError((error, stackTrace) {
+        model = ResponseModel(data: error, status: 'error');
+      });
+      // } else {
+      //   await SingleFileUploader.uploadFile(File(userData.avatar.toString()))
+      //       .then((value) async {
+      //     if (value.status == "success") {
+      //       await id.set({
+      //         'userId': userData.userId,
+      //         'streamId': id.id,
+      //         'title': userData.title,
+      //         'description': userData.description,
+      //         'avatar': value.data.toString(),
+      //         'userName': userData.userName,
+      //         'streamImage': userData.streamImage,
+      //       }).then((value) {
+      //         model = ResponseModel(data: 'success', status: 'success');
+      //       }).onError((error, stackTrace) {
+      //         model = ResponseModel(data: error, status: 'error');
+      //       });
+      //     } else {
+      //       return ResponseModel(data: 'error', status: 'error');
+      //     }
+      //   });
+      // }
       return model!;
     } catch (e) {
       return ResponseModel(data: e, status: 'error');

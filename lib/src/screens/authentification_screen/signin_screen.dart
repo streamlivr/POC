@@ -191,7 +191,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     AppMessage.showMessage(
                       context: context,
                       message: 'User login successfully',
-                      type: AnimatedSnackBarType.error,
+                      type: AnimatedSnackBarType.success,
                     );
                     pushRemoveAll(context: context, page: const MainScreen());
                   } else {

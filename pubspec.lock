@@ -765,6 +765,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.0.5"
+  random_date:
+    dependency: "direct main"
+    description:
+      name: random_date
+      sha256: "9d33bda9fc297a415d2861401157af1833f979429417246190cf84a4e7387346"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.7"
   rxdart:
     dependency: transitive
     description:
@@ -922,6 +930,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.3.2"
+  unique_name_generator:
+    dependency: "direct main"
+    description:
+      name: unique_name_generator
+      sha256: "15fb44abfdb4ada447f18acadb4c9a090cc0020b98c62901c3f88eaabb87dfce"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   uuid:
     dependency: transitive
     description:

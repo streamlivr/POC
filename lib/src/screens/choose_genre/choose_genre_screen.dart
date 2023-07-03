@@ -18,8 +18,22 @@ import '../../constants/constants.dart';
 import '../../providers/dark_theme_provider.dart';
 import '../../theme/style.dart';
 
-class ChooseGenreScreen extends StatelessWidget {
+class ChooseGenreScreen extends StatefulWidget {
   const ChooseGenreScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChooseGenreScreen> createState() => _ChooseGenreScreenState();
+}
+
+class _ChooseGenreScreenState extends State<ChooseGenreScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<GenreProvider>(context, listen: false).fetchList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
@@ -91,6 +105,10 @@ some live streams you might like.''',
                 text: 'Continue',
                 textColor: Styles.white,
                 onPressed: () {
+                  print(Provider.of<GenreProvider>(
+                    context,
+                    listen: false,
+                  ).checkedList);
                   if (Provider.of<GenreProvider>(
                     context,
                     listen: false,
@@ -157,7 +175,7 @@ some live streams you might like.''',
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                provider.checkList(provider.list[index]);
+                provider.checkList(provider.list[index].id.toString());
               },
               borderRadius: BorderRadius.circular(13),
               child: SizedBox(
@@ -168,17 +186,17 @@ some live streams you might like.''',
                         borderRadius: BorderRadius.circular(13),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(
+                          image: NetworkImage(
                             provider.list[index].image.toString(),
                           ),
                         ),
-                        border:
-                            !provider.checkedList.contains(provider.list[index])
-                                ? null
-                                : Border.all(
-                                    color: Styles.blue,
-                                    width: 2,
-                                  ),
+                        border: !provider.checkedList
+                                .contains(provider.list[index].id)
+                            ? null
+                            : Border.all(
+                                color: Styles.blue,
+                                width: 2,
+                              ),
                       ),
                     ),
                     Positioned(
@@ -195,7 +213,7 @@ some live streams you might like.''',
                       child: Center(
                         child: BuildText(
                           data: provider.list[index].title.toString(),
-                          color: Styles.white,
+                          // color: Styles.white,
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),

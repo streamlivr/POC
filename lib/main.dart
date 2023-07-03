@@ -14,6 +14,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  DarkThemeProvider d = DarkThemeProvider();
+  await d.getTheme();
   runApp(const MyApp());
 }
 

@@ -19,8 +19,22 @@ import '../../theme/style.dart';
 import '../../widgets/app_message.dart';
 import '../../widgets/processing_dialogue.dart';
 
-class ChooseChannelScreen extends StatelessWidget {
+class ChooseChannelScreen extends StatefulWidget {
   const ChooseChannelScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChooseChannelScreen> createState() => _ChooseChannelScreenState();
+}
+
+class _ChooseChannelScreenState extends State<ChooseChannelScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<ChannelProvider>(context, listen: false).fetcChannel();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
@@ -155,7 +169,7 @@ class ChooseChannelScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                provider.checkList(provider.list[index]);
+                provider.checkList(provider.list[index].uuid.toString());
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -168,22 +182,22 @@ class ChooseChannelScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(
-                            provider.list[index].image.toString(),
+                          image: NetworkImage(
+                            provider.list[index].avatar.toString(),
                           ),
                         ),
                       ),
                     ),
                     const Horizontalspace(space: 5),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BuildText(
-                          data: 'Channel',
+                          data: provider.list[index].firstName.toString(),
                           fontWeight: FontWeight.w600,
                           fontSize: 15,
                         ),
-                        BuildText(
+                        const BuildText(
                           data: '249k follower',
                           fontWeight: FontWeight.w500,
                           fontSize: 10,
@@ -195,31 +209,32 @@ class ChooseChannelScreen extends StatelessWidget {
                     AnimatedContainer(
                       duration: KAninationDuration,
                       height: 26,
-                      width:
-                          !provider.checkedList.contains(provider.list[index])
-                              ? 59
-                              : 72,
+                      width: !provider.checkedList
+                              .contains(provider.list[index].uuid)
+                          ? 59
+                          : 72,
                       child: AppButton(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         fontSize: 8,
-                        buttonColor:
-                            !provider.checkedList.contains(provider.list[index])
-                                ? Styles.primary
-                                : Styles.white,
-                        textColor:
-                            !provider.checkedList.contains(provider.list[index])
-                                ? Styles.white
-                                : Styles.black,
-                        side:
-                            !provider.checkedList.contains(provider.list[index])
-                                ? BorderSide.none
-                                : const BorderSide(color: Styles.primary),
-                        text:
-                            !provider.checkedList.contains(provider.list[index])
-                                ? "Follow"
-                                : "Following",
+                        buttonColor: !provider.checkedList
+                                .contains(provider.list[index].uuid)
+                            ? Styles.primary
+                            : Styles.white,
+                        textColor: !provider.checkedList
+                                .contains(provider.list[index].uuid)
+                            ? Styles.white
+                            : Styles.black,
+                        side: !provider.checkedList
+                                .contains(provider.list[index].uuid)
+                            ? BorderSide.none
+                            : const BorderSide(color: Styles.primary),
+                        text: !provider.checkedList
+                                .contains(provider.list[index].uuid)
+                            ? "Follow"
+                            : "Following",
                         onPressed: () {
-                          provider.checkList(provider.list[index]);
+                          provider
+                              .checkList(provider.list[index].uuid.toString());
                         },
                       ),
                     ),

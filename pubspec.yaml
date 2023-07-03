@@ -32,7 +32,9 @@ dependencies:
   intl: ^0.18.0
   lottie: ^2.3.2
   provider: ^6.0.3
+  random_date: ^0.0.7
   shared_preferences: ^2.1.1
+  unique_name_generator: ^1.0.0
   zego_uikit_prebuilt_live_streaming: ^2.12.5
 
 dev_dependencies:
