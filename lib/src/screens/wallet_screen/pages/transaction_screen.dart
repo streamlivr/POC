@@ -4,6 +4,7 @@ import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
+import 'package:streamlivr/src/widgets/vertical_space.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({Key? key}) : super(key: key);
@@ -11,7 +12,10 @@ class TransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.black,
-      body: ListView.builder(
+      body: ListView.separated(
+        itemCount: 10,
+        physics: const NeverScrollableScrollPhysics(),
+        separatorBuilder: (context, index) => const Verticalspace(space: 10),
         padding: screenPadding,
         itemBuilder: (context, index) {
           return buildTransactionTile();
@@ -36,6 +40,7 @@ class TransactionScreen extends StatelessWidget {
               BuildText(
                 data: 'Kachi',
                 fontSize: 16,
+                color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
               BuildText(
@@ -53,6 +58,7 @@ class TransactionScreen extends StatelessWidget {
               BuildText(
                 data: '~\$130,000',
                 fontSize: 18,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
               BuildText(

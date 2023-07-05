@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
-import 'package:streamlivr/src/providers/basic_provider.dart';
+import 'package:streamlivr/src/helper/export.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/screens/discover_screen/discover_screen.dart';
 import 'package:streamlivr/src/screens/following_screen/following_screen.dart';
@@ -21,9 +19,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarIconBrightness: Brightness.dark,
+    ));
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<UserProvider>(context, listen: false).fetchData();
+      Provider.of<ChannelProvider>(context, listen: false).fetcChannel();
+      Provider.of<GenreProvider>(context, listen: false).fetchList();
     });
   }
 
@@ -32,29 +35,31 @@ class _MainScreenState extends State<MainScreen> {
     var pages = [
       const FollowingScreen(),
       const DiscoverScreen(),
-      const WalletScreen(),
+      const CollapsingTabView(),
     ];
     return Consumer<BasicProvider>(builder: (context, provider, _) {
       return Scaffold(
         backgroundColor: Styles.black,
-        body: AnimatedSwitcher(
-            switchInCurve: Curves.easeIn,
-            switchOutCurve: Curves.ease,
-            transitionBuilder: (child, animation) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-              // return SlideTransition(
-              //   position: Tween<Offset>(
-              //     begin: const Offset(0.0, 1.0),
-              //     end: const Offset(0.0, 0.0),
-              //   ).animate(animation),
-              //   child: child,
-              // );
-            },
-            duration: KAninationDuration,
-            child: pages[provider.currentIndex]),
+        body: SafeArea(
+          child: AnimatedSwitcher(
+              switchInCurve: Curves.easeIn,
+              switchOutCurve: Curves.ease,
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+                // return SlideTransition(
+                //   position: Tween<Offset>(
+                //     begin: const Offset(0.0, 1.0),
+                //     end: const Offset(0.0, 0.0),
+                //   ).animate(animation),
+                //   child: child,
+                // );
+              },
+              duration: KAninationDuration,
+              child: pages[provider.currentIndex]),
+        ),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Styles.primary,

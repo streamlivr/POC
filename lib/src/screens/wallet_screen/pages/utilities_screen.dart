@@ -4,10 +4,10 @@ class UtilitiesScreen extends StatelessWidget {
   const UtilitiesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-     
+    return const Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
-        child: Text('Utitlities Screen'),
+        child: Text(''),
       ),
     );
   }

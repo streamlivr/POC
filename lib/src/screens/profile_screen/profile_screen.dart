@@ -22,8 +22,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Consumer<UserProvider>(builder: (context, snapshot, _) {
         if (!snapshot.hadData) {
@@ -69,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     BuildText(
                       data: 'Online',
                       fontSize: 12,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ],
@@ -80,6 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: BuildText(
               data: '${snapshot.model!.firstName} ${snapshot.model!.lastName}',
               fontSize: 24,
+              color: Colors.white,
               fontWeight: FontWeight.w700,
             )),
             const Verticalspace(space: 28),
@@ -173,12 +180,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               src,
               height: 20,
               width: 19,
-              color: Theme.of(context).textTheme.titleSmall!.color,
+              color: Colors.white,
             ),
             const Horizontalspace(space: 10),
             BuildText(
               data: title,
               fontSize: 16,
+              color: Colors.white,
               fontWeight: FontWeight.w500,
             ),
             const Spacer(),
@@ -204,6 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BuildText(
           data: subtitle,
           fontSize: 12,
+          color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
       ],

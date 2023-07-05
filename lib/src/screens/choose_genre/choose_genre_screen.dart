@@ -161,71 +161,73 @@ some live streams you might like.''',
 
   Widget builtListWidget() {
     return Expanded(
-      child: Consumer<GenreProvider>(builder: (context, provider, _) {
-        return GridView.builder(
-          padding: screenPadding,
-          itemCount: provider.list.length,
-          physics: const AlwaysScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 3 / 4,
-          ),
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                provider.checkList(provider.list[index].id.toString());
-              },
-              borderRadius: BorderRadius.circular(13),
-              child: SizedBox(
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            provider.list[index].image.toString(),
+      child: Consumer<GenreProvider>(
+        builder: (context, provider, _) {
+          return GridView.builder(
+            padding: screenPadding,
+            itemCount: provider.list.length,
+            physics: const AlwaysScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 3 / 4,
+            ),
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  provider.checkList(provider.list[index].id.toString());
+                },
+                borderRadius: BorderRadius.circular(13),
+                child: SizedBox(
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              provider.list[index].image.toString(),
+                            ),
+                          ),
+                          border: !provider.checkedList
+                                  .contains(provider.list[index].id)
+                              ? null
+                              : Border.all(
+                                  color: Styles.blue,
+                                  width: 2,
+                                ),
+                        ),
+                      ),
+                      Positioned(
+                          right: 5,
+                          top: 5,
+                          child: !provider.checkedList
+                                  .contains(provider.list[index])
+                              ? const SizedBox()
+                              : SvgPicture.asset(Assets.assetsIconsActiveIcon)),
+                      Positioned(
+                        right: 5,
+                        left: 5,
+                        bottom: 5,
+                        child: Center(
+                          child: BuildText(
+                            data: provider.list[index].title.toString(),
+                            // color: Styles.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        border: !provider.checkedList
-                                .contains(provider.list[index].id)
-                            ? null
-                            : Border.all(
-                                color: Styles.blue,
-                                width: 2,
-                              ),
                       ),
-                    ),
-                    Positioned(
-                        right: 5,
-                        top: 5,
-                        child: !provider.checkedList
-                                .contains(provider.list[index])
-                            ? const SizedBox()
-                            : SvgPicture.asset(Assets.assetsIconsActiveIcon)),
-                    Positioned(
-                      right: 5,
-                      left: 5,
-                      bottom: 5,
-                      child: Center(
-                        child: BuildText(
-                          data: provider.list[index].title.toString(),
-                          // color: Styles.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        );
-      }),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

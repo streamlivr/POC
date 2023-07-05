@@ -26,11 +26,14 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const BuildText(
-                data: 'Welcome to StreamLIVR! 👋',
-                fontSize: 40,
-                color: Styles.white,
-                textAlign: TextAlign.center,
+              Hero(
+                tag: "title",
+                child: BuildText(
+                  data: 'Welcome to Streamlivr! 👋',
+                  fontSize: 40,
+                  color: Styles.white,
+                  textAlign: TextAlign.center,
+                ),
               ),
               const Verticalspace(space: 24),
               const BuildText(

@@ -98,7 +98,7 @@ abstract class Styles {
       useMaterial3: true,
       shadowColor: isDarkTheme ? transparent : transparent,
       canvasColor: isDarkTheme ? primary : primary,
-      scaffoldBackgroundColor: isDarkTheme ? black : const Color(0xfff7fafd),
+      scaffoldBackgroundColor: isDarkTheme ? black : white,
       indicatorColor:
           isDarkTheme ? const Color(0xff0E1D36) : const Color(0xffCBDCF8),
       hintColor:
@@ -116,7 +116,7 @@ abstract class Styles {
               ? const ColorScheme.dark()
               : const ColorScheme.light()),
       appBarTheme: AppBarTheme(
-        backgroundColor: isDarkTheme ? black : const Color(0xfff7fafd),
+        backgroundColor: isDarkTheme ? black : white,
         elevation: 0,
         iconTheme: IconThemeData(color: isDarkTheme ? white : black),
         toolbarTextStyle: const TextTheme().bodyLarge,

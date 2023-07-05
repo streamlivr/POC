@@ -7,7 +7,6 @@ import '../../../assets/assets.dart';
 import '../../routes/router.dart';
 import '../../widgets/build_text.dart';
 import '../../widgets/horizontal_space.dart';
-import '../../widgets/vertical_space.dart';
 import '../profile_screen/profile_screen.dart';
 import 'content_tab.dart';
 import 'dashboard_tab.dart';
@@ -19,18 +18,25 @@ class StreamDashboard extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [
-              const Verticalspace(space: 24),
+              // const Verticalspace(space: 24),
               Padding(
                 padding: screenPadding,
                 child: buildAppButton(context),
               ),
-              const TabBar(tabs: [
-                Tab(text: "Dashboard"),
-                Tab(text: "Content"),
-              ]),
+              const TabBar(
+                  dividerColor: Colors.transparent,
+                  labelColor: Styles.primary,
+                  indicatorWeight: 1.0,
+                  indicatorColor: Styles.primary,
+                  unselectedLabelColor: Colors.white,
+                  tabs: [
+                    Tab(text: "Dashboard"),
+                    Tab(text: "Content"),
+                  ]),
               const Expanded(
                   child: TabBarView(children: [
                 DashboardTab(),

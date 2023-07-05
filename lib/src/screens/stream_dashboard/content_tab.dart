@@ -5,10 +5,9 @@ class ContentTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.black,
       body: Column(
-        children: [
-          
-        ],
+        children: [],
       ),
     );
   }

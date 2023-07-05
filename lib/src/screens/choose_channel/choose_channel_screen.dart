@@ -161,90 +161,92 @@ class _ChooseChannelScreenState extends State<ChooseChannelScreen> {
 
   Widget builtListWidget() {
     return Expanded(
-      child: Consumer<ChannelProvider>(builder: (context, provider, _) {
-        return ListView.builder(
-          padding: screenPadding,
-          itemCount: provider.list.length,
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                provider.checkList(provider.list[index].uuid.toString());
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 51,
-                      width: 51,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            provider.list[index].avatar.toString(),
+      child: Consumer<ChannelProvider>(
+        builder: (context, provider, _) {
+          return ListView.builder(
+            padding: screenPadding,
+            itemCount: provider.list.length,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  provider.checkList(provider.list[index].uuid.toString());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 51,
+                        width: 51,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              provider.list[index].avatar.toString(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const Horizontalspace(space: 5),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BuildText(
-                          data: provider.list[index].firstName.toString(),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                        const BuildText(
-                          data: '249k follower',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10,
-                          color: Color(0xff676767),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    AnimatedContainer(
-                      duration: KAninationDuration,
-                      height: 26,
-                      width: !provider.checkedList
-                              .contains(provider.list[index].uuid)
-                          ? 59
-                          : 72,
-                      child: AppButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        fontSize: 8,
-                        buttonColor: !provider.checkedList
-                                .contains(provider.list[index].uuid)
-                            ? Styles.primary
-                            : Styles.white,
-                        textColor: !provider.checkedList
-                                .contains(provider.list[index].uuid)
-                            ? Styles.white
-                            : Styles.black,
-                        side: !provider.checkedList
-                                .contains(provider.list[index].uuid)
-                            ? BorderSide.none
-                            : const BorderSide(color: Styles.primary),
-                        text: !provider.checkedList
-                                .contains(provider.list[index].uuid)
-                            ? "Follow"
-                            : "Following",
-                        onPressed: () {
-                          provider
-                              .checkList(provider.list[index].uuid.toString());
-                        },
+                      const Horizontalspace(space: 5),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BuildText(
+                            data: provider.list[index].firstName.toString(),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                          ),
+                          const BuildText(
+                            data: '249k follower',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10,
+                            color: Color(0xff676767),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      const Spacer(),
+                      AnimatedContainer(
+                        duration: KAninationDuration,
+                        height: 26,
+                        width: !provider.checkedList
+                                .contains(provider.list[index].uuid)
+                            ? 59
+                            : 72,
+                        child: AppButton(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          fontSize: 8,
+                          buttonColor: !provider.checkedList
+                                  .contains(provider.list[index].uuid)
+                              ? Styles.primary
+                              : Styles.white,
+                          textColor: !provider.checkedList
+                                  .contains(provider.list[index].uuid)
+                              ? Styles.white
+                              : Styles.black,
+                          side: !provider.checkedList
+                                  .contains(provider.list[index].uuid)
+                              ? BorderSide.none
+                              : const BorderSide(color: Styles.primary),
+                          text: !provider.checkedList
+                                  .contains(provider.list[index].uuid)
+                              ? "Follow"
+                              : "Following",
+                          onPressed: () {
+                            provider.checkList(
+                                provider.list[index].uuid.toString());
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        );
-      }),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

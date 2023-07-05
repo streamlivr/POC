@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/models/following_model.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
@@ -6,6 +7,8 @@ import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/my_app_bar.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
+import '../../models/user_model.dart';
+import '../../providers/channel_provider.dart';
 import '../../routes/router.dart';
 import '../../theme/style.dart';
 import '../profile_screen/profile_screen.dart';
@@ -59,14 +62,29 @@ class FollowingScreen extends StatelessWidget {
             ),
             const Verticalspace(space: 20),
             Expanded(
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return buildFollowingTile(index, data);
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Verticalspace(space: 10);
-                    },
-                    itemCount: data.length))
+              child: Consumer<ChannelProvider>(
+                builder: (context, provider, _) {
+                  if (provider.list.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "No Channel here",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.separated(
+                      itemBuilder: (context, index) {
+                        return buildFollowingTile(index, provider.list);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Verticalspace(space: 10);
+                      },
+                      itemCount: provider.list.length);
+                },
+              ),
+            )
           ],
         ),
       ),
@@ -75,7 +93,7 @@ class FollowingScreen extends StatelessWidget {
 
   Widget buildFollowingTile(
     int index,
-    List<FollowingModel> data,
+    List<UserModel> data,
   ) {
     return SizedBox(
       height: 100,
@@ -90,8 +108,8 @@ class FollowingScreen extends StatelessWidget {
                 width: 160,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    image:
-                        DecorationImage(image: AssetImage(data[index].src!))),
+                    image: DecorationImage(
+                        image: NetworkImage(data[index].avatar.toString()))),
               ),
               Container(
                 height: 27,
@@ -117,22 +135,22 @@ class FollowingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 BuildText(
-                  data: data[index].title!,
+                  data: data[index].lastName!,
                   color: Styles.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
-                Row(
+                const Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.remove_red_eye,
                       color: Color(0xffe0e0e0),
                       size: 26,
                     ),
-                    const Horizontalspace(space: 5),
+                    Horizontalspace(space: 5),
                     BuildText(
-                      data: '${data[index].views!} viewers',
-                      color: const Color(0xffe0e0e0),
+                      data: '0 viewers',
+                      color: Color(0xffe0e0e0),
                       fontSize: 14,
                     ),
                   ],

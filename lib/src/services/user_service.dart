@@ -39,18 +39,8 @@ class UserService {
     required RegisterUserModel userData,
   }) async {
     var wallet = await createWallet();
-    String cleanedJsonString = wallet.data
-        .toString()
-        .replaceAll('\n', '')
-        .replaceAll('\\', '')
-        .replaceAll('[n', '[')
-        .replaceAll('{n', '{')
-        .replaceAll(',n', ',')
-        .replaceAll('}n', '}')
-        .replaceAll(']n', ']')
-        .replaceAll('"n', '"');
 
-    // WalletDetailModel.fromJson(jsonDecode(cleanedJsonString));
+    WalletDetailModel.fromJson(jsonDecode(wallet.data)[0]);
 
     final firestoreInstance = FirebaseFirestore.instance;
     final userRef = firestoreInstance.collection('users');
@@ -65,8 +55,7 @@ class UserService {
 
     try {
       ResponseModel? model;
-      // await id.collection('wallet').doc('wallet').set(
-      //     WalletDetailModel.fromJson(jsonDecode(cleanedJsonString)[0]).toMap());
+
       if (userData.avatar == "") {
         print("no image");
         await id.set({
@@ -78,7 +67,9 @@ class UserService {
           'password': userData.password,
           'phoneNumber': generateRandomnumber(),
           'avatar': "https://img.icons8.com/3d-fluency/94/person-male--v3.png",
-        }).then((value) {
+        }).then((value) async {
+          await id.collection('wallet').doc('wallet').set(
+              WalletDetailModel.fromJson(jsonDecode(wallet.data)[0]).toMap());
           model = ResponseModel(data: 'success', status: 'success');
         }).onError((error, stackTrace) {
           model = ResponseModel(data: error, status: 'error');

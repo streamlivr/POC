@@ -4,6 +4,7 @@ import '../theme/style.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
+  final String? tag;
   final VoidCallback onPressed;
 
   final Color? buttonColor;
@@ -25,32 +26,36 @@ class AppButton extends StatelessWidget {
     this.elevation,
     this.padding,
     this.side,
+    this.tag,
   });
 
   @override
   Widget build(BuildContext context) {
     BorderSide side_ = BorderSide.none;
-    return SizedBox(
-      width: double.infinity,
-      height: 50,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          elevation: elevation,
-          padding: padding,
-          backgroundColor: buttonColor ?? Styles.primary,
-          shape: RoundedRectangleBorder(
-            side: side ?? side_,
-            borderRadius: BorderRadius.circular(
-              radius ?? 13,
+    return Hero(
+      tag: tag ?? "b",
+      child: SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            elevation: elevation,
+            padding: padding,
+            backgroundColor: buttonColor ?? Styles.primary,
+            shape: RoundedRectangleBorder(
+              side: side ?? side_,
+              borderRadius: BorderRadius.circular(
+                radius ?? 13,
+              ),
             ),
           ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor ?? Styles.black,
-            fontSize: fontSize ?? 16,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: textColor ?? Styles.black,
+              fontSize: fontSize ?? 16,
+            ),
           ),
         ),
       ),

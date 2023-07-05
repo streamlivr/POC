@@ -25,7 +25,6 @@ class _LivePage2State extends State<LivePage2> {
   @override
   void initState() {
     super.initState();
-  
   }
 
   @override

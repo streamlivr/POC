@@ -34,7 +34,7 @@ class MyAppBar extends StatelessWidget {
                   child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),
               SvgPicture.asset(Assets.assetsIconsNotificationsLogo),
-              const Horizontalspace(space: 5),
+              const Horizontalspace(space: 19),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Styles.transparent,
@@ -45,7 +45,7 @@ class MyAppBar extends StatelessWidget {
                             width: 2,
                           ))),
                   onPressed: () {
-                    push(context: context,page: const StreamDashboard() );
+                    push(context: context, page: const StreamDashboard());
                   },
                   child: Row(
                     children: [

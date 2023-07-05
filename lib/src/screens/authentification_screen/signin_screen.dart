@@ -114,7 +114,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 BuildText(
                   data: 'E-mail',
                   fontSize: 14,
-                  color: Styles.black.withOpacity(0.5),
+                  color: Theme.of(context)
+                      .appBarTheme
+                      .iconTheme!
+                      .color!
+                      .withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppTextField(
@@ -133,11 +137,16 @@ class _SignInScreenState extends State<SignInScreen> {
                 BuildText(
                   data: 'Password',
                   fontSize: 14,
-                  color: Styles.black.withOpacity(0.5),
+                  color: Theme.of(context)
+                      .appBarTheme
+                      .iconTheme!
+                      .color!
+                      .withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
-                    hint: "Password", controller: passwordTextEditingCOntroller),
+                    hint: "Password",
+                    controller: passwordTextEditingCOntroller),
               ],
             ),
             const Verticalspace(space: 54),
@@ -204,7 +213,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       message: message,
                       type: AnimatedSnackBarType.error,
                     );
-
+            
                     log(value.data.toString());
                   }
                 });
@@ -226,6 +235,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 34,
               child: AppButton(
+                tag: "n",
                 textColor: Styles.white,
                 radius: 3,
                 text: 'Connect to wallet',
@@ -234,6 +244,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 },
               ),
             ),
+            const Verticalspace(space: 32),
           ],
         ),
       );

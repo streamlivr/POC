@@ -47,6 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Consumer<AuthentificationProvider>(builder: (context, provider, _) {
       return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           actions: [
             Consumer<DarkThemeProvider>(builder: (context, provider, _) {
               final themeProvider = Provider.of<DarkThemeProvider>(context);
@@ -113,7 +114,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BuildText(
                   data: 'E-mail',
                   fontSize: 14,
-                  color: Styles.black.withOpacity(0.5),
+                  color: Theme.of(context)
+                      .appBarTheme
+                      .iconTheme!
+                      .color!
+                      .withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppTextField(
@@ -132,7 +137,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BuildText(
                   data: 'Password',
                   fontSize: 14,
-                  color: Styles.black.withOpacity(0.5),
+                  color: Theme.of(context)
+                      .appBarTheme
+                      .iconTheme!
+                      .color!
+                      .withOpacity(0.5),
                 ),
                 const Verticalspace(space: 8),
                 AppPasswordTextField(
@@ -143,6 +152,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const Verticalspace(space: 31),
             CustomDropdown(
               hintText: 'Select job role',
+              listItemStyle: const TextStyle(
+                color: Styles.black,
+              ),
+              selectedStyle: const TextStyle(
+                color: Styles.black,
+              ),
               borderRadius: BorderRadius.circular(0),
               items: const ['Creator', 'Fan'],
               controller: provider.jobRoleCtrl,
@@ -181,38 +196,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               text: 'Continue',
               textColor: Styles.white,
               onPressed: () {
+                // print('object');
                 // UserService.createWallet().then((value) {
-                //   String jsonString = '${value.data}';
-                //   String cleanedJsonString = jsonString
-                //       .replaceAll('\n', '')
-                //       .replaceAll('\\', '')
-                //       .replaceAll('[n', '[')
-                //       .replaceAll('{n', '{')
-                //       .replaceAll(',n', ',')
-                //       .replaceAll('}n', '}')
-                //       .replaceAll(']n', ']')
-                //       .replaceAll('"n', '"')
-                //       .trim();
-                // String cleanedJsonString2 = jsonString.replaceAll("\\", '');
-
-                // print(cleanedJsonString.toString().trim()[0]);
-                // List<dynamic> data = jsonDecode(cleanedJsonString);
-                // // List<dynamic> data = jsonDecode('${value.data}');
-
-                // if (data.isNotEmpty) {
-                //   Map<String, dynamic> firstObject = data[0];
-                //   String passphrase = firstObject['passphrase'];
-                //   String privateKey = firstObject['privateKey'];
-                //   String publicKey = firstObject['publicKey'];
-                //   String binaryAddress = firstObject['binaryAddress'];
-                //   String address = firstObject['address'];
-
-                //   print('Passphrase: $passphrase');
-                //   print('Private Key: $privateKey');
-                //   print('Public Key: $publicKey');
-                //   print('Binary Address: $binaryAddress');
-                //   print('Address: $address');
-                // }
+                //   print(value);
                 // });
                 // return;
                 if (emailTextEditingCOntroller.text.isEmpty) {
