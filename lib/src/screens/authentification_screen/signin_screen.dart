@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
@@ -54,27 +54,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 padding: const EdgeInsets.only(
                   right: 24,
                 ),
-                child: FlutterSwitch(
-                  width: 35.49,
-                  height: 17.74,
-                  toggleSize: 20.0,
-                  value: provider.darkTheme,
-                  borderRadius: 30.0,
-                  padding: 2.0,
-                  toggleColor: const Color.fromRGBO(225, 225, 225, 1),
-                  switchBorder: Border.all(
-                    color: const Color.fromRGBO(2, 107, 206, 1),
-                    width: 0.0,
+                child: SizedBox(
+                  width: 45.49,
+                  height: 20.74,
+                  child: DayNightSwitch(
+                    value: provider.darkTheme,
+                    onChanged: (_) {
+                      themeProvider.darkTheme = !themeProvider.darkTheme;
+                    },
                   ),
-                  toggleBorder: Border.all(
-                    color: const Color.fromRGBO(2, 107, 206, 1),
-                    width: 0.0,
-                  ),
-                  activeColor: Styles.primary,
-                  inactiveColor: Colors.black38,
-                  onToggle: (value) {
-                    themeProvider.darkTheme = !themeProvider.darkTheme;
-                  },
                 ),
               );
             })
@@ -213,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       message: message,
                       type: AnimatedSnackBarType.error,
                     );
-            
+
                     log(value.data.toString());
                   }
                 });

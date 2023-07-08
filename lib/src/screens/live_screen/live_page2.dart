@@ -19,9 +19,7 @@ class LivePage2 extends StatefulWidget {
 }
 
 class _LivePage2State extends State<LivePage2> {
-  var controller = ZegoUIKitPrebuiltLiveStreamingController(
-    
-  );
+  var controller = ZegoUIKitPrebuiltLiveStreamingController();
   @override
   void initState() {
     super.initState();
@@ -51,13 +49,11 @@ class _LivePage2State extends State<LivePage2> {
             appSign:
                 '90dbade8b2bb4155feec5f0d2ffdd5b8ad6742386fea19ccd62d419e8784dbff', // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
             userID: widget.userId,
-            
+
             userName: widget.userName,
             liveID: widget.liveID,
             config: widget.isHost
-                ? ZegoUIKitPrebuiltLiveStreamingConfig.host(
-                  
-                )
+                ? ZegoUIKitPrebuiltLiveStreamingConfig.host()
                 : ZegoUIKitPrebuiltLiveStreamingConfig.audience(),
           ),
         ),

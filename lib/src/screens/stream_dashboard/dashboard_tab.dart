@@ -29,7 +29,7 @@ class DashboardTab extends StatelessWidget {
             const Align(
               alignment: Alignment.center,
               child: BuildText(
-                data: "you're offline",
+                data: "You're offline",
                 fontSize: 24,
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

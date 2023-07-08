@@ -1,7 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/genre_provider.dart';
@@ -47,27 +47,15 @@ class _ChooseGenreScreenState extends State<ChooseGenreScreen> {
                 padding: const EdgeInsets.only(
                   right: 24,
                 ),
-                child: FlutterSwitch(
-                  width: 35.49,
-                  height: 17.74,
-                  toggleSize: 20.0,
-                  value: provider.darkTheme,
-                  borderRadius: 30.0,
-                  padding: 2.0,
-                  toggleColor: const Color.fromRGBO(225, 225, 225, 1),
-                  switchBorder: Border.all(
-                    color: const Color.fromRGBO(2, 107, 206, 1),
-                    width: 0.0,
+                child: SizedBox(
+                  width: 45.49,
+                  height: 20.74,
+                  child: DayNightSwitch(
+                    value: provider.darkTheme,
+                    onChanged: (_) {
+                      themeProvider.darkTheme = !themeProvider.darkTheme;
+                    },
                   ),
-                  toggleBorder: Border.all(
-                    color: const Color.fromRGBO(2, 107, 206, 1),
-                    width: 0.0,
-                  ),
-                  activeColor: Styles.primary,
-                  inactiveColor: Colors.black38,
-                  onToggle: (value) {
-                    themeProvider.darkTheme = !themeProvider.darkTheme;
-                  },
                 ),
               );
             })
@@ -186,7 +174,7 @@ some live streams you might like.''',
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13),
                           image: DecorationImage(
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             image: NetworkImage(
                               provider.list[index].image.toString(),
                             ),
@@ -201,13 +189,6 @@ some live streams you might like.''',
                         ),
                       ),
                       Positioned(
-                          right: 5,
-                          top: 5,
-                          child: !provider.checkedList
-                                  .contains(provider.list[index])
-                              ? const SizedBox()
-                              : SvgPicture.asset(Assets.assetsIconsActiveIcon)),
-                      Positioned(
                         right: 5,
                         left: 5,
                         bottom: 5,
@@ -220,6 +201,13 @@ some live streams you might like.''',
                           ),
                         ),
                       ),
+                      Positioned(
+                          right: 5,
+                          top: 5,
+                          child: !provider.checkedList
+                                  .contains(provider.list[index].id)
+                              ? const SizedBox()
+                              : SvgPicture.asset(Assets.assetsIconsActiveIcon)),
                     ],
                   ),
                 ),

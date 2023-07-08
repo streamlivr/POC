@@ -36,10 +36,34 @@ dependencies:
   shared_preferences: ^2.1.1
   unique_name_generator: ^1.0.0
   zego_uikit_prebuilt_live_streaming: ^2.12.5
+  day_night_themed_switch: ^1.0.0
 
 dev_dependencies:
 
   flutter_lints: ^2.0.0
+
+  flutter_launcher_icons: "^0.13.1"
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  remove_alpha_ios: true
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/logo.png"
+    background_color: "#001D50"
+    theme_color: "#001D50"
+  windows:
+    generate: true
+    image_path: "assets/images/logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/logo.png"
+
   flutter_test:
     sdk: flutter
 

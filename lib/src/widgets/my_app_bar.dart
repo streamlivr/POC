@@ -28,6 +28,8 @@ class MyAppBar extends StatelessWidget {
         children: [
           Row(
             children: [
+              Image.asset(Assets.assetsIconsMainLogo),
+              const Horizontalspace(space: 10),
               InkWell(
                   onTap: onPressed,
                   borderRadius: BorderRadius.circular(50),

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
+import 'package:streamlivr/src/screens/my_schannel_screen/my_channel_screen.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
@@ -93,15 +94,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildOptionWidget(title: '38', subtitle: 'Streams'),
-                buildOptionWidget(title: '50', subtitle: 'Collections'),
-                buildOptionWidget(title: '87.8k', subtitle: 'Followers'),
-                buildOptionWidget(title: '526', subtitle: 'Following'),
+                buildOptionWidget(title: '0', subtitle: 'Streams'),
+                buildOptionWidget(title: '0', subtitle: 'Collections'),
+                buildOptionWidget(title: '0', subtitle: 'Followers'),
+                buildOptionWidget(title: '0', subtitle: 'Following'),
               ],
             ),
             const Verticalspace(space: 40),
             buildListTile(
-                onTap: () {},
+                onTap: () {
+                  push(context: context, page: const MyChannelScreen());
+                },
                 title: 'My Channel',
                 src: Assets.assetsIconsProfilecircleIcon),
             buildListTile(

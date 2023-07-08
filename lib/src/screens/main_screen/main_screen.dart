@@ -19,7 +19,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarIconBrightness: Brightness.dark,
     ));
     super.initState();
@@ -35,11 +35,10 @@ class _MainScreenState extends State<MainScreen> {
     var pages = [
       const FollowingScreen(),
       const DiscoverScreen(),
-      const CollapsingTabView(),
+      const WalletScreen(),
     ];
     return Consumer<BasicProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: Styles.black,
         body: SafeArea(
           child: AnimatedSwitcher(
               switchInCurve: Curves.easeIn,

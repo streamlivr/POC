@@ -127,6 +127,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/src/constants/constants.dart';
+import 'package:streamlivr/src/screens/wallet_screen/pages/currencies_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/pages/nfts_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/pages/transaction_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/pages/utilities_screen.dart';
@@ -140,8 +141,8 @@ import '../../widgets/my_app_bar.dart';
 import '../../widgets/vertical_space.dart';
 import '../profile_screen/profile_screen.dart';
 
-class CollapsingTabView extends StatelessWidget {
-  const CollapsingTabView({super.key});
+class WalletScreen extends StatelessWidget {
+  const WalletScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -161,8 +162,10 @@ class CollapsingTabView extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: DefaultTabController(
-                length: 3, // Replace with the number of tabs you have
+              child: 
+              
+              DefaultTabController(
+                length: 4, // Replace with the number of tabs you have
                 child: CustomScrollView(
                   shrinkWrap: true,
                   slivers: [
@@ -180,14 +183,14 @@ class CollapsingTabView extends StatelessWidget {
                           RichText(
                               text: const TextSpan(children: [
                             TextSpan(
-                                text: '35,850.124',
+                                text: '0 ',
                                 style: TextStyle(
                                   color: Styles.white,
                                   fontSize: 36,
                                   fontWeight: FontWeight.w600,
                                 )),
                             TextSpan(
-                                text: 'STVR',
+                                text: 'LSK',
                                 style: TextStyle(
                                   color: Styles.white,
                                   fontSize: 17,
@@ -197,7 +200,7 @@ class CollapsingTabView extends StatelessWidget {
                           RichText(
                               text: const TextSpan(children: [
                             TextSpan(
-                                text: '107,550.124',
+                                text: '0 ',
                                 style: TextStyle(
                                   color: Styles.white,
                                   fontSize: 14,
@@ -218,17 +221,17 @@ class CollapsingTabView extends StatelessWidget {
                             children: [
                               buildOptionWidget(
                                   onTap: () {},
-                                  data: 'Send STVR',
+                                  data: 'Send \$LSK',
                                   icon: Assets.assetsIconsUpArrow),
                               const Horizontalspace(space: 30),
                               buildOptionWidget(
                                   onTap: () {},
-                                  data: 'State STVR',
+                                  data: 'State \$LSK',
                                   icon: Assets.assetsIconsDownArrow),
                               const Horizontalspace(space: 30),
                               buildOptionWidget(
                                   onTap: () {},
-                                  data: 'Buy STVR',
+                                  data: 'Buy \$LSK',
                                   icon: Assets.assetsIconsWalletInclined),
                             ],
                           ),
@@ -246,8 +249,9 @@ class CollapsingTabView extends StatelessWidget {
                         indicatorColor: Styles.primary,
                         unselectedLabelColor: Colors.white,
                         tabs: [
-                          Tab(text: "Transactions"),
+                          Tab(text: "Currencies"),
                           Tab(text: "NFTs"),
+                          Tab(text: "Transactions"),
                           Tab(text: "Utilities"),
                         ],
                       ),
@@ -258,8 +262,9 @@ class CollapsingTabView extends StatelessWidget {
                       fillOverscroll: true,
                       child: TabBarView(
                         children: [
-                          TransactionScreen(),
+                          CurrenciesScreen(),
                           NftsScreen(),
+                          TransactionScreen(),
                           UtilitiesScreen(),
                         ],
                       ),
@@ -267,6 +272,9 @@ class CollapsingTabView extends StatelessWidget {
                   ],
                 ),
               ),
+         
+         
+         
             ),
           ],
         ),
@@ -290,6 +298,7 @@ Widget buildOptionWidget({
             child: SvgPicture.asset(icon),
           ),
         ),
+        const Verticalspace(space: 2),
         BuildText(
           data: data,
           fontSize: 12,

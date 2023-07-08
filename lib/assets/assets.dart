@@ -1,6 +1,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsAnimationsLoading
+  /// assets/animations/loading.json
+  static const String assetsAnimationsLoading = "assets/animations/loading.json";
+
   /// Assets for assetsIconsActiveIcon
   /// assets/icons/active_icon.svg
   static const String assetsIconsActiveIcon = "assets/icons/active_icon.svg";
@@ -85,6 +89,14 @@ class Assets {
   /// assets/icons/logout_icon.svg
   static const String assetsIconsLogoutIcon = "assets/icons/logout_icon.svg";
 
+  /// Assets for assetsIconsLskWallet
+  /// assets/icons/lsk_wallet.png
+  static const String assetsIconsLskWallet = "assets/icons/lsk_wallet.png";
+
+  /// Assets for assetsIconsMainLogo
+  /// assets/icons/main_logo.png
+  static const String assetsIconsMainLogo = "assets/icons/main_logo.png";
+
   /// Assets for assetsIconsMetamaskWalletLogo
   /// assets/icons/metamask-wallet-logo.png
   static const String assetsIconsMetamaskWalletLogo = "assets/icons/metamask-wallet-logo.png";
@@ -92,6 +104,10 @@ class Assets {
   /// Assets for assetsIconsMoresquareIcon
   /// assets/icons/moresquare_icon.svg
   static const String assetsIconsMoresquareIcon = "assets/icons/moresquare_icon.svg";
+
+  /// Assets for assetsIconsNearWallet
+  /// assets/icons/near_wallet.png
+  static const String assetsIconsNearWallet = "assets/icons/near_wallet.png";
 
   /// Assets for assetsIconsNearWalletLogo
   /// assets/icons/near-wallet-logo.png
@@ -108,6 +124,10 @@ class Assets {
   /// Assets for assetsIconsOptimism
   /// assets/icons/optimism.png
   static const String assetsIconsOptimism = "assets/icons/optimism.png";
+
+  /// Assets for assetsIconsPenEdit
+  /// assets/icons/pen_edit.svg
+  static const String assetsIconsPenEdit = "assets/icons/pen_edit.svg";
 
   /// Assets for assetsIconsPersonIcon
   /// assets/icons/person_icon.svg
@@ -133,6 +153,10 @@ class Assets {
   /// assets/icons/shield_icon.svg
   static const String assetsIconsShieldIcon = "assets/icons/shield_icon.svg";
 
+  /// Assets for assetsIconsSliders
+  /// assets/icons/sliders.svg
+  static const String assetsIconsSliders = "assets/icons/sliders.svg";
+
   /// Assets for assetsIconsSolana
   /// assets/icons/solana.png
   static const String assetsIconsSolana = "assets/icons/solana.png";
@@ -141,6 +165,10 @@ class Assets {
   /// assets/icons/tip_user_icon.svg
   static const String assetsIconsTipUserIcon = "assets/icons/tip_user_icon.svg";
 
+  /// Assets for assetsIconsToroWallet
+  /// assets/icons/toro_wallet.png
+  static const String assetsIconsToroWallet = "assets/icons/toro_wallet.png";
+
   /// Assets for assetsIconsTrustWalletLogo
   /// assets/icons/trust-wallet-logo.png
   static const String assetsIconsTrustWalletLogo = "assets/icons/trust-wallet-logo.png";
@@ -148,6 +176,10 @@ class Assets {
   /// Assets for assetsIconsUpArrow
   /// assets/icons/up_arrow.svg
   static const String assetsIconsUpArrow = "assets/icons/up_arrow.svg";
+
+  /// Assets for assetsIconsUsdtWallet
+  /// assets/icons/usdt_wallet.png
+  static const String assetsIconsUsdtWallet = "assets/icons/usdt_wallet.png";
 
   /// Assets for assetsIconsWalletInclined
   /// assets/icons/wallet_inclined.svg
@@ -192,6 +224,10 @@ class Assets {
   /// Assets for assetsImagesImage
   /// assets/images/image.png
   static const String assetsImagesImage = "assets/images/image.png";
+
+  /// Assets for assetsImagesLogo
+  /// assets/images/logo.png
+  static const String assetsImagesLogo = "assets/images/logo.png";
 
   /// Assets for assetsImagesProfileImage
   /// assets/images/profile_image.png

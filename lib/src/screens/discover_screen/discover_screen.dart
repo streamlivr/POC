@@ -20,56 +20,7 @@ class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var stream = <StreamingModel>[
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-      StreamingModel(
-          title: "Streaming",
-          avatar: Assets.assetsImagesImage,
-          image: Assets.assetsImagesStream1,
-          subtitle: "Daily Life",
-          userName: "Kachi",
-          views: "2000",
-          tag: ["Vlog", "Entertainment", "English"]),
-    ];
+     
     var category = <CategoryModel>[
       CategoryModel(title: "Games"),
       CategoryModel(title: "Music"),
