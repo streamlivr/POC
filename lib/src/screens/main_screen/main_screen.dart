@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/helper/export.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
+import 'package:streamlivr/src/providers/wallet_provider.dart';
 import 'package:streamlivr/src/screens/discover_screen/discover_screen.dart';
 import 'package:streamlivr/src/screens/following_screen/following_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/wallet_screen.dart';
@@ -22,11 +23,14 @@ class _MainScreenState extends State<MainScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarIconBrightness: Brightness.dark,
     ));
+    
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<UserProvider>(context, listen: false).fetchData();
       Provider.of<ChannelProvider>(context, listen: false).fetcChannel();
       Provider.of<GenreProvider>(context, listen: false).fetchList();
+      Provider.of<WalletProvider>(context, listen: false)
+          .fetchBalance(address: "");
     });
   }
 

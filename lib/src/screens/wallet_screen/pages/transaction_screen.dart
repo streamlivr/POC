@@ -13,7 +13,7 @@ class TransactionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Styles.black,
       body: ListView.separated(
-        itemCount: 10,
+        itemCount: 1,
         physics: const NeverScrollableScrollPhysics(),
         separatorBuilder: (context, index) => const Verticalspace(space: 10),
         padding: screenPadding,

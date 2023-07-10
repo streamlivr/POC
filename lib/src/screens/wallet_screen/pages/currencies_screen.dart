@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/models/response_model.dart';
+import 'package:streamlivr/src/providers/wallet_provider.dart';
 import 'package:streamlivr/src/services/crypto_services.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
@@ -41,7 +43,7 @@ class CurrenciesScreen extends StatelessWidget {
     required CurrenciesModel data,
   }) {
     return FutureBuilder<ResponseModel>(
-        future: CryptoService.fetchData(currency: data.title.toString()),
+        future: CryptoService.convertCurrency(currency: data.title.toString()),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!.status == "success") {
@@ -73,36 +75,65 @@ class CurrenciesScreen extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        BuildText(
-                          data: jsonDecode(snapshot.data!.data)['rate']
-                                      .toString() ==
-                                  "null"
-                              ? (int.parse("0") + 1000).toString()
-                              : (1000 *
-                                      double.parse(jsonDecode(
-                                              snapshot.data!.data)['rate']
-                                          .toString()))
-                                  .toString(),
-                          // data: jsonDecode(snapshot.data!.data)['rate'] == null
-                          //     ? ""
-                          //     : int.parse(jsonDecode(snapshot.data!.data)['rate']
-                          //             .toString())
-                          //         .toString(),
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        const BuildText(
-                          data: 'USD value',
-                          color: Color(0xff7d8fa9),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    ),
+                    Consumer<WalletProvider>(builder: (context, p, _) {
+                      if (p.hasData) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            BuildText(
+                              data: jsonDecode(snapshot.data!.data)['rate']
+                                          .toString() ==
+                                      "null"
+                                  ? ""
+                                  : '\$${(double.parse(p.model!.data!.first.token!.balance!).roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}',
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            BuildText(
+                              data: jsonDecode(snapshot.data!.data)['rate']
+                                          .toString() ==
+                                      "null"
+                                  ? "-"
+                                  : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
+                              color: const Color(0xff7d8fa9),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            BuildText(
+                              data: jsonDecode(snapshot.data!.data)['rate']
+                                          .toString() ==
+                                      "null"
+                                  ? (int.parse("0") + 1000).toString()
+                                  : (1000 *
+                                          double.parse(jsonDecode(
+                                                  snapshot.data!.data)['rate']
+                                              .toString()))
+                                      .toString(),
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            BuildText(
+                              data: jsonDecode(snapshot.data!.data)['rate']
+                                          .toString() ==
+                                      "null"
+                                  ? "-"
+                                  : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
+                              color: const Color(0xff7d8fa9),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
+                        );
+                      }
+                    }),
                   ],
                 ),
               );

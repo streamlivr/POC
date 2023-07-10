@@ -21,14 +21,7 @@ class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      
-    var category = <CategoryModel>[
-      CategoryModel(title: "Games"),
-      CategoryModel(title: "Music"),
-      CategoryModel(title: "Creative"),
-      CategoryModel(title: "Games"),
-      CategoryModel(title: "Music"),
-      CategoryModel(title: "Creative"),
-    ];
+   
     return Scaffold(
       backgroundColor: Styles.transparent,
       body: Column(
@@ -55,7 +48,7 @@ class DiscoverScreen extends StatelessWidget {
               ),
               Padding(
                 padding: screenPadding,
-                child: buildCategory(model: category),
+                child: buildCategory(),
               ),
               const Verticalspace(space: 13),
               Padding(
@@ -91,7 +84,7 @@ class DiscoverScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCategory({required List<CategoryModel> model}) {
+  Widget buildCategory() {
     return SizedBox(
       height: 36,
       child: Consumer<GenreProvider>(builder: (context, provider, _) {

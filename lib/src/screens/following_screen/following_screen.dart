@@ -17,26 +17,7 @@ class FollowingScreen extends StatelessWidget {
   const FollowingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var data = <FollowingModel>[
-      FollowingModel(
-          src: Assets.assetsImagesFlight, title: "Flight tour", views: "78.4"),
-      FollowingModel(
-          src: Assets.assetsImagesTravel, title: "Travelling", views: "78.4"),
-      FollowingModel(
-          src: Assets.assetsImagesSunset,
-          title: "Sunset at Mon",
-          views: "78.4"),
-      FollowingModel(
-          src: Assets.assetsImagesAustralia,
-          title: "Austria Morning",
-          views: "78.4"),
-      FollowingModel(
-          src: Assets.assetsImagesAncient,
-          title: "Ancient temple",
-          views: "78.4"),
-      FollowingModel(
-          src: Assets.assetsImagesFlight, title: "Flight tour", views: "78.4"),
-    ];
+   
     return Scaffold(
       backgroundColor: Styles.transparent,
       body: Padding(
