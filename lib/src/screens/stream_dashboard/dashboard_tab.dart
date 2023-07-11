@@ -20,7 +20,7 @@ class DashboardTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       body: Padding(
         padding: screenPadding,
         child: Column(
@@ -31,7 +31,7 @@ class DashboardTab extends StatelessWidget {
               child: BuildText(
                 data: "You're offline",
                 fontSize: 24,
-                color: Colors.white,
+                // color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/constants/constants.dart';
-import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
@@ -11,7 +10,7 @@ class TransactionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.black,
+      // backgroundColor: Styles.black,
       body: ListView.separated(
         itemCount: 1,
         physics: const NeverScrollableScrollPhysics(),
@@ -26,7 +25,7 @@ class TransactionScreen extends StatelessWidget {
 
   Widget buildTransactionTile() {
     return Container(
-      color: Styles.black,
+      // color: Styles.black,
       child: const Row(
         children: [
           CircleAvatar(
@@ -40,7 +39,7 @@ class TransactionScreen extends StatelessWidget {
               BuildText(
                 data: 'Kachi',
                 fontSize: 16,
-                color: Colors.white,
+                // color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
               BuildText(
@@ -58,7 +57,7 @@ class TransactionScreen extends StatelessWidget {
               BuildText(
                 data: '~\$130,000',
                 fontSize: 18,
-                color: Colors.white,
+                // color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
               BuildText(

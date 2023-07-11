@@ -946,6 +946,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_barcodes:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_barcodes
+      sha256: "72413cd3334e238caef9f8bd7b0c4f8f3ab06d191346a279fffd0cb3802a77cb"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "22.1.37"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: e2b49a16805a54714ba0712d62e9f3c6311081ec2bec835529b778cc5349430a
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "22.1.37"
   synchronized:
     dependency: transitive
     description:

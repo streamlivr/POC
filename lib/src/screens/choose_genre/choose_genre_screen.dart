@@ -174,7 +174,7 @@ some live streams you might like.''',
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13),
                           image: DecorationImage(
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                             image: NetworkImage(
                               provider.list[index].image.toString(),
                             ),
@@ -195,7 +195,7 @@ some live streams you might like.''',
                         child: Center(
                           child: BuildText(
                             data: provider.list[index].title.toString(),
-                            // color: Styles.white,
+                            color: Styles.white,
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                           ),

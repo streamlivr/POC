@@ -27,7 +27,7 @@ class CryptoService {
     try {
       var response = await http.get(
         Uri.parse(
-            "https://service.lisk.com/api/v2/accounts?address=lskjschf4aov8t9dp3aeaokvk99txz9webvu3egc4"),
+            "https://service.lisk.com/api/v2/accounts?address=$address"),
       );
       if (response.statusCode.toString()[0] == "2") {
         return ResponseModel(data: response.body, status: "success");

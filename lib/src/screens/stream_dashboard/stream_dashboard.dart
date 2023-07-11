@@ -7,6 +7,7 @@ import '../../../assets/assets.dart';
 import '../../routes/router.dart';
 import '../../widgets/build_text.dart';
 import '../../widgets/horizontal_space.dart';
+import '../notification_screen/notification_screen.dart';
 import '../profile_screen/profile_screen.dart';
 import 'content_tab.dart';
 import 'dashboard_tab.dart';
@@ -18,7 +19,7 @@ class StreamDashboard extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
             children: [
@@ -32,7 +33,7 @@ class StreamDashboard extends StatelessWidget {
                   labelColor: Styles.primary,
                   indicatorWeight: 1.0,
                   indicatorColor: Styles.primary,
-                  unselectedLabelColor: Colors.white,
+                  unselectedLabelColor: Colors.grey,
                   tabs: [
                     Tab(text: "Dashboard"),
                     Tab(text: "Content"),
@@ -58,6 +59,8 @@ class StreamDashboard extends StatelessWidget {
         children: [
           Row(
             children: [
+              Image.asset(Assets.assetsIconsMainLogo),
+              const Horizontalspace(space: 10),
               InkWell(
                   onTap: () {
                     push(context: context, page: const ProfileScreen());
@@ -65,7 +68,11 @@ class StreamDashboard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),
-              SvgPicture.asset(Assets.assetsIconsNotificationsLogo),
+              InkWell(
+                  onTap: () {
+                    push(context: context, page: const NotificationScreen());
+                  },
+                  child: SvgPicture.asset(Assets.assetsIconsNotificationsLogo)),
               const Horizontalspace(space: 5),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(

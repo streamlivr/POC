@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:streamlivr/src/models/channel_model.dart';
 import 'package:streamlivr/src/models/user_model.dart';
 import 'package:streamlivr/src/services/user_service.dart';
-
-import '../../assets/assets.dart';
 
 class ChannelProvider extends ChangeNotifier {
   List<UserModel> _list = [];

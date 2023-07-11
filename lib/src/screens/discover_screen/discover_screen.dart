@@ -1,7 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/src/constants/constants.dart';
-import 'package:streamlivr/src/models/category_model.dart';
-import 'package:streamlivr/src/models/streaming_model.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/live_screen/live_page2.dart';
@@ -20,8 +18,6 @@ class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-     
-   
     return Scaffold(
       backgroundColor: Styles.transparent,
       body: Column(
@@ -57,7 +53,7 @@ class DiscoverScreen extends StatelessWidget {
                   children: [
                     const BuildText(
                       data: 'Top Streamers Live',
-                      color: Styles.white,
+                      // color: Styles.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
@@ -151,8 +147,10 @@ class DiscoverScreen extends StatelessWidget {
                                   height: 156,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: NetworkImage(
-                                            model[index].streamImage!)),
+                                      image: NetworkImage(
+                                          model[index].streamImage!),
+                                      fit: BoxFit.cover,
+                                    ),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                 ),
@@ -195,12 +193,12 @@ class DiscoverScreen extends StatelessWidget {
                                             children: [
                                               const Icon(
                                                 Icons.remove_red_eye,
-                                                color: Styles.white,
+                                                // color: Styles.white,
                                               ),
                                               const Horizontalspace(space: 5),
                                               BuildText(
                                                 data: formatNumber("23"),
-                                                color: Styles.white,
+                                                // color: Styles.white,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -217,7 +215,7 @@ class DiscoverScreen extends StatelessWidget {
                           const Verticalspace(space: 13),
                           BuildText(
                             data: model[index].userName!,
-                            color: Styles.white,
+                            // color: Styles.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),
@@ -262,7 +260,7 @@ class DiscoverScreen extends StatelessWidget {
                                             data: e.value,
                                             fontSize: 5,
                                             fontWeight: FontWeight.w500,
-                                            color: Styles.white,
+                                            // color: Styles.white,
                                           ),
                                         ))
                                     .toList(),
@@ -322,8 +320,10 @@ class DiscoverScreen extends StatelessWidget {
                                   height: 156,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: NetworkImage(
-                                            model![index].streamImage!)),
+                                      image: NetworkImage(
+                                          model![index].streamImage!),
+                                      fit: BoxFit.cover,
+                                    ),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                 ),
@@ -366,12 +366,12 @@ class DiscoverScreen extends StatelessWidget {
                                             children: [
                                               const Icon(
                                                 Icons.remove_red_eye,
-                                                color: Styles.white,
+                                                // color: Styles.white,
                                               ),
                                               const Horizontalspace(space: 5),
                                               BuildText(
                                                 data: formatNumber("67"),
-                                                color: Styles.white,
+                                                // color: Styles.white,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -408,7 +408,7 @@ class DiscoverScreen extends StatelessWidget {
                                 children: [
                                   BuildText(
                                     data: model[index].userName!,
-                                    color: Styles.white,
+                                    // color: Styles.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -416,13 +416,13 @@ class DiscoverScreen extends StatelessWidget {
                                     children: [
                                       BuildText(
                                         data: model[index].title!,
-                                        color: Styles.white,
+                                        // color: Styles.white,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w500,
                                       ),
                                       BuildText(
                                         data: model[index].description!,
-                                        color: Styles.white,
+                                        // color: Styles.white,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10,
                                       ),
@@ -496,8 +496,8 @@ class DiscoverScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: Styles.white,
-          ),
+              // color: Styles.white,
+              ),
         ),
         child: Row(
           children: [

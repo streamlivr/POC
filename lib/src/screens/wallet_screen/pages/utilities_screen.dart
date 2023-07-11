@@ -5,7 +5,7 @@ class UtilitiesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       body: Center(
         child: Text(''),
       ),

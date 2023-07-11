@@ -6,6 +6,7 @@ import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/my_schannel_screen/my_channel_screen.dart';
+import 'package:streamlivr/src/screens/settings_screen/settings_screen.dart';
 import 'package:streamlivr/src/theme/style.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
@@ -23,13 +24,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
+            // color: Colors.white,
+            ),
       ),
       body: Consumer<UserProvider>(builder: (context, snapshot, _) {
         if (!snapshot.hadData) {
@@ -75,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     BuildText(
                       data: 'Online',
                       fontSize: 12,
-                      color: Colors.white,
+                      // color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ],
@@ -87,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: BuildText(
               data: '${snapshot.model!.firstName} ${snapshot.model!.lastName}',
               fontSize: 24,
-              color: Colors.white,
+              // color: Colors.white,
               fontWeight: FontWeight.w700,
             )),
             const Verticalspace(space: 28),
@@ -123,7 +124,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               src: Assets.assetsIconsNotificationIcon,
             ),
             buildListTile(
-              onTap: () {},
+              onTap: () {
+                push(context: context, page: const SettingScreen());
+              },
               title: 'Preferences',
               src: Assets.assetsIconsSettingIcon,
             ),
@@ -183,13 +186,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               src,
               height: 20,
               width: 19,
-              color: Colors.white,
+              color: Theme.of(context).textTheme.titleSmall!.color,
             ),
             const Horizontalspace(space: 10),
             BuildText(
               data: title,
               fontSize: 16,
-              color: Colors.white,
+              // color: Theme.of(context).textTheme.titleSmall!.color,
               fontWeight: FontWeight.w500,
             ),
             const Spacer(),
@@ -215,7 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BuildText(
           data: subtitle,
           fontSize: 12,
-          color: Colors.white,
+          // color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
       ],

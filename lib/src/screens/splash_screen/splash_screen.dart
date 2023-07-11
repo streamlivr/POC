@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
     _animationController!.forward().then((value) {
-      push(context: context, page: const Wrapper());
+      pushRemoveAll(context: context, page: const Wrapper());
     });
   }
 

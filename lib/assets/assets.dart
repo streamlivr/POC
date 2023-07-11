@@ -37,6 +37,10 @@ class Assets {
   /// assets/icons/box_icon.svg
   static const String assetsIconsBoxIcon = "assets/icons/box_icon.svg";
 
+  /// Assets for assetsIconsBuyButton
+  /// assets/icons/buy_button.png
+  static const String assetsIconsBuyButton = "assets/icons/buy_button.png";
+
   /// Assets for assetsIconsCommentIcon
   /// assets/icons/comment_icon.svg
   static const String assetsIconsCommentIcon = "assets/icons/comment_icon.svg";
@@ -161,6 +165,14 @@ class Assets {
   /// assets/icons/solana.png
   static const String assetsIconsSolana = "assets/icons/solana.png";
 
+  /// Assets for assetsIconsStreamlivrCoin
+  /// assets/icons/streamlivr_coin.png
+  static const String assetsIconsStreamlivrCoin = "assets/icons/streamlivr_coin.png";
+
+  /// Assets for assetsIconsSwapButton
+  /// assets/icons/swap_button.png
+  static const String assetsIconsSwapButton = "assets/icons/swap_button.png";
+
   /// Assets for assetsIconsTipUserIcon
   /// assets/icons/tip_user_icon.svg
   static const String assetsIconsTipUserIcon = "assets/icons/tip_user_icon.svg";
@@ -176,6 +188,10 @@ class Assets {
   /// Assets for assetsIconsUpArrow
   /// assets/icons/up_arrow.svg
   static const String assetsIconsUpArrow = "assets/icons/up_arrow.svg";
+
+  /// Assets for assetsIconsUpdownArrow
+  /// assets/icons/updown_arrow.svg
+  static const String assetsIconsUpdownArrow = "assets/icons/updown_arrow.svg";
 
   /// Assets for assetsIconsUsdtWallet
   /// assets/icons/usdt_wallet.png

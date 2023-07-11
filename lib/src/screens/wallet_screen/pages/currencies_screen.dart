@@ -26,7 +26,7 @@ class CurrenciesScreen extends StatelessWidget {
       CurrenciesModel(src: Assets.assetsIconsNearWallet, title: "NEAR"),
     ];
     return Scaffold(
-      backgroundColor: Styles.black,
+      // backgroundColor: Styles.black,
       body: ListView.separated(
         itemCount: currency.length,
         physics: const NeverScrollableScrollPhysics(),
@@ -42,159 +42,177 @@ class CurrenciesScreen extends StatelessWidget {
   Widget buildCurrencyTile({
     required CurrenciesModel data,
   }) {
-    return FutureBuilder<ResponseModel>(
-        future: CryptoService.convertCurrency(currency: data.title.toString()),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.status == "success") {
-              return Container(
-                color: Styles.black,
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(data.src.toString()),
-                      backgroundColor: Styles.transparent,
-                    ),
-                    const Horizontalspace(space: 5),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BuildText(
-                          data: '\$${data.title}',
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        const BuildText(
-                          data: 'Owns 32,000 STVR',
-                          color: Color(0xff7d8fa9),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Consumer<WalletProvider>(builder: (context, p, _) {
-                      if (p.hasData) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            BuildText(
-                              data: jsonDecode(snapshot.data!.data)['rate']
-                                          .toString() ==
-                                      "null"
-                                  ? ""
-                                  : '\$${(double.parse(p.model!.data!.first.token!.balance!).roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}',
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            BuildText(
-                              data: jsonDecode(snapshot.data!.data)['rate']
-                                          .toString() ==
-                                      "null"
-                                  ? "-"
-                                  : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
-                              color: const Color(0xff7d8fa9),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        );
-                      } else {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            BuildText(
-                              data: jsonDecode(snapshot.data!.data)['rate']
-                                          .toString() ==
-                                      "null"
-                                  ? (int.parse("0") + 1000).toString()
-                                  : (1000 *
-                                          double.parse(jsonDecode(
-                                                  snapshot.data!.data)['rate']
-                                              .toString()))
-                                      .toString(),
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            BuildText(
-                              data: jsonDecode(snapshot.data!.data)['rate']
-                                          .toString() ==
-                                      "null"
-                                  ? "-"
-                                  : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
-                              color: const Color(0xff7d8fa9),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        );
-                      }
-                    }),
-                  ],
-                ),
-              );
+    return Consumer<WalletProvider>(builder: (context, p, _) {
+      return FutureBuilder<ResponseModel>(
+          future:
+              CryptoService.convertCurrency(currency: data.title.toString()),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.status == "success") {
+                return Container(
+                  // color: Styles.black,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage(data.src.toString()),
+                        backgroundColor: Styles.transparent,
+                      ),
+                      const Horizontalspace(space: 5),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BuildText(
+                            data: '\$${data.title}',
+                            fontSize: 16,
+                            // color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          Builder(builder: (context) {
+                            if (p.hasData) {
+                              return BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? ""
+                                    : '\$ ${(double.parse(p.model!.data!.first.token!.balance!).roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}USD',
+                                color: const Color(0xff7d8fa9),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              );
+                            } else {
+                              return BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? ""
+                                    : '\$ ${(double.parse("3").roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}USD',
+                                color: const Color(0xff7d8fa9),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              );
+                            }
+                          }),
+                        ],
+                      ),
+                      const Spacer(),
+                      Consumer<WalletProvider>(builder: (context, p, _) {
+                        if (p.hasData) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? ""
+                                    : '\$ ${(double.parse(p.model!.data!.first.token!.balance!).roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}',
+                                fontSize: 18,
+                                // color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? "-"
+                                    : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
+                                color: const Color(0xff7d8fa9),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? ""
+                                    : '\$ ${(double.parse("3.00").roundToDouble() * double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble())}',
+                                fontSize: 18,
+                                // color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              BuildText(
+                                data: jsonDecode(snapshot.data!.data)['rate']
+                                            .toString() ==
+                                        "null"
+                                    ? "-"
+                                    : "${double.parse(jsonDecode(snapshot.data!.data)['rate'].toString()).roundToDouble()} %",
+                                color: const Color(0xff7d8fa9),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          );
+                        }
+                      }),
+                    ],
+                  ),
+                );
+              } else {
+                return Container(
+                  // color: Styles.black,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage(data.src.toString()),
+                        backgroundColor: Styles.transparent,
+                      ),
+                      const Horizontalspace(space: 5),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BuildText(
+                            data: '\$${data.title}',
+                            fontSize: 16,
+                            // color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          const BuildText(
+                            data: '-',
+                            color: Color(0xff7d8fa9),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          BuildText(
+                            data: "-",
+                            // data: jsonDecode(snapshot.data!.data)['rate'] == null
+                            //     ? ""
+                            //     : int.parse(jsonDecode(snapshot.data!.data)['rate']
+                            //             .toString())
+                            //         .toString(),
+                            fontSize: 18,
+                            // color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          BuildText(
+                            data: '-',
+                            color: Color(0xff7d8fa9),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }
             } else {
-              return Container(
-                color: Styles.black,
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(data.src.toString()),
-                      backgroundColor: Styles.transparent,
-                    ),
-                    const Horizontalspace(space: 5),
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BuildText(
-                          data: '-',
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        BuildText(
-                          data: '-',
-                          color: Color(0xff7d8fa9),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        BuildText(
-                          data: "-",
-                          // data: jsonDecode(snapshot.data!.data)['rate'] == null
-                          //     ? ""
-                          //     : int.parse(jsonDecode(snapshot.data!.data)['rate']
-                          //             .toString())
-                          //         .toString(),
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        BuildText(
-                          data: '-',
-                          color: Color(0xff7d8fa9),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
+              return const SizedBox();
             }
-          } else {
-            return const SizedBox();
-          }
-        });
+          });
+    });
   }
 }

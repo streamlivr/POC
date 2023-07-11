@@ -35,9 +35,9 @@ class _WrapperState extends State<Wrapper> {
     print(user);
 
     if (user != null) {
-      push(context: context, page: const MainScreen());
+      pushRemoveAll(context: context, page: const MainScreen());
     } else {
-      push(context: context, page: const WelcomeScreen());
+      pushRemoveAll(context: context, page: const WelcomeScreen());
     }
   }
 }

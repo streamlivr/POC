@@ -23,14 +23,21 @@ class _MainScreenState extends State<MainScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarIconBrightness: Brightness.dark,
     ));
-    
+
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       Provider.of<UserProvider>(context, listen: false).fetchData();
+      Provider.of<UserProvider>(context, listen: false)
+          .fetchWalletData()
+          .then((value) async {
+        var data = Provider.of<UserProvider>(context, listen: false);
+        Provider.of<WalletProvider>(context, listen: false)
+            .fetchBalance(address: data.model1!.address ?? "");
+      });
       Provider.of<ChannelProvider>(context, listen: false).fetcChannel();
       Provider.of<GenreProvider>(context, listen: false).fetchList();
-      Provider.of<WalletProvider>(context, listen: false)
-          .fetchBalance(address: "");
+
+      Provider.of<WalletProvider>(context, listen: false).fetchData();
     });
   }
 
@@ -67,8 +74,8 @@ class _MainScreenState extends State<MainScreen> {
             type: BottomNavigationBarType.fixed,
             selectedItemColor: Styles.primary,
             elevation: 0,
-            backgroundColor: Styles.black,
-            unselectedItemColor: Styles.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            unselectedItemColor: Styles.grayColor,
             selectedLabelStyle: const TextStyle(color: Styles.white),
             currentIndex: provider.currentIndex,
             onTap: (value) => provider.changeIndex(value),
@@ -76,19 +83,25 @@ class _MainScreenState extends State<MainScreen> {
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     Assets.assetsIconsFollowingLogo,
-                    color: provider.currentIndex == 0 ? Styles.primary : null,
+                    color: provider.currentIndex == 0
+                        ? Styles.primary
+                        : Styles.grayColor,
                   ),
                   label: "Following"),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     Assets.assetsIconsDiscoverLogo,
-                    color: provider.currentIndex == 1 ? Styles.primary : null,
+                    color: provider.currentIndex == 1
+                        ? Styles.primary
+                        : Styles.grayColor,
                   ),
                   label: "Discover"),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     Assets.assetsIconsWalletLogo,
-                    color: provider.currentIndex == 2 ? Styles.primary : null,
+                    color: provider.currentIndex == 2
+                        ? Styles.primary
+                        : Styles.grayColor,
                   ),
                   label: "Wallet"),
             ]),

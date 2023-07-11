@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
-import 'package:streamlivr/src/models/following_model.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/my_app_bar.dart';
@@ -17,7 +16,6 @@ class FollowingScreen extends StatelessWidget {
   const FollowingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: Styles.transparent,
       body: Padding(
@@ -117,7 +115,7 @@ class FollowingScreen extends StatelessWidget {
               children: [
                 BuildText(
                   data: data[index].lastName!,
-                  color: Styles.white,
+                  // color: Styles.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
@@ -125,13 +123,13 @@ class FollowingScreen extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.remove_red_eye,
-                      color: Color(0xffe0e0e0),
+                      // color: Color(0xffe0e0e0),
                       size: 26,
                     ),
                     Horizontalspace(space: 5),
                     BuildText(
                       data: '0 viewers',
-                      color: Color(0xffe0e0e0),
+                      // color: Color(0xffe0e0e0),
                       fontSize: 14,
                     ),
                   ],
@@ -167,7 +165,7 @@ class FollowingScreen extends StatelessWidget {
                     BuildText(
                       data: 'Kachi',
                       fontSize: 8,
-                      color: Styles.white,
+                      // color: Styles.white,
                     )
                   ],
                 )

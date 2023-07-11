@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/assets/assets.dart';
+import 'package:streamlivr/src/screens/notification_screen/notification_screen.dart';
 import 'package:streamlivr/src/screens/stream_dashboard/stream_dashboard.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
@@ -35,7 +36,11 @@ class MyAppBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   child: SvgPicture.asset(Assets.assetsIconsPersonIcon)),
               const Spacer(),
-              SvgPicture.asset(Assets.assetsIconsNotificationsLogo),
+              InkWell(
+                  onTap: () {
+                    push(context: context, page: const NotificationScreen());
+                  },
+                  child: SvgPicture.asset(Assets.assetsIconsNotificationsLogo)),
               const Horizontalspace(space: 19),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -63,7 +68,7 @@ class MyAppBar extends StatelessWidget {
           ),
           BuildText(
             data: pageTitle,
-            color: Styles.white,
+            // color: Styles.white,
             fontSize: 24,
             fontWeight: FontWeight.w600,
           ),
