@@ -155,58 +155,55 @@ class CurrenciesScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                return Container(
-                  // color: Styles.black,
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(data.src.toString()),
-                        backgroundColor: Styles.transparent,
-                      ),
-                      const Horizontalspace(space: 5),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BuildText(
-                            data: '\$${data.title}',
-                            fontSize: 16,
-                            // color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          const BuildText(
-                            data: '-',
-                            color: Color(0xff7d8fa9),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          BuildText(
-                            data: "-",
-                            // data: jsonDecode(snapshot.data!.data)['rate'] == null
-                            //     ? ""
-                            //     : int.parse(jsonDecode(snapshot.data!.data)['rate']
-                            //             .toString())
-                            //         .toString(),
-                            fontSize: 18,
-                            // color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          BuildText(
-                            data: '-',
-                            color: Color(0xff7d8fa9),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                return Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage(data.src.toString()),
+                      backgroundColor: Styles.transparent,
+                    ),
+                    const Horizontalspace(space: 5),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BuildText(
+                          data: '\$${data.title}',
+                          fontSize: 16,
+                          // color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        const BuildText(
+                          data: '-',
+                          color: Color(0xff7d8fa9),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        BuildText(
+                          data: "-",
+                          // data: jsonDecode(snapshot.data!.data)['rate'] == null
+                          //     ? ""
+                          //     : int.parse(jsonDecode(snapshot.data!.data)['rate']
+                          //             .toString())
+                          //         .toString(),
+                          fontSize: 18,
+                          // color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        BuildText(
+                          data: '-',
+                          color: Color(0xff7d8fa9),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                  ],
                 );
               }
             } else {

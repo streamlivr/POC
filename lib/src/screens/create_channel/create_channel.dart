@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:streamlivr/src/models/channel_model.dart';
+import 'package:provider/provider.dart';
+import 'package:streamlivr/src/models/all_channel_model.dart';
 import 'package:streamlivr/src/routes/router.dart';
-import 'package:streamlivr/src/services/user_service.dart';
+import 'package:streamlivr/src/services/channel_service.dart';
 import 'package:streamlivr/src/widgets/app_message.dart';
 
+import '../../providers/user_provider.dart';
 import '../../theme/style.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_textfield.dart';
@@ -26,6 +27,14 @@ class _CreateChannelState extends State<CreateChannel> {
   var imageUrl = "";
   final myKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +87,7 @@ class _CreateChannelState extends State<CreateChannel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BuildText(
-                    data: 'Channel Title',
+                    data: 'Channel Name',
                     fontSize: 14,
                     color: Theme.of(context)
                         .appBarTheme
@@ -88,12 +97,36 @@ class _CreateChannelState extends State<CreateChannel> {
                   ),
                   const Verticalspace(space: 8),
                   AppTextField(
-                    hint: "Channel Title",
+                    hint: "Channel name",
                     prefix: const Icon(
                       Icons.person_outline,
                       color: Styles.grey,
                     ),
                     controller: titleController,
+                  ),
+                ],
+              ),
+              const Verticalspace(space: 26),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BuildText(
+                    data: 'Channel Description',
+                    fontSize: 14,
+                    color: Theme.of(context)
+                        .appBarTheme
+                        .iconTheme!
+                        .color!
+                        .withOpacity(0.5),
+                  ),
+                  const Verticalspace(space: 8),
+                  AppTextField(
+                    hint: "Channel Description",
+                    prefix: const Icon(
+                      Icons.person_outline,
+                      color: Styles.grey,
+                    ),
+                    controller: descriptionController,
                   ),
                 ],
               ),
@@ -108,30 +141,27 @@ class _CreateChannelState extends State<CreateChannel> {
                     return;
                   }
                   if (imageUrl.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("seleted An Image")));
+                    AppMessage.showMessage("select image");
                     return;
                   }
                   ProcessingDialog.showProcessingDialog(context: context);
-                  UserService.createChannel(
-                    userData: ChannelModel(
-                      title: titleController.text,
-                      image: imageUrl,
+                  ChannelService.createChannel(
+                    channelData: AllChannelModel(
+                      channelName: titleController.text,
+                      channelImage: imageUrl,
+                      channelDescription: descriptionController.text,
                     ),
                   ).then((value) {
+                    Provider.of<UserProvider>(context, listen: false)
+                        .checkChannel();
                     pop(context: context);
-                    if (value.status == "success") {
-                      AppMessage.showMessage(
-                          context: context,
-                          message: 'Channel Created',
-                          type: AnimatedSnackBarType.success);
-                      pop(context: context);
-                    } else {
-                      AppMessage.showMessage(
-                          context: context,
-                          message: 'Channel Created',
-                          type: AnimatedSnackBarType.success);
-                    }
+
+                    AppMessage.showMessage('Channel Created');
+                    pop(context: context);
+                  }).onError((error, stackTrace) {
+                    pop(context: context);
+                    AppMessage.showMessage(error.toString());
+                    pop(context: context);
                   });
                 },
               ),

@@ -96,6 +96,8 @@ abstract class Styles {
       fontFamily: "Poppins",
       applyElevationOverlayColor: true,
       useMaterial3: true,
+      
+      
       shadowColor: isDarkTheme ? transparent : transparent,
       canvasColor: isDarkTheme ? primary : primary,
       scaffoldBackgroundColor: isDarkTheme ? black : white,

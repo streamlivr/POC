@@ -38,6 +38,7 @@ dependencies:
   zego_uikit_prebuilt_live_streaming: ^2.12.5
   day_night_themed_switch: ^1.0.0
   syncfusion_flutter_barcodes: ^22.1.37
+  oktoast: ^3.3.1
 
 dev_dependencies:
 

@@ -182,7 +182,7 @@ class WalletScreen extends StatelessWidget {
                                     onTap: () {
                                       showSheet(context);
                                     },
-                                    data: 'Receivece',
+                                    data: 'Receive',
                                     backgroundColor: Theme.of(context)
                                         .textTheme
                                         .titleSmall!

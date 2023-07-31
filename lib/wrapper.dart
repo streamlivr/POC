@@ -15,11 +15,9 @@ class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized()
-        .addPostFrameCallback((timeStamp) {
-  init();
-        });
-  
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      init();
+    });
   }
 
   @override
@@ -31,8 +29,6 @@ class _WrapperState extends State<Wrapper> {
 
   void init() async {
     var user = FirebaseAuth.instance.currentUser;
-
-    print(user);
 
     if (user != null) {
       pushRemoveAll(context: context, page: const MainScreen());

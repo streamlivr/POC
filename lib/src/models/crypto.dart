@@ -297,7 +297,7 @@ final int? rank;
 final String? status;
 final String? rewards;
 const Delegate({this.username , this.consecutiveMissedBlocks , this.registrationHeight , this.lastForgedHeight , this.isBanned , this.voteWeight , this.totalVotesReceived , this.producedBlocks , this.rank , this.status , this.rewards });
-Delegate copyWith({String? username, int? consecutiveMissedBlocks, int? registrationHeight, dynamic? lastForgedHeight, bool? isBanned, String? voteWeight, String? totalVotesReceived, int? producedBlocks, int? rank, String? status, String? rewards}){
+Delegate copyWith({String? username, int? consecutiveMissedBlocks, int? registrationHeight, dynamic lastForgedHeight, bool? isBanned, String? voteWeight, String? totalVotesReceived, int? producedBlocks, int? rank, String? status, String? rewards}){
 return Delegate(
             username:username ?? this.username,
 consecutiveMissedBlocks:consecutiveMissedBlocks ?? this.consecutiveMissedBlocks,

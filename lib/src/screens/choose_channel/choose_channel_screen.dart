@@ -1,8 +1,6 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/src/providers/authentification_provider.dart';
 import 'package:streamlivr/src/providers/channel_provider.dart';
@@ -100,11 +98,7 @@ class _ChooseChannelScreenState extends State<ChooseChannelScreen> {
                     context,
                     listen: false,
                   ).checkedList.isEmpty) {
-                    AppMessage.showMessage(
-                      context: context,
-                      message: 'Select at least one',
-                      type: AnimatedSnackBarType.info,
-                    );
+                    AppMessage.showMessage('Select at least one');
                     return;
                   }
                   ProcessingDialog.showProcessingDialog(
@@ -121,20 +115,14 @@ class _ChooseChannelScreenState extends State<ChooseChannelScreen> {
                     pop(context: context);
                     if (value.status == 'success') {
                       AppMessage.showMessage(
-                        context: context,
-                        message: 'channel selected',
-                        type: AnimatedSnackBarType.success,
+                        'channel selected',
                       );
                       push(
                         context: context,
                         page: const MainScreen(),
                       );
                     } else {
-                      AppMessage.showMessage(
-                        context: context,
-                        message: 'something went wrong',
-                        type: AnimatedSnackBarType.error,
-                      );
+                      AppMessage.showMessage('something went wrong');
                     }
                   });
 
@@ -197,7 +185,7 @@ class _ChooseChannelScreenState extends State<ChooseChannelScreen> {
                       ),
                       const Spacer(),
                       AnimatedContainer(
-                        duration: KAninationDuration,
+                        duration: kAninationDuration,
                         height: 26,
                         width: !provider.checkedList
                                 .contains(provider.list[index].uuid)

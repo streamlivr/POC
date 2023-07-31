@@ -41,7 +41,7 @@ class WalletProvider extends ChangeNotifier {
         }
       });
     } catch (e) {
-      print(e);
+     
       _isLoading = false;
       _hasData = false;
       notifyListeners();
@@ -81,7 +81,7 @@ class WalletProvider extends ChangeNotifier {
           ),
         );
         notifyListeners();
-        print(e);
+       
       }
       await Future.delayed(const Duration(seconds: 3));
     }

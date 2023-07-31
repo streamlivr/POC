@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 class UserModel {
   String? firstName;
   String? uuid;
@@ -24,7 +22,6 @@ class UserModel {
     this.avatar,
     this.userType,
   });
- 
 
   UserModel copyWith({
     String? firstName,
@@ -69,10 +66,13 @@ class UserModel {
       firstName: map['firstName'] != null ? map['firstName'] as String : null,
       uuid: map['uuid'] != null ? map['uuid'] as String : null,
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
-      dateOfBirth: map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
-      emailAddress: map['emailAddress'] != null ? map['emailAddress'] as String : null,
+      dateOfBirth:
+          map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
+      emailAddress:
+          map['emailAddress'] != null ? map['emailAddress'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
-      phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
+      phoneNumber:
+          map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
       userType: map['userType'] != null ? map['userType'] as String : null,
     );
@@ -80,7 +80,8 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -90,29 +91,28 @@ class UserModel {
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.firstName == firstName &&
-      other.uuid == uuid &&
-      other.lastName == lastName &&
-      other.dateOfBirth == dateOfBirth &&
-      other.emailAddress == emailAddress &&
-      other.password == password &&
-      other.phoneNumber == phoneNumber &&
-      other.avatar == avatar &&
-      other.userType == userType;
+
+    return other.firstName == firstName &&
+        other.uuid == uuid &&
+        other.lastName == lastName &&
+        other.dateOfBirth == dateOfBirth &&
+        other.emailAddress == emailAddress &&
+        other.password == password &&
+        other.phoneNumber == phoneNumber &&
+        other.avatar == avatar &&
+        other.userType == userType;
   }
 
   @override
   int get hashCode {
     return firstName.hashCode ^
-      uuid.hashCode ^
-      lastName.hashCode ^
-      dateOfBirth.hashCode ^
-      emailAddress.hashCode ^
-      password.hashCode ^
-      phoneNumber.hashCode ^
-      avatar.hashCode ^
-      userType.hashCode;
+        uuid.hashCode ^
+        lastName.hashCode ^
+        dateOfBirth.hashCode ^
+        emailAddress.hashCode ^
+        password.hashCode ^
+        phoneNumber.hashCode ^
+        avatar.hashCode ^
+        userType.hashCode;
   }
 }

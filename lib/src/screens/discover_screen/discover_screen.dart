@@ -1,9 +1,12 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:streamlivr/src/constants/constants.dart';
+import 'package:streamlivr/src/models/all_channel_model.dart';
+import 'package:streamlivr/src/models/user_model.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/live_screen/live_page2.dart';
 import 'package:streamlivr/src/screens/profile_screen/profile_screen.dart';
+import 'package:streamlivr/src/services/channel_service.dart';
 import 'package:streamlivr/src/services/user_service.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
@@ -114,8 +117,8 @@ class DiscoverScreen extends StatelessWidget {
     var user = Provider.of<UserProvider>(context, listen: false);
     return SizedBox(
       height: 250,
-      child: StreamBuilder<List<StreamModel>>(
-          stream: UserService.readStreams(),
+      child: StreamBuilder<List<AllChannelModel>>(
+          stream: ChannelService.readChannel(),
           builder: (context, provider) {
             if (provider.hasData) {
               var model = provider.data!;
@@ -123,17 +126,7 @@ class DiscoverScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
-                        push(
-                            context: context,
-                            page: LivePage2(
-                              isHost: user.model!.uuid.toString() ==
-                                  model[index].userId.toString(),
-                              userId: user.model!.uuid.toString(),
-                              liveID: model[index].streamId.toString(),
-                              userName: user.model!.firstName.toString(),
-                            ));
-                      },
+                      onTap: () {},
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -148,7 +141,7 @@ class DiscoverScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                          model[index].streamImage!),
+                                          model[index].channelImage!),
                                       fit: BoxFit.cover,
                                     ),
                                     borderRadius: BorderRadius.circular(16),
@@ -214,19 +207,29 @@ class DiscoverScreen extends StatelessWidget {
                           ),
                           const Verticalspace(space: 13),
                           BuildText(
-                            data: model[index].userName!,
+                            data: model[index].channelName!,
                             // color: Styles.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),
                           Row(
                             children: [
-                              BuildText(
-                                data: model[index].title!,
-                                color: const Color(0xff1d9ddd),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              FutureBuilder<UserModel?>(
+                                  future: UserService.readUser2(
+                                    userId:
+                                        model[index].channelOwner.toString(),
+                                  ),
+                                  builder: (context, future) {
+                                    if (!future.hasData) {
+                                      return const SizedBox();
+                                    }
+                                    return BuildText(
+                                      data: future.data!.firstName.toString(),
+                                      color: const Color(0xff1d9ddd),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    );
+                                  }),
                               const BuildText(
                                 data: "-",
                                 color: Color(0xff828282),
@@ -234,7 +237,7 @@ class DiscoverScreen extends StatelessWidget {
                                 fontSize: 12,
                               ),
                               BuildText(
-                                data: model[index].description!,
+                                data: model[index].channelDescription!,
                                 color: const Color(0xff828282),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,

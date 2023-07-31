@@ -1,8 +1,10 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:streamlivr/src/providers/my_stream_provider.dart';
 import 'package:streamlivr/src/providers/wallet_provider.dart';
 
 import '../helper/export.dart';
+import '../providers/user_presence_provider.dart';
 import '../providers/user_provider.dart';
 
 class StateManager extends StatefulWidget {
@@ -29,6 +31,7 @@ class _StateManagerState extends State<StateManager> {
         ChangeNotifierProvider(create: (context) => MyStreamProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => ChannelProvider()),
+        ChangeNotifierProvider(create: (context) => UserPresenceProvider()),
         ChangeNotifierProvider(create: (context) => GenreProvider()),
         ChangeNotifierProvider.value(value: themeProvider),
         ChangeNotifierProvider(create: (context) => AuthentificationProvider()),
@@ -39,8 +42,30 @@ class _StateManagerState extends State<StateManager> {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, _) {
-            return widget.child;
+            return OKToast(
+              child: widget.child,
+            );
           }),
     );
+  }
+}
+
+class AppLifecycleObserver extends WidgetsBindingObserver {
+  final UserPresenceProvider userPresenceProvider;
+
+  AppLifecycleObserver(this.userPresenceProvider);
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+        userPresenceProvider.updateUserPresence(false);
+        break;
+      case AppLifecycleState.resumed:
+        userPresenceProvider.updateUserPresence(true);
+        break;
+    }
   }
 }

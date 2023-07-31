@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +10,7 @@ import 'package:streamlivr/src/providers/basic_provider.dart';
 import 'package:streamlivr/src/providers/dark_theme_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
+import 'package:streamlivr/src/services/auth_service.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/app_message.dart';
 import 'package:streamlivr/src/widgets/app_password_textfield.dart';
@@ -177,33 +175,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   return;
                 }
                 ProcessingDialog.showProcessingDialog(context: context);
-                provider
-                    .loginUser(
+                AuthService.loginUser(
                   email: emailTextEditingCOntroller.text,
                   password: passwordTextEditingCOntroller.text,
-                )
-                    .then((value) async {
+                ).then((value) async {
                   Navigator.pop(context);
-                  if (value.status == "success") {
-                    AppMessage.showMessage(
-                      context: context,
-                      message: 'User login successfully',
-                      type: AnimatedSnackBarType.success,
-                    );
-                    pushRemoveAll(context: context, page: const MainScreen());
-                  } else {
-                    String message = value.data
-                        .toString()
-                        .replaceRange(0, 14, '')
-                        .split(']')[1];
-                    AppMessage.showMessage(
-                      context: context,
-                      message: message,
-                      type: AnimatedSnackBarType.error,
-                    );
-
-                    log(value.data.toString());
-                  }
+                  AppMessage.showMessage('User login successfully');
+                  pushRemoveAll(context: context, page: const MainScreen());
+                }).onError((error, stackTrace) {
+                  Navigator.pop(context);
+                  AppMessage.showMessage(error.toString());
                 });
               },
             ),

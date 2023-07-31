@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/routes/router.dart';
 import 'package:streamlivr/src/screens/choose_genre/choose_genre_screen.dart';
-import 'package:streamlivr/src/screens/main_screen/main_screen.dart';
 import 'package:streamlivr/src/widgets/app_button.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 

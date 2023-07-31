@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:streamlivr/src/models/genre_model.dart';
 import 'package:streamlivr/src/services/user_service.dart';
 
-import '../helper/export.dart';
-
 class GenreProvider extends foundation.ChangeNotifier {
   List<GenreModel> _list = [];
 
@@ -12,7 +10,7 @@ class GenreProvider extends foundation.ChangeNotifier {
   final List<GenreModel> _filterList = [];
   List<GenreModel> get filterListdList => _filterList;
 
-   List<dynamic> _checkedList = [];
+  final List<dynamic> _checkedList = [];
   List<dynamic> get checkedList => _checkedList;
 
   checkList(String data) {

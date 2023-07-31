@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -65,8 +62,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-
-          
               );
             })
           ],
@@ -139,24 +134,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: passwordTextEditingCOntroller),
               ],
             ),
-            const Verticalspace(space: 31),
-            CustomDropdown(
-              hintText: 'Select job role',
-              listItemStyle: const TextStyle(
-                color: Styles.black,
-              ),
-              selectedStyle: const TextStyle(
-                color: Styles.black,
-              ),
-              borderRadius: BorderRadius.circular(0),
-              items: const ['Creator', 'Fan'],
-              controller: provider.jobRoleCtrl,
-              onChanged: (p0) {
-                setState(() {
-                  userType = p0;
-                });
-              },
-            ),
+            // const Verticalspace(space: 31),
+            // CustomDropdown(
+            //   hintText: 'Select job role',
+            //   listItemStyle: const TextStyle(
+            //     color: Styles.black,
+            //   ),
+            //   selectedStyle: const TextStyle(
+            //     color: Styles.black,
+            //   ),
+            //   borderRadius: BorderRadius.circular(0),
+            //   items: const ['Creator', 'Fan'],
+            //   controller: provider.jobRoleCtrl,
+            //   onChanged: (p0) {
+            //     setState(() {
+            //       userType = p0;
+            //     });
+            //   },
+            // ),
             const Verticalspace(space: 54),
             Row(
               children: [
@@ -186,37 +181,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               text: 'Continue',
               textColor: Styles.white,
               onPressed: () {
-                // print('object');
-                // UserService.createWallet().then((value) {
-                //   print(value);
-                // });
-                // return;
                 if (emailTextEditingCOntroller.text.isEmpty) {
-                  AppMessage.showMessage(
-                      context: context,
-                      message: "email field cannot be empty",
-                      type: AnimatedSnackBarType.info);
+                  AppMessage.showMessage("email field cannot be empty");
                   return;
                 }
                 if (passwordTextEditingCOntroller.text.isEmpty) {
-                  AppMessage.showMessage(
-                      context: context,
-                      message: "password field cannot be empty",
-                      type: AnimatedSnackBarType.info);
-                  return;
-                }
-                if (userType.isEmpty) {
-                  AppMessage.showMessage(
-                      context: context,
-                      message: "Select user type",
-                      type: AnimatedSnackBarType.info);
+                  AppMessage.showMessage("password field cannot be empty");
                   return;
                 }
                 if (!Provider.of<BasicProvider>(context, listen: false).check) {
                   AppMessage.showMessage(
-                      context: context,
-                      message: "Please check Accept term and privacy",
-                      type: AnimatedSnackBarType.info);
+                      "Please check Accept term and privacy");
                   return;
                 }
                 ProcessingDialog.showProcessingDialog(context: context);
@@ -224,29 +199,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     .registerUser(
                         email: emailTextEditingCOntroller.text,
                         password: passwordTextEditingCOntroller.text,
-                        userType: userType)
+                        )
                     .then((value) async {
                   Navigator.pop(context);
-                  if (value.status == "success") {
-                    await FirebaseAuth.instance.currentUser!
-                        .sendEmailVerification()
-                        .then((value) {
-                      AppMessage.showMessage(
-                          context: context,
-                          message: "Go to your mail to verify email",
-                          type: AnimatedSnackBarType.info);
-                      pushRemoveAll(
-                          context: context, page: const ChooseGenreScreen());
-                    });
-                  } else {
-                    String message = value.data.data.toString();
-                    AppMessage.showMessage(
-                      context: context,
-                      message: message,
-                      type: AnimatedSnackBarType.error,
-                    );
-                    log(value.data.toString());
-                  }
+
+                  await FirebaseAuth.instance.currentUser!
+                      .sendEmailVerification()
+                      .then((value) {
+                    AppMessage.showMessage("Go to your mail to verify email");
+                    pushRemoveAll(
+                        context: context, page: const ChooseGenreScreen());
+                  });
+                }).onError((error, stackTrace) {
+                  AppMessage.showMessage(error.toString());
                 });
               },
             ),

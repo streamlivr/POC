@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Hero(
+              const Hero(
                 tag: "title",
                 child: BuildText(
                   data: 'Welcome to Streamlivr! 👋',

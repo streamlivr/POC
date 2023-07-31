@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:day_night_themed_switch/day_night_themed_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -101,11 +100,7 @@ some live streams you might like.''',
                     context,
                     listen: false,
                   ).checkedList.isEmpty) {
-                    AppMessage.showMessage(
-                      context: context,
-                      message: 'Select at least one',
-                      type: AnimatedSnackBarType.info,
-                    );
+                    AppMessage.showMessage('Select at least one');
                     return;
                   }
                   ProcessingDialog.showProcessingDialog(
@@ -121,21 +116,13 @@ some live streams you might like.''',
                       .then((value) {
                     pop(context: context);
                     if (value.status == 'success') {
-                      AppMessage.showMessage(
-                        context: context,
-                        message: 'genre selected',
-                        type: AnimatedSnackBarType.success,
-                      );
+                      AppMessage.showMessage('genre selected');
                       push(
                         context: context,
                         page: const ChooseChannelScreen(),
                       );
                     } else {
-                      AppMessage.showMessage(
-                        context: context,
-                        message: 'something went wrong',
-                        type: AnimatedSnackBarType.error,
-                      );
+                      AppMessage.showMessage('something went wrong');
                     }
                   });
                 },

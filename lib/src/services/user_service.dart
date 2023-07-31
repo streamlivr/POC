@@ -14,10 +14,12 @@ import 'package:unique_name_generator/unique_name_generator.dart';
 
 import '../helper/generate_stream_id.dart';
 import '../helper/single_file_uploader.dart';
+import '../models/all_channel_model.dart';
 import '../models/channel_model.dart';
 import '../models/register_user_model.dart';
 import '../models/response_model.dart';
 import '../models/stream_model.dart';
+import 'channel_service.dart';
 
 class UserService {
   static Future<ResponseModel> createWallet() async {
@@ -31,7 +33,6 @@ class UserService {
         return ResponseModel(data: response.body, status: 'error');
       }
     } catch (e) {
-      print(e);
       return ResponseModel(data: e, status: 'error');
     }
   }
@@ -48,7 +49,7 @@ class UserService {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     final id = userRef.doc(userId);
     var ung = UniqueNameGenerator(
-      dictionaries: [adjectives, animals],
+      dictionaries: [adjectives, animals, names],
       style: NameStyle.capital,
       separator: '_',
     );
@@ -58,7 +59,6 @@ class UserService {
       ResponseModel? model;
 
       if (userData.avatar == "") {
-        print("no image");
         await id.set({
           'uuid': id.id,
           'firstName': ung.generate().split("_")[0],
@@ -72,6 +72,16 @@ class UserService {
         }).then((value) async {
           await id.collection('wallet').doc('wallet').set(
               WalletDetailModel.fromJson(jsonDecode(wallet.data)[0]).toMap());
+          await ChannelService.createChannel(
+              channelData: AllChannelModel(
+            channelName: ung.generate(),
+            channelImage: "",
+            channelDescription: """
+Proident aute ipsum ex sunt id do. Fugiat laborum ipsum commodo quis cillum aute non sunt eiusmod. Anim reprehenderit exercitation do ad amet occaecat. Nostrud eu enim consequat velit est deserunt velit reprehenderit aliquip incididunt culpa anim. Aliquip sunt deserunt ea incididunt reprehenderit consectetur sunt excepteur. Ex adipisicing elit consectetur laborum consectetur cupidatat velit in occaecat. Nisi exercitation voluptate occaecat dolore nostrud magna elit veniam cupidatat ut nisi cupidatat consectetur.
+
+Non veniam sint aute ex. Est dolor sunt ut culpa cillum velit ad. Eiusmod mollit Lorem qui culpa dolor cupidatat ut reprehenderit irure eu ut ullamco tempor amet. Eiusmod exercitation eu mollit officia laborum tempor in laboris enim. Officia anim commodo enim Lorem dolore quis non ea ullamco irure aliquip dolor labore ut. Nisi sint mollit Lorem enim cillum in magna deserunt sint nostrud sit in. Adipisicing aliqua laborum laborum ad non in dolore dolor.
+""",
+          ));
           model = ResponseModel(data: 'success', status: 'success');
         }).onError((error, stackTrace) {
           model = ResponseModel(data: error, status: 'error');
@@ -90,7 +100,20 @@ class UserService {
               'userType': userData.userType,
               'phoneNumber': userData.phoneNumber,
               'avatar': value.data,
-            }).then((value) {
+            }).then((value) async {
+              await id.collection('wallet').doc('wallet').set(
+                  WalletDetailModel.fromJson(jsonDecode(wallet.data)[0])
+                      .toMap());
+              await ChannelService.createChannel(
+                  channelData: AllChannelModel(
+                channelName: ung.generate(),
+                channelImage: "",
+                channelDescription: """
+Proident aute ipsum ex sunt id do. Fugiat laborum ipsum commodo quis cillum aute non sunt eiusmod. Anim reprehenderit exercitation do ad amet occaecat. Nostrud eu enim consequat velit est deserunt velit reprehenderit aliquip incididunt culpa anim. Aliquip sunt deserunt ea incididunt reprehenderit consectetur sunt excepteur. Ex adipisicing elit consectetur laborum consectetur cupidatat velit in occaecat. Nisi exercitation voluptate occaecat dolore nostrud magna elit veniam cupidatat ut nisi cupidatat consectetur.
+
+Non veniam sint aute ex. Est dolor sunt ut culpa cillum velit ad. Eiusmod mollit Lorem qui culpa dolor cupidatat ut reprehenderit irure eu ut ullamco tempor amet. Eiusmod exercitation eu mollit officia laborum tempor in laboris enim. Officia anim commodo enim Lorem dolore quis non ea ullamco irure aliquip dolor labore ut. Nisi sint mollit Lorem enim cillum in magna deserunt sint nostrud sit in. Adipisicing aliqua laborum laborum ad non in dolore dolor.
+""",
+              ));
               model = ResponseModel(data: 'success', status: 'success');
             }).onError((error, stackTrace) {
               model = ResponseModel(data: error, status: 'error');
@@ -321,13 +344,34 @@ class UserService {
     }
   }
 
-    static Future<ResponseModel?> fetchUserWallet() async {
+  static Future<UserModel?> readUser2({
+    required String userId
+  }) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+
+   
+
+    final doc = await firestoreInstance.collection('users').doc(userId).get();
+
+    if (doc.exists) {
+     
+      return UserModel.fromMap(doc.data()!);
+    }
+    return null;
+  }
+
+  static Future<ResponseModel?> fetchUserWallet() async {
     final firestoreInstance = FirebaseFirestore.instance;
 
     var userId = FirebaseAuth.instance.currentUser!.uid;
 
     try {
-      final doc = await firestoreInstance.collection('users').doc(userId).collection('wallet').doc('wallet').get();
+      final doc = await firestoreInstance
+          .collection('users')
+          .doc(userId)
+          .collection('wallet')
+          .doc('wallet')
+          .get();
 
       if (doc.exists) {
         final userData = doc.data();

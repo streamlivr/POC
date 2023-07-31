@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:streamlivr/assets/assets.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/routes/router.dart';
+import 'package:streamlivr/src/screens/create_channel/create_channel.dart';
 import 'package:streamlivr/src/screens/my_schannel_screen/my_channel_screen.dart';
 import 'package:streamlivr/src/screens/settings_screen/settings_screen.dart';
 import 'package:streamlivr/src/theme/style.dart';
@@ -12,6 +15,8 @@ import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 import 'package:streamlivr/wrapper.dart';
+
+import '../../providers/user_presence_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -23,6 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    var userPresenceProvider = Provider.of<UserPresenceProvider>(context);
     return Scaffold(
       // backgroundColor: Colors.black,
       appBar: AppBar(
@@ -64,23 +70,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 height: 30,
                 width: 82,
-                child: const Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 3,
-                      backgroundColor: Styles.green,
-                    ),
-                    Horizontalspace(space: 10),
-                    BuildText(
-                      data: 'Online',
-                      fontSize: 12,
-                      // color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ],
-                ),
+                child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    stream: userPresenceProvider.getUserPresenceStream(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CupertinoActivityIndicator();
+                      }
+                      var data = snapshot.data?.data();
+                      bool isOnline = data?['isOnline'] ?? false;
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 3,
+                            backgroundColor:
+                                isOnline ? Styles.green : Styles.red,
+                          ),
+                          const Horizontalspace(space: 10),
+                          BuildText(
+                            data: isOnline ? 'Online' : 'Offline',
+                            fontSize: 12,
+                            // color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      );
+                    }),
               ),
             ),
             const Verticalspace(space: 14),
@@ -104,7 +120,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Verticalspace(space: 40),
             buildListTile(
                 onTap: () {
-                  push(context: context, page: const MyChannelScreen());
+                  var hasChannel =
+                      Provider.of<UserProvider>(context, listen: false)
+                          .hasChannel;
+                  push(
+                      context: context,
+                      page: !hasChannel!
+                          ? const CreateChannel()
+                          : const MyChannelScreen());
                 },
                 title: 'My Channel',
                 src: Assets.assetsIconsProfilecircleIcon),

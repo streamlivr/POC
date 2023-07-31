@@ -9,12 +9,12 @@ class MyStreamProvider extends ChangeNotifier {
   bool _hadData = false;
   bool get hadData => _hadData;
   fetchData() async {
-    var data = await UserService.readStreams();
+    var data = UserService.readStreams();
 
-    if (data!.isEmpty == "success") {
+    if (data.isEmpty == "success") {
       _hadData = true;
       // _model = StreamModel.fromMap(data.data);
-      print(_model);
+      
       notifyListeners();
     } else {
       _model = null;

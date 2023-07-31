@@ -10,14 +10,14 @@ class CryptoService {
         Uri.parse("https://rest.coinapi.io/v1/exchangerate/USD/$currency"),
         headers: {"X-CoinAPI-Key": "EA52CABA-71F6-42E4-BCEB-C052B6133118"},
       );
-      print(response.body);
+    
       if (response.statusCode.toString()[0] == "2") {
         return ResponseModel(data: response.body, status: "success");
       } else {
         return ResponseModel(data: response.body, status: "error");
       }
     } catch (e) {
-      print(e);
+     
       return ResponseModel(data: e, status: "error");
     }
   }
@@ -35,7 +35,7 @@ class CryptoService {
         return ResponseModel(data: response.body, status: "error");
       }
     } catch (e) {
-      print(e);
+    
       return ResponseModel(data: e, status: "error");
     }
   }

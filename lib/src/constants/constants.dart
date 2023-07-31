@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String appName = "shop more";
+String appName = "Streamlivr";
 String baseUrl = "https://backend-service-qo4m.onrender.com";
 
 EdgeInsetsGeometry screenPadding = const EdgeInsets.symmetric(horizontal: 23);
@@ -10,7 +10,7 @@ double dp32 = 32.0;
 double dp20 = 20.0;
 double dp14 = 14.0;
 
-const KAninationDuration = Duration(milliseconds: 500);
+const kAninationDuration = Duration(milliseconds: 500);
 
 // Form Error
 final RegExp emailValidatorRegExp = RegExp(
@@ -26,4 +26,4 @@ const String kMatchPassError = "Passwords don't match";
 const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
-const String FIELD_REQUIRED_MSG = "This field is required";
+const String fieldRequiredMsg = "This field is required";

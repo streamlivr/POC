@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:streamlivr/src/services/user_service.dart';
 
@@ -13,6 +15,25 @@ class UserProvider extends ChangeNotifier {
   bool _hadData1 = false;
   bool get hadData => _hadData;
   bool get hadData1 => _hadData1;
+  bool? _hasChannel = false;
+  bool? get hasChannel => _hasChannel;
+
+  checkChannel() {
+    FirebaseFirestore.instance
+        .collection('channels')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      if (value.exists) {
+        _hasChannel = true;
+        notifyListeners();
+      } else {
+        _hasChannel = false;
+        notifyListeners();
+      }
+    });
+  }
+
   fetchData() async {
     var data = await UserService.fetchUser();
 

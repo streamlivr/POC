@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:streamlivr/src/widgets/app_message.dart';
@@ -33,11 +32,7 @@ class ReceiveScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: address)).then((value) {
-                AppMessage.showMessage(
-                  context: context,
-                  message: 'Copied to clipboard',
-                  type: AnimatedSnackBarType.info,
-                );
+                AppMessage.showMessage('Copied to clipboard');
               });
             },
             child: const Text('Copy'),
