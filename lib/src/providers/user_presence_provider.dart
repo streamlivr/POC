@@ -19,10 +19,11 @@ class UserPresenceProvider with ChangeNotifier {
     }
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserPresenceStream() {
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserPresenceStream(
+      {String? user}) {
     if (_auth.currentUser != null) {
       String userId = _auth.currentUser!.uid;
-      return _firestore.collection('users').doc(userId).snapshots();
+      return _firestore.collection('users').doc(user ?? userId).snapshots();
     }
     return const Stream.empty();
   }

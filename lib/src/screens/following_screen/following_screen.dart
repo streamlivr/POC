@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:streamlivr/assets/assets.dart';
+import 'package:streamlivr/src/models/all_channel_model.dart';
+import 'package:streamlivr/src/models/user_model.dart';
+import 'package:streamlivr/src/services/channel_service.dart';
+import 'package:streamlivr/src/services/user_service.dart';
 import 'package:streamlivr/src/widgets/build_text.dart';
 import 'package:streamlivr/src/widgets/horizontal_space.dart';
 import 'package:streamlivr/src/widgets/my_app_bar.dart';
 import 'package:streamlivr/src/widgets/vertical_space.dart';
 
-import '../../models/user_model.dart';
-import '../../providers/channel_provider.dart';
 import '../../routes/router.dart';
 import '../../theme/style.dart';
+import '../channel_detail_screen/channel_detail_screen.dart';
 import '../profile_screen/profile_screen.dart';
 
 class FollowingScreen extends StatelessWidget {
@@ -41,28 +42,36 @@ class FollowingScreen extends StatelessWidget {
             ),
             const Verticalspace(space: 20),
             Expanded(
-              child: Consumer<ChannelProvider>(
-                builder: (context, provider, _) {
-                  if (provider.list.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        "No Channel here",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  }
-                  return ListView.separated(
-                      itemBuilder: (context, index) {
-                        return buildFollowingTile(index, provider.list);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Verticalspace(space: 10);
-                      },
-                      itemCount: provider.list.length);
-                },
-              ),
+              child: StreamBuilder<List<AllChannelModel>>(
+                  stream: ChannelService.readFollowingChannels(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      var list = snapshot.data!;
+                      if (list.isEmpty) {
+                        return const Center(
+                          child: Text("You've not followed any channel"),
+                        );
+                      }
+                      return ListView.separated(
+                          itemBuilder: (context, index) {
+                            var data = list[index];
+                            return buildFollowingTile(data, context);
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Verticalspace(space: 10);
+                          },
+                          itemCount: list.length);
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    }
+                  }),
             )
           ],
         ),
@@ -70,109 +79,137 @@ class FollowingScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFollowingTile(
-    int index,
-    List<UserModel> data,
-  ) {
-    return SizedBox(
-      height: 100,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 100,
-                width: 160,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: NetworkImage(data[index].avatar.toString()))),
-              ),
-              Container(
-                height: 27,
-                margin: const EdgeInsets.all(8),
-                width: 43,
-                decoration: BoxDecoration(
-                  color: Styles.red,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Center(
-                  child: BuildText(
-                    data: 'Live',
-                    color: Styles.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Horizontalspace(space: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+  Widget buildFollowingTile(AllChannelModel data, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        push(
+            context: context,
+            page: ChannelDetailScreen(
+              data: data,
+            ));
+      },
+      child: SizedBox(
+        height: 100,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
               children: [
-                BuildText(
-                  data: data[index].lastName!,
-                  // color: Styles.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                Container(
+                  height: 100,
+                  width: 160,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(data.channelImage.toString()))),
                 ),
-                const Row(
-                  children: [
-                    Icon(
-                      Icons.remove_red_eye,
-                      // color: Color(0xffe0e0e0),
-                      size: 26,
-                    ),
-                    Horizontalspace(space: 5),
-                    BuildText(
-                      data: '0 viewers',
-                      // color: Color(0xffe0e0e0),
-                      fontSize: 14,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ...["Nigeria", "Ph"]
-                        .map((e) => Container(
-                              margin: const EdgeInsets.only(right: 8),
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                color: const Color(0xff343232),
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              child: BuildText(
-                                data: e.toString(),
-                                fontSize: 5,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xfff4f3fc),
-                              ),
-                            ))
-                        .toList(),
-                  ],
-                ),
-                const Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 7,
-                      backgroundImage:
-                          AssetImage(Assets.assetsImagesProfileImage),
-                    ),
-                    Horizontalspace(space: 5),
-                    BuildText(
-                      data: 'Kachi',
-                      fontSize: 8,
-                      // color: Styles.white,
-                    )
-                  ],
-                )
+                // Container(
+                //   height: 27,
+                //   margin: const EdgeInsets.all(8),
+                //   width: 43,
+                //   decoration: BoxDecoration(
+                //     color: Styles.red,
+                //     borderRadius: BorderRadius.circular(8),
+                //   ),
+                //   child: const Center(
+                //     child: BuildText(
+                //       data: 'Live',
+                //       color: Styles.white,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
-          )
-        ],
+            const Horizontalspace(space: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  BuildText(
+                    data: data.channelName!,
+                    // color: Styles.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.remove_red_eye,
+                        // color: Color(0xffe0e0e0),
+                        size: 16,
+                      ),
+                      Horizontalspace(space: 5),
+                      BuildText(
+                        data: '0 viewers',
+                        // color: Color(0xffe0e0e0),
+                        fontSize: 14,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ...["Nigeria", "Ph"]
+                          .map((e) => Container(
+                                margin: const EdgeInsets.only(right: 8),
+                                padding: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff343232),
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: BuildText(
+                                  data: e.toString(),
+                                  fontSize: 5,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xfff4f3fc),
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                  FutureBuilder<UserModel?>(
+                      future: UserService.readUser2(
+                          userId: data.channelOwner.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 7,
+                                backgroundImage: NetworkImage(
+                                    snapshot.data!.avatar.toString()),
+                              ),
+                              const Horizontalspace(space: 5),
+                              BuildText(
+                                data: snapshot.data!.firstName.toString(),
+                                fontSize: 8,
+                                // color: Styles.white,
+                              )
+                            ],
+                          );
+                        } else {
+                          return const Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 7,
+                              ),
+                              Horizontalspace(space: 5),
+                              BuildText(
+                                data: '',
+                                fontSize: 8,
+                                // color: Styles.white,
+                              )
+                            ],
+                          );
+                        }
+                      })
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

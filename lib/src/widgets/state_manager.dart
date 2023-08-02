@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:streamlivr/src/providers/ads_provider.dart';
 import 'package:streamlivr/src/providers/my_stream_provider.dart';
 import 'package:streamlivr/src/providers/wallet_provider.dart';
 
@@ -27,6 +28,7 @@ class _StateManagerState extends State<StateManager> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => AdsProvider()),
         ChangeNotifierProvider(create: (context) => WalletProvider()),
         ChangeNotifierProvider(create: (context) => MyStreamProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),

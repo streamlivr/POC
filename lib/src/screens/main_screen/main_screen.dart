@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streamlivr/src/constants/constants.dart';
 import 'package:streamlivr/src/helper/export.dart';
+import 'package:streamlivr/src/providers/ads_provider.dart';
 import 'package:streamlivr/src/providers/user_presence_provider.dart';
 import 'package:streamlivr/src/providers/user_provider.dart';
 import 'package:streamlivr/src/providers/wallet_provider.dart';
@@ -10,6 +12,7 @@ import 'package:streamlivr/src/screens/following_screen/following_screen.dart';
 import 'package:streamlivr/src/screens/wallet_screen/wallet_screen.dart';
 
 import '../../theme/style.dart';
+import '../../widgets/ads.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -45,6 +48,34 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  Future<void> checkRatePrompt(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final lastOpenedTime = prefs.getInt('last_opened_time') ?? 0;
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    final timeSinceLastOpened = currentTime - lastOpenedTime;
+
+    // Prompt the user for a rating if the app has been open for at least 2 days
+    if (timeSinceLastOpened >= const Duration(days: 2).inMilliseconds) {
+      await showRatePrompt(context);
+    }
+
+    // Update the last opened time to the current time
+    await prefs.setInt('last_opened_time', currentTime);
+  }
+
+  Future<void> showRatePrompt(BuildContext context) async {
+    bool shouldRate = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AdsDialog();
+      },
+    );
+
+    if (shouldRate) {
+      // Open app store for rating
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var pages = [
@@ -53,6 +84,7 @@ class _MainScreenState extends State<MainScreen> {
       const WalletScreen(),
     ];
     return Consumer<BasicProvider>(builder: (context, provider, _) {
+      final adsProvider = Provider.of<AdsProvider>(context);
       return Scaffold(
         body: SafeArea(
           child: AnimatedSwitcher(
@@ -82,7 +114,11 @@ class _MainScreenState extends State<MainScreen> {
             unselectedItemColor: Styles.grayColor,
             selectedLabelStyle: const TextStyle(color: Styles.white),
             currentIndex: provider.currentIndex,
-            onTap: (value) => provider.changeIndex(value),
+            onTap: (value) {
+              adsProvider.setShowAds(true);
+              provider.changeIndex(value);
+              checkRatePrompt(context);
+            },
             items: [
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(

@@ -16,6 +16,7 @@ import '../../helper/export.dart';
 import '../../models/stream_model.dart';
 import '../../theme/style.dart';
 import '../../widgets/my_app_bar.dart';
+import '../channel_detail_screen/channel_detail_screen.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({Key? key}) : super(key: key);
@@ -118,7 +119,7 @@ class DiscoverScreen extends StatelessWidget {
     return SizedBox(
       height: 250,
       child: StreamBuilder<List<AllChannelModel>>(
-          stream: ChannelService.readChannel(),
+          stream: ChannelService.readChannels(),
           builder: (context, provider) {
             if (provider.hasData) {
               var model = provider.data!;
@@ -126,7 +127,13 @@ class DiscoverScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        push(
+                            context: context,
+                            page: ChannelDetailScreen(
+                              data: model[index],
+                            ));
+                      },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

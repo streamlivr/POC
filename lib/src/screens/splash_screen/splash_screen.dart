@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   inti() {
     Future.delayed(const Duration(seconds: 2), () {
-      push(context: context, page: const Wrapper());
+      pushRemoveAll(context: context, page: const Wrapper());
     });
   }
 
